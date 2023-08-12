@@ -1,0 +1,11 @@
+@echo off
+echo.
+echo ±‡“Î÷–
+
+md out\production\HDQS
+cd src
+javac -d ..\out\production\HDQS -encoding UTF-8 Launcher.java
+
+echo ±‡“ÎÕÍ≥…
+echo.
+pause

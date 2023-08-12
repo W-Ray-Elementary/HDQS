@@ -1,0 +1,40 @@
+CHANGE_LOG
+{
+	LOG
+	{
+		name = LEXICON
+		VERSIONS
+		{
+			name = 0.1a
+			description = 无更改
+			benckmark = 无数据
+		}
+		VERSIONS
+		{
+			name = 0.2.0
+			description = get 系列方法新增模糊查询功能
+			benchmark = 2312 // 毫秒，越短越好
+		}
+		VERSIONS
+		{
+			name = 0.2.1
+			description = 更换数据结构，实现速度飞跃
+			benchmark = 468 // 毫秒，越短越好
+		}
+		VERSIONS
+		{
+			name = 0.3.0
+			description = 新增 boolean remove(String key)
+			benchmark = 无数据
+		}
+	}
+	LOG
+	{
+		name = FileAndString
+		VERSIONS
+		{
+			name = 0.1a
+			description = 无更改
+		}
+	}
+}
