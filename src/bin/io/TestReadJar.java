@@ -1,6 +1,10 @@
 package bin.io;
 
+import bin.util.NewInstance;
 import pkg.Temp;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class TestReadJar {
     public static void main(String[] args) {
@@ -19,6 +23,10 @@ public class TestReadJar {
 
     private static void TEST_ReadJar() {
         ReadJar rj = new ReadJar(PATH.getFile("testRes\\io\\GetCode[77a7c91a].jar"));
+        List<Class<?>> allClass = rj.getAllClass();
+        Object t = NewInstance.get(allClass.get(0));
+        if (!"77a7c91a".equals(t.toString()))
+            throw new RuntimeException("bin.io.ReadJar未能读取到类");
 
     }
 }
