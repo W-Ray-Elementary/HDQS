@@ -1,6 +1,7 @@
 package bin.io;
 
 import java.io.File;
+import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
@@ -8,6 +9,7 @@ public class Test {
         TEST_PATH();
         TEST_FileToString();
         TEST_ENCODE();
+        TEST_FileSearch();
         long cost = System.currentTimeMillis() - startTime;
         System.out.println("bin.io.FileAndString 的测试成功完成于" + ' ' + cost + ' ' + "ms");
     }
@@ -51,5 +53,12 @@ public class Test {
         FileAndString.write(
                 PATH.getFile("testRes\\io\\编码测试"),
                 "编码测试。\nEncode test.");
+    }
+
+    private static void TEST_FileSearch() {
+        List<File> cfgFiles = FileSearch.suffix(PATH.getFile("testRes"), ".cfg");
+        if (!(cfgFiles.size() > 2) || !(cfgFiles.get(0).getAbsolutePath().endsWith(".cfg"))) {
+            throw new RuntimeException("FileSearch 未能找到文件！");
+        }
     }
 }

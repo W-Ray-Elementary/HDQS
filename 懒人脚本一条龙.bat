@@ -3,16 +3,6 @@ chcp 65001
 echo.
 echo 编译中
 
-md out\production\HDQS
-cd src
-chcp 936
-javac -d ..\out\production\HDQS -encoding UTF-8 Launcher.java
-chcp 65001
-echo 编译完成
-cd ..
-
-echo.
-
 mkdir out
 cd out
 mkdir production
@@ -27,18 +17,14 @@ cd ..
 cd ..
 cd ..
 
-
-echo.
-echo 资源文件拷贝完成
-echo 正在准备所有测试
-cd out
-cd production
-cd HDQS
-
-echo 正在运行所有测试
+md out\production\HDQS
+chcp 936
+javac -classpath "src;out\production\HDQS\testRes\io\GetCode[77a7c91a].jar" -d ..\out\production\HDQS -encoding UTF-8 src\Launcher.java
+echo 编译完成
+chcp 65001
 echo.
 
-java Launcher -t all
+java -classpath "out\production\HDQS;out\production\HDQS\testRes\io\GetCode[77a7c91a].jar" Launcher -t all
 
 echo.
 pause
