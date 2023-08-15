@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="HDQS:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="68739be9-680e-4245-be87-0aa23fe114e1" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/bin/io/smartIO2/AutoPlay.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/bin/io/smartIO2/SmartIO.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2KIkV1a38O4DroARugVokTxEoRH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Administrator/OneDrive/Dev01/Interest/Java Projects/HDQS",
+    "project.structure.last.edited": "工件",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.Launcher">
+    <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Launcher" />
+      <module name="HDQS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="bin.io.smartIO2.Test" />
+      <module name="HDQS" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="bin.io.smartIO2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="68739be9-680e-4245-be87-0aa23fe114e1" name="Changes" comment="" />
+      <created>1673669505395</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673669505395</updated>
+      <workItem from="1673669506714" duration="1418000" />
+      <workItem from="1673674743058" duration="2545000" />
+      <workItem from="1673700642839" duration="2160000" />
+      <workItem from="1673747460030" duration="229000" />
+      <workItem from="1673751689091" duration="164000" />
+      <workItem from="1673782841953" duration="433000" />
+      <workItem from="1673962237724" duration="806000" />
+      <workItem from="1674042879886" duration="830000" />
+      <workItem from="1674045136162" duration="544000" />
+      <workItem from="1674131673491" duration="2298000" />
+      <workItem from="1674186061610" duration="9000" />
+      <workItem from="1674218026171" duration="85000" />
+      <workItem from="1675763680492" duration="133000" />
+      <workItem from="1675866222768" duration="12000" />
+      <workItem from="1678526444232" duration="387000" />
+      <workItem from="1678527141723" duration="1382000" />
+      <workItem from="1678581404011" duration="38000" />
+      <workItem from="1678581466465" duration="3000" />
+      <workItem from="1678595942375" duration="28000" />
+      <workItem from="1678600622983" duration="2316000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
