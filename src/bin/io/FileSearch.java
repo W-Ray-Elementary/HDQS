@@ -4,6 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 从某一目录中查找特定的文件
+ * 现有以下功能
+ * <pre>
+ *     - 按后缀查找
+ * </pre>
+ */
 public class FileSearch {
     /* 不应被实例化 */
     private FileSearch() {}
