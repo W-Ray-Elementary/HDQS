@@ -15,7 +15,6 @@ public class Test {
     }
 
     // 此方法用于测试 bin.io.PATH
-
     private static void TEST_PATH() {
         File testFile = PATH.getFile("config.properties");
         String testTxt = testFile.getAbsolutePath();
@@ -23,8 +22,8 @@ public class Test {
             throw new RuntimeException("类 bin.io.PATH 未达成预定目标，测试未完成");
         }
     }
-    // 此方法用于测试 bin.io.FileToString
 
+    // 此方法用于测试 bin.io.FileToString
     private static void TEST_FileToString() {
         // 测试读取
         String testTxt = FileAndString.read(PATH.getFile("testRes\\io\\FileAndString.txt"));
