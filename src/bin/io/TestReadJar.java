@@ -18,6 +18,7 @@ public class TestReadJar {
     }
 
     private static void TEST_ReadJar() {
+        ReadJar rj = new ReadJar(PATH.getFile("testRes\\io\\GetCode[77a7c91a].jar"));
 
     }
 }
