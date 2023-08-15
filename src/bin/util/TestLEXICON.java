@@ -21,7 +21,7 @@ public class TestLEXICON {
             benchmark.add(String.valueOf(r.nextLong()), String.valueOf(r.nextLong()));
         }
         long startTime = System.currentTimeMillis();
-        benchmark = LEXICON.getInstance(benchmark.toString());
+        benchmark = LEXICON.getInstance(benchmark.toString()).get(0);
         long cost = System.currentTimeMillis() - startTime;
         System.out.println("bin.util 的基准测试成功完成于" + ' ' + cost + ' ' + "ms");
     }
@@ -128,17 +128,56 @@ public class TestLEXICON {
         }
 
         // 测试 空白LEXICON 的 LEXICON(String name, String str)
-        // 懒了，不测了
+        // 懒了，不测了，不抛异常就行
+        LEXICON bL = LEXICON.getInstance("bL{}").get(0);
+        bL = LEXICON.getInstance("bL {}").get(0);
+        bL = LEXICON.getInstance("""
+                bL{
+                }""").get(0);
+        bL = LEXICON.getInstance("""
+                bL
+                {
+                }""").get(0);
 
         // 测试 纯文本LEXICON 的 LEXICON(String name, String str)
-        // 懒了，不测了
+        // 懒了，不测了，不抛异常就行
+        LEXICON tL = LEXICON.getInstance("""
+                tL{
+                    des = a
+                }""").get(0);
+        tL = LEXICON.getInstance("""
+                tL {
+                    mm = ds
+                }""").get(0);
+        tL = LEXICON.getInstance("""
+                tL
+                {
+                    hhh = hhh
+                }""").get(0);
 
         // 测试 嵌套LEXICON 的 LEXICON(String name, String str)
-        // 懒了，不测了
+        // 懒了，不测了，不抛异常就行
+        LEXICON nL = LEXICON.getInstance("""
+                nL
+                {
+                    a = a
+                    b = b
+                    sL
+                    {
+                        c = c
+                    }
+                    d = d
+                    sL
+                    {
+                        e = e
+                        f = f
+                    }
+                    g = g
+                }""").get(0);
 
         // 测试 testRes\\util\\mk1Pod_v2.cfg文件 转 LEXICON
         String testFilePath = "testRes\\util\\mk1Pod_v2.cfg";
-        LEXICON mk1pod_v2 = LEXICON.getInstance(PATH.getFile(testFilePath));
+        LEXICON mk1pod_v2 = LEXICON.getInstance(PATH.getFile(testFilePath)).get(0);
         if (mk1pod_v2.lineCount() < 228)
             throw new RuntimeException(testFilePath + "文件 转 LEXICON 时结果不正确！");
 
@@ -157,7 +196,7 @@ public class TestLEXICON {
             throw new RuntimeException(" String getFirst(String key) 方法返回值不正确！");
 
         // 测试模糊查询
-        LEXICON fuzzyLexicon = LEXICON.getInstance(PATH.getFile("testRes\\util\\fuzzyLexicon.cfg"));
+        LEXICON fuzzyLexicon = LEXICON.getInstance(PATH.getFile("testRes\\util\\fuzzyLexicon.cfg")).get(0);
         String a = fuzzyLexicon.getFirst("a", true);
         String b = fuzzyLexicon.getFirst("b", true);
         String c = fuzzyLexicon.getFirst("c", true);
@@ -170,7 +209,7 @@ public class TestLEXICON {
         }
 
         // 测试 boolean remove(String key)
-        LEXICON removal = LEXICON.getInstance(textLexicon.toString());
+        LEXICON removal = LEXICON.getInstance(textLexicon.toString()).get(0);
         removal.remove("员工");
         if (removal.lineCount() > 4) {
             throw new RuntimeException("boolean remove(String key) 方法不工作");

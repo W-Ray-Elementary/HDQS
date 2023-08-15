@@ -168,117 +168,192 @@ public class LEXICON {
      * @param txtF 纯文本文件，文件编码必须与{@link bin.SETTINGS}中{@code ENCODE}相同
      * @return 根据{@code txtF}创建的对象
      */
-    public static LEXICON getInstance(File txtF) {
+    public static List<LEXICON> getInstance(File txtF) {
         return getInstance(FileAndString.read(txtF));
     }
 
     /**
      * 完成字符串与对象的转换，类似于反序列化
      * @return 根据{@code s}创建的对象
+     * @param s 方法调用者必须确保此值有效并且符合格式
      */
-    public static LEXICON getInstance(String s) {
-        String[] lines = preProcess(s);
-        return readLexicon(lines);
+    public static List<LEXICON> getInstance(String s) {
+        return read(s);
     }
 
     /*
-    * 对即将转换为Lexicon对象的字符串进行预处理，步骤如下
-    *     1.按换行符切分为String数组
-    *     2.删除注释
-    *     3.删除空行
+    * 简单粗暴，从 String s 里面读一个LEXICON出来。
+    * 读取，读取，只是不知道注释怎么写
     * */
-    private static String[] preProcess(String s) {
-        List<String> lines = new ArrayList<>(Arrays.asList(s.split("\n")));
-        delComments(lines);
-        lines = delBlankLine(lines);
-        String[] returnVal = new String[lines.size()];
-        for (int i = 0; i < lines.size(); i++) {
-            returnVal[i] = lines.get(i);
-        }
-        return returnVal;
-    }
-
-    /*
-    * 删除所有的注释，注释格式仅支持单行注释，例如：
-    *     key = value // 位于双斜线"//"后的字符会被删除
-    * */
-    public static void delComments(List<String> lines) {
-        for (int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i);
-            if (line.contains("//")) {
-                lines.set(i, line.substring(0, line.indexOf("//")));
-            }
-        }
-    }
-
-    /*
-    * 删除空行，由于删除空行后会导致行数变化，故特殊处理
-    * 若一行中仅存在空格或制表符，同样视为空行
-    * */
-    public static List<String> delBlankLine(List<String> lines) {
-        List<String> result = new ArrayList<>();
-        for (String line : lines) {
-            String lineBur = line;
-            lineBur = lineBur.replace("\t", "");
-            lineBur = lineBur.replace(" ", "");
-            if (!("".equals(lineBur))) {
-                result.add(line);
-            }
-        }
-        return result;
-    }
-
-    /*
-    * 仅接受处理好后的字符串数组，不能包含注释与空行，但支持缩进
-    * 由于删除注释有时会产生新的空行，建议的处理顺序如下：
-    *     1.删除注释
-    *     2.删除空行
-    * */
-    private static LEXICON readLexicon(String[] lines) {
-        return readLexicon(lines, 0);
-    }
-
-    /*
-    * 把字符串转换为Lexicon的核心，start变量用于处理嵌套
-    * 具体格式要求见类注释
-    * */
-    private static LEXICON readLexicon(String[] lines, int start) {
-        String name = lines[start];
-        while (name.startsWith("\t") || name.startsWith(" ")) {
-            name = name.substring(1);
-        }
-        LEXICON returnVal = new LEXICON(name);
-        syntax :
-        {
-            if (!(lines[start + 1]).contains("{")) {
-                break syntax;
-            }
-            for (start += 2; start < lines.length; start++) {
-                String line = lines[start];
-                if (line.contains("}"))
-                    return returnVal;
-                if (line.contains("=")) {
-                    String key = line.substring(0, line.indexOf("="));
-                    while (key.startsWith("\t") || key.startsWith(" ")) {
-                        key = key.substring(1);
-                    }
-                    while (key.endsWith(" ")) {
-                        key = key.substring(0, key.length() - 1);
-                    }
-                    String value = line.substring(line.indexOf("=") + 1);
-                    while (value.startsWith("\t") || value.startsWith(" ")) {
-                        value = value.substring(1);
-                    }
-                    returnVal.add(key, value);
-                } else {
-                    LEXICON subLexicon = readLexicon(lines, start);
-                    returnVal.add(subLexicon);
-                    start += subLexicon.lineCount() - 1;
+    private static List<LEXICON> read(String s) {
+        Store begin = new Store(0);
+        List<LEXICON> returnVal = new ArrayList<>();
+        char c;
+        int keyStart = -1;
+        int keyLen = -1;
+        for (; begin.i < s.length(); begin.i++) {
+            c = s.charAt(begin.i);
+            // 忽略注释
+            if ((begin.i+1) < s.length()) if (c == '/' || s.charAt(begin.i+1) == '/') {
+                begin.i += 2;  /*
+                                    //comments
+                                    ↑↑↑
+                                    012
+                                                    */
+                for (; begin.i < s.length(); begin.i++) {
+                    c = s.charAt(begin.i);
+                    if (c == '\n') break;
                 }
             }
+            // 读取 key
+            if (keyStart == -1) {
+                if (c == ' ' || c == '\t' || c == '\n') {
+                    continue;
+                } else {
+                    keyStart = begin.i;
+                }
+            }
+            block : {   // 有这个就可以处理BUG
+                if (keyLen == -1) {
+                    if (c == '{') {
+                        keyLen = begin.i - keyStart;
+                        break block;
+                    }
+                    if (c != ' ' && c != '\t' && c != '\n') {
+                        continue;
+                    } else {
+                        keyLen = begin.i - keyStart;
+                    }
+                }
+            }
+            if (c == '{') {
+                String k = s.substring(keyStart, keyStart + keyLen);
+                keyStart = -1;
+                keyLen = -1;
+                begin.i++;  // begin.i自加1，跳过大括号
+                returnVal.add(read0(k, s, begin));
+            }
         }
+        return returnVal;
         // syntax error
-        throw new IllegalArgumentException();
+//        throw new IllegalArgumentException();
+    }
+
+     /*
+     * 已知名字的情况下读取一个LEXICON
+     * 把字符串转换为Lexicon的核心，begin变量用于处理嵌套
+     * 具体格式要求见类注释
+     * */
+    private static LEXICON read0(String key, String s, Store begin) {
+        LEXICON returnVal = new LEXICON(key);
+        char c;
+        int keyStart = -1;
+        int keyLen = -1;
+        boolean hasReadCtt = false;
+        for (; begin.i < s.length(); begin.i++) {
+            c = s.charAt(begin.i);
+            // 技巧：终止条件提前
+            if (c == '}') {
+                return returnVal;
+            }
+            // 忽略注释
+            if ((begin.i+1) < s.length()) if (c == '/' || s.charAt(begin.i+1) == '/') {
+                begin.i += 2;  /*
+                                    //comments
+                                    ↑↑↑
+                                    012
+                                                    */
+                for (; begin.i < s.length(); begin.i++) {
+                    c = s.charAt(begin.i);
+                    if (c == '\n') break;
+                }
+            }
+            // 读取 key
+            if (keyStart == -1) {
+                if (c == ' ' || c == '\t' || c == '\n') {
+                    continue;
+                } else {
+                    keyStart = begin.i;
+                }
+            }
+            block : {       // 街区（确信）
+                if (keyLen == -1) {
+                    if (c == '{') {
+                        keyLen = begin.i - keyStart;
+                        break block;
+                    }
+                    if (c == '=') {
+                        keyLen = begin.i - keyStart;
+                        hasReadCtt = true;
+                        break block;
+                    }
+                    if (c != ' ' && c != '\t' && c != '\n') {
+                        continue;
+                    } else {
+                        keyLen = begin.i - keyStart;
+                    }
+                }
+            }
+            if (c == '{') {
+                String k = s.substring(keyStart, keyStart + keyLen);
+                keyStart = -1;
+                keyLen = -1;
+                begin.i++;  // begin.i自加1，跳过大括号
+                returnVal.add(read0(k, s, begin));
+            }
+            if (c == '=' || hasReadCtt) {
+                String k = s.substring(keyStart, keyStart + keyLen);
+                // 开始读value
+                int valueStart = ++begin.i; // 自加1跳过等号
+                int valueLen;
+                String v = "";
+                for (; begin.i < s.length(); begin.i++) {
+                    c = s.charAt(begin.i);
+                    // 忽略注释
+                    if ((begin.i+1) < s.length()) if (c == '/' || s.charAt(begin.i+1) == '/') {
+                        valueLen = begin.i - valueStart;
+                        v = s.substring(valueStart, valueStart + valueLen);
+                        // 累了，这里直接用String的subString方法去空格
+                        while (v.startsWith(" ")) {
+                            v = v.substring(1);
+                        }
+                        while (v.endsWith(" ")) {
+                            v = v.substring(0, v.length() - 1);
+                        }
+                        begin.i++;  // 自加1跳过换行符
+                        break;
+                    }
+                    if (c == '\n') {
+                        valueLen = begin.i - valueStart;
+                        v = s.substring(valueStart, valueStart + valueLen);
+                        // 累了，这里直接用String的subString方法去空格
+                        while (v.startsWith(" ")) {
+                            v = v.substring(1);
+                        }
+                        while (v.endsWith(" ")) {
+                            v = v.substring(0, v.length() - 1);
+                        }
+                        //begin.i++;  // 自加1跳过换行符
+                        break;
+                    }
+                }
+                keyStart = -1;
+                keyLen = -1;
+                hasReadCtt = false;
+                returnVal.add(k, v);
+            }
+        }
+        throw new RuntimeException("syntax error");
+    }
+
+    /**
+     * 因为java传参的特殊性，故有此类用于存放int。
+     */
+    static class Store {
+        public int i;
+        public Store(int i) {
+            this.i = i;
+        }
     }
 
     /**

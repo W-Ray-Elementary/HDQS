@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
 /**
- * 以class对象，创Object示例
+ * 以class对象，创Object实例
  * （不好意思高考作文写多了）
  */
 public class NewInstance {
