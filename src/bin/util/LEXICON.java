@@ -191,7 +191,6 @@ public class LEXICON {
         char c;
         int keyStart = -1;
         int keyLen = -1;
-        boolean hasRead = false;
         for (; begin.i < s.length(); begin.i++) {
             c = s.charAt(begin.i);
             // 忽略注释
@@ -218,7 +217,6 @@ public class LEXICON {
                 if (keyLen == -1) {
                     if (c == '{') {
                         keyLen = begin.i - keyStart;
-                        hasRead = true;
                         break block;
                     }
                     if (c != ' ' && c != '\t' && c != '\n') {
@@ -228,11 +226,10 @@ public class LEXICON {
                     }
                 }
             }
-            if (c == '{' || hasRead) {
+            if (c == '{') {
                 String k = s.substring(keyStart, keyStart + keyLen);
                 keyStart = -1;
                 keyLen = -1;
-                hasRead = false;
                 begin.i++;  // begin.i自加1，跳过大括号
                 returnVal.add(read0(k, s, begin));
             }
@@ -252,9 +249,7 @@ public class LEXICON {
         char c;
         int keyStart = -1;
         int keyLen = -1;
-        boolean hasReadLxc = false;
         boolean hasReadCtt = false;
-        boolean end = false;
         for (; begin.i < s.length(); begin.i++) {
             c = s.charAt(begin.i);
             // 技巧：终止条件提前
@@ -285,7 +280,6 @@ public class LEXICON {
                 if (keyLen == -1) {
                     if (c == '{') {
                         keyLen = begin.i - keyStart;
-                        hasReadLxc = true;
                         break block;
                     }
                     if (c == '=') {
@@ -300,11 +294,10 @@ public class LEXICON {
                     }
                 }
             }
-            if (c == '{' || hasReadLxc) {
+            if (c == '{') {
                 String k = s.substring(keyStart, keyStart + keyLen);
                 keyStart = -1;
                 keyLen = -1;
-                hasReadLxc = false;
                 begin.i++;  // begin.i自加1，跳过大括号
                 returnVal.add(read0(k, s, begin));
             }
@@ -312,7 +305,7 @@ public class LEXICON {
                 String k = s.substring(keyStart, keyStart + keyLen);
                 // 开始读value
                 int valueStart = ++begin.i; // 自加1跳过等号
-                int valueLen = -1;
+                int valueLen;
                 String v = "";
                 for (; begin.i < s.length(); begin.i++) {
                     c = s.charAt(begin.i);
