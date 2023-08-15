@@ -26,6 +26,7 @@ public class Launcher {
                 bin.io.smartIO2.Test.main(null);
                 bin.util.TestLEXICON.main(null);
                 bin.util.TestCurve.main(null);
+                bin.io.TestReadJar.main(null);
             }
             default -> throw new RuntimeException("Invalid parameter: " + arg);
         }
