@@ -1,5 +1,3 @@
-import bin.util.TestCurve;
-import bin.util.TestLEXICON;
 
 public class Launcher {
     private static void configureLaunch() {
@@ -27,8 +25,9 @@ public class Launcher {
             case "all", "All", "ALL" -> {
                 bin.io.Test.main(null);
                 bin.io.smartIO2.Test.main(null);
-                TestLEXICON.main(null);
-                TestCurve.main(null);
+                bin.util.TestLEXICON.main(null);
+                bin.util.TestCurve.main(null);
+                bin.io.TestJar.main(null);
             }
             default -> throw new RuntimeException("Invalid parameter: " + arg);
         }
@@ -48,7 +47,7 @@ public class Launcher {
     private static void benchmark(String arg) {
         switch (arg) {
             case "all", "All", "ALL" -> {
-                TestLEXICON.BenchMark();
+                bin.util.TestLEXICON.BenchMark();
             }
             default -> throw new RuntimeException("Invalid parameter: " + arg);
         }
