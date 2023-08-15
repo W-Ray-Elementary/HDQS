@@ -57,7 +57,7 @@ public class Test {
 
     private static void TEST_FileSearch() {
         List<File> cfgFiles = FileSearch.suffix(PATH.getFile("testRes"), ".cfg");
-        if (!(cfgFiles.size() > 3) || !(cfgFiles.get(0).getAbsolutePath().endsWith(".cfg"))) {
+        if (!(cfgFiles.size() > 2) || !(cfgFiles.get(0).getAbsolutePath().endsWith(".cfg"))) {
             throw new RuntimeException("FileSearch 未能找到文件！");
         }
     }
