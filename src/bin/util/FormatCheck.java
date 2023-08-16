@@ -1,5 +1,7 @@
 package bin.util;
 
+import java.math.BigInteger;
+
 public class FormatCheck {
 
     /**
@@ -16,5 +18,14 @@ public class FormatCheck {
             msg = "Argument is greater than max: " + i + " > " + max;
         if (!msg.equals("check"))
             throw new IllegalArgumentException(msg);
+    }
+
+    /**
+     * 检查字符串是否可以被转换为BigInteger
+     * 十进制
+     */
+    public static String integerString(String val, int radix) {
+        BigInteger bi = new BigInteger(val, radix);
+        return String.valueOf(bi);
     }
 }
