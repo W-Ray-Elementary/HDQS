@@ -23,7 +23,7 @@ public class Launcher {
         switch (arg) {
             case "all", "All", "ALL" -> {
                 bin.io.Test.main(null);
-                bin.io.smartIO2.Test.main(null);
+                bin.io.smartIO2.TestSmartIO.main(null);
                 bin.util.TestLEXICON.main(null);
                 bin.util.TestCurve.main(null);
                 bin.io.TestReadJar.main(null);
@@ -45,9 +45,8 @@ public class Launcher {
 
     private static void benchmark(String arg) {
         switch (arg) {
-            case "all", "All", "ALL" -> {
+            case "all", "All", "ALL" ->
                 bin.util.TestLEXICON.BenchMark();
-            }
             default -> throw new RuntimeException("Invalid parameter: " + arg);
         }
     }

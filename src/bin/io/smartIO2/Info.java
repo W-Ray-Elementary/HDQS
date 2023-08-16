@@ -13,6 +13,11 @@ public class Info {
     private String value;
     private final boolean isInteger;
     private int width;
+    private static final int MIN_WIDTH = 3;
+
+    public Info(String name, int i, int width) {
+        this(name, String.valueOf(i), width);
+    }
 
     public Info(String name, String value, boolean isInteger) {
         this.name = name;
@@ -21,7 +26,7 @@ public class Info {
     }
 
     public Info(String name, String value, int width) {
-        FormatCheck.intLimit(width, 2, Integer.MAX_VALUE);
+        FormatCheck.intLimit(width, MIN_WIDTH, Integer.MAX_VALUE);
         this.name = name;
         this.value = value;
         this.isInteger = true;
@@ -30,10 +35,6 @@ public class Info {
 
     public String getName() {
         return name;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     public boolean isInteger() {
@@ -54,7 +55,7 @@ public class Info {
      * @param width 必须大于等于3
      */
     public void setWidth(int width) {
-        FormatCheck.intLimit(width, 3, Integer.MAX_VALUE);
+        FormatCheck.intLimit(width, MIN_WIDTH, Integer.MAX_VALUE);
         this.width = width;
     }
 
@@ -67,29 +68,19 @@ public class Info {
         if (!isInteger) return value;
         if (value.length() == 0) return "";
         FormatCheck.integerString(value, 10);
-        if (value.length() < width) return value;
+        if (value.length() <= width) return value;
         // 运行到这说明是数值，而且必须转换
         StringBuilder sb = new StringBuilder();
-        int currentDI = value.length() - 1; // DI: DigitIndex
+        int currentDI = 0; // DI: DigitIndex
         int targetDI = 0;
-        sb.append(value.charAt(currentDI--));
+        sb.append(value.charAt(currentDI++));
         sb.append(POINT);
         for (int i = width - (POINT.length() + 1); i > 0; i--) {
-            //                ↑ 一个是小数点前一位，一个是小数点本身
-            sb.append(value.charAt(currentDI--));
+            //                ↑ 1是小数点前一位，POINT.length()是小数点本身
+            sb.append(value.charAt(currentDI++));
         }
         sb.append(SCIENTIFIC_NOTATION_PARAM);
         sb.append(value.length() - 1);
         return String.valueOf(sb);
-    }
-
-    private int convertParameter(char c) {
-        return switch (c) {
-            case '0' -> 0;
-            case '1' -> 1; case '2' -> 2; case '3' -> 3;
-            case '4' -> 4; case '5' -> 5; case '6' -> 6;
-            case '7' -> 7; case '8' -> 8; case '9' -> 9;
-            default -> throw new IllegalArgumentException();
-        };
     }
 }

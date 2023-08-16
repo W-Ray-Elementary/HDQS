@@ -12,9 +12,9 @@ public class FormatCheck {
             throw new IllegalArgumentException("min is greater than max: " +
                     min + " > " + max);
         String msg = "check";
-        if (i <= min)
+        if (i < min)
             msg = "Argument is smaller than min: " + i + " < " + min;
-        if (i >= max)
+        if (i > max)
             msg = "Argument is greater than max: " + i + " > " + max;
         if (!msg.equals("check"))
             throw new IllegalArgumentException(msg);
