@@ -4,7 +4,7 @@ public class Info {
     private final String name;
     private String value;
     private final boolean isInteger;
-    private int width;
+    private static int width;
 
     public Info(String name, String value, boolean isInteger) {
         this.name = name;
@@ -27,5 +27,6 @@ public class Info {
     public void setValue(String value) {
         this.value = value;
     }
-    //TODO: 开发转String的方法
+
+
 }
