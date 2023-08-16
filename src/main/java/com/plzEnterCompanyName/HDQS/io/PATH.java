@@ -28,7 +28,7 @@ public class PATH {
         } else if (runInCmd.exists()) {
             ABSOLUTE_ROOT_PATH = runInCmd.getAbsolutePath().substring(0, runInCmd.getAbsolutePath().lastIndexOf('\\'));
         } else {
-            throw new UnsupportedOperationException("Unsupported platform! Please reinstall this program.");
+            throw new Error("Unsupported platform! Please reinstall this program.");
         }
     }
 
