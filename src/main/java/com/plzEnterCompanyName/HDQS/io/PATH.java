@@ -13,9 +13,6 @@ public class PATH {
 
     /**
      * 类加载时，此变量就被确定
-     * 类加载时，以相对路径寻找"out\\production\\HDQS\\com.plzEnterCompanyName.HDQS.Launcher.class"
-     * 和"com.plzEnterCompanyName.HDQS.Launcher.class"，并以此为基准判断运行环境
-     * 赋予ABSOLUTE_ROOT_PATH相应值
      * <p>注意：{@code ABSOLUTE_ROOT_PATH}<i>的末尾自动带有\\，勿重复添加！</i>
      */
     public static final String ABSOLUTE_ROOT_PATH;
