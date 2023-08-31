@@ -12,6 +12,8 @@ public class Launcher {
                 helloWorld(args[i + 1]);
             }
         }
+        System.out.println("你好世界！");
+        System.out.println("Hello world!");
         cleanUp();
     }
 
