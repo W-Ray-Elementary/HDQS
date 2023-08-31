@@ -3,8 +3,8 @@ package com.plzEnterCompanyName.HDQS.io;
 import java.io.File;
 
 /**
- * 专用于解决IDE与cmd中相对路径不同的问题，
  * 功能十分简单的一个工具类。
+ * 专用于解决IDE与cmd中相对路径不同的问题，
  * 领文件对象一定要准备好以下材料，按目录顺序依次叠放
  *  - 文件相对路径
  * 注意文件相对路径要有效，不然你自己惹出麻烦来本类概不负责。
