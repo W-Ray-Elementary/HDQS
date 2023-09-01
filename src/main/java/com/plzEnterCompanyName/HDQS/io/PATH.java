@@ -21,7 +21,6 @@ public class PATH {
         File runInIDEA = new File("out\\batchBuild\\HDQS\\bin\\HDQS.jar");
         File runInCmd = new File("bin\\HDQS.jar");
         if (runInIDEA.exists()) {
-            // TODO: 课间写不完，下次再写
             ABSOLUTE_ROOT_PATH = runInIDEA.getAbsolutePath().substring(0, runInIDEA.getAbsolutePath().lastIndexOf("\\") - 3);
         } else if (runInCmd.exists()) {
             ABSOLUTE_ROOT_PATH = runInCmd.getAbsolutePath().substring(0, runInCmd.getAbsolutePath().lastIndexOf("\\") - 3);
