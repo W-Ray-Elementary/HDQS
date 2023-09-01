@@ -33,7 +33,7 @@ The following content will no longer be written in both Chinese and English. Ple
     cd ..
 
     md out\production\HDQS
-    javac -classpath "src;out\production\HDQS\testRes\io\GetCode[77a7c91a].jar" -d ..\out\production\HDQS -encoding UTF-8 src\Launcher.java
+    javac -classpath "src;out\production\HDQS\testRes\io\GetCode[77a7c91a].jar" -d ..\out\production\HDQS -encoding UTF-8 src\com.plzEnterCompanyName.HDQS.Launcher.java
 
     pause
 ```
