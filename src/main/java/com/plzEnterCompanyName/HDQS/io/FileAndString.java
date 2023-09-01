@@ -1,7 +1,7 @@
 package com.plzEnterCompanyName.HDQS.io;
 
 import com.plzEnterCompanyName.HDQS.SETTINGS;
-import com.plzEnterCompanyName.HDQS.io.base.UnicodeReader;
+import com.google.UnicodeReader.java.io.base.UnicodeReader;
 
 import java.io.*;
 import java.util.Objects;

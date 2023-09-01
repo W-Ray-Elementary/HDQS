@@ -18,12 +18,13 @@ public class PATH {
     public static final String ABSOLUTE_ROOT_PATH;
 
     static {
-        File runInIDEA = new File("out\\production\\HDQS\\com.plzEnterCompanyName.HDQS.Launcher.class");
-        File runInCmd = new File("com.plzEnterCompanyName.HDQS.Launcher.class");
+        File runInIDEA = new File("out\\batchBuild\\HDQS\\bin\\HDQS.jar");
+        File runInCmd = new File("bin\\HDQS.jar");
         if (runInIDEA.exists()) {
-            ABSOLUTE_ROOT_PATH = runInIDEA.getAbsolutePath().substring(0, runInIDEA.getAbsolutePath().lastIndexOf('\\'));
+            // TODO: 课间写不完，下次再写
+            ABSOLUTE_ROOT_PATH = runInIDEA.getAbsolutePath().substring(0, runInIDEA.getAbsolutePath().lastIndexOf("\\") - 3);
         } else if (runInCmd.exists()) {
-            ABSOLUTE_ROOT_PATH = runInCmd.getAbsolutePath().substring(0, runInCmd.getAbsolutePath().lastIndexOf('\\'));
+            ABSOLUTE_ROOT_PATH = runInCmd.getAbsolutePath().substring(0, runInCmd.getAbsolutePath().lastIndexOf("\\") - 3);
         } else {
             throw new Error("Unsupported platform! Please reinstall this program.");
         }
