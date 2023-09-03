@@ -11,6 +11,8 @@ import java.util.List;
 
 public class MessageManager {
     private static final String DEFAULT_BLANK_TEXT = "";
+    private static final Info DEFAULT_BLANK_INFO =
+            new Info("", "", false);
     private List<String> title;
     private final List<String> texts;
     private int textIndex;
@@ -21,7 +23,7 @@ public class MessageManager {
 
     public MessageManager() {
         this.title = new ArrayList<>();
-        title.add(DEFAULT_BLANK_TEXT);
+        this.title.add(DEFAULT_BLANK_TEXT);
         this.texts = new ArrayList<>();
         this.textIndex = 0;
         this.infos = new ArrayList<>();
@@ -30,11 +32,12 @@ public class MessageManager {
     }
 
     public Message toMessage() {
-        return new Message(title,
-                           texts,
-                           infos,
-                           operations,
-                           advancedInfo);
+        return new Message(
+                this.title,
+                this.texts,
+                this.infos,
+                this.operations,
+                this.advancedInfo);
     }
 
     public void title(String s) {
@@ -43,10 +46,10 @@ public class MessageManager {
 
     public void title(String s, boolean append) {
         FormatCheck.specialString(s, NULL + NEW_LINE);
-        String org = title.get(0);
+        String org = this.title.get(0);
         if (append) org += s;
         else org = s;
-        title.set(0, org);
+        this.title.set(0, org);
     }
 
     public void text(String s) {
@@ -59,9 +62,9 @@ public class MessageManager {
 
     public void text(String s, int index, boolean append) {
         FormatCheck.specialString(s, NULL);
-        ensureTextIndex(texts, index);
-        if (append) texts.set(index, texts.get(index) + s);
-        else texts.set(index, s);
+        ensureTextIndex(this.texts, index);
+        if (append) this.texts.set(index, this.texts.get(index) + s);
+        else this.texts.set(index, s);
     }
 
     private void ensureTextIndex(List<String> texts, int index) {
@@ -75,14 +78,22 @@ public class MessageManager {
     }
 
     public void info(Info info, int index) {
-        infos.set(index, info);
+        ensureInfoIndex(this.infos, index);
+        this.infos.set(index, info);
     }
 
+    private void ensureInfoIndex(List<Info> infos, int index) {
+        if (index < infos.size()) return;
+        while (!(index < infos.size()))
+            infos.add(DEFAULT_BLANK_INFO);
+    }
+
+
     public void addOperation(Operation ort) {
-        operations.add(ort);
+        this.operations.add(ort);
     }
 
     public void removeOperation(Operation ort) {
-        operations.remove(ort);
+        this.operations.remove(ort);
     }
 }
