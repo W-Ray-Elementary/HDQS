@@ -3,8 +3,8 @@ package com.plzEnterCompanyName.HDQS.io;
 import java.io.File;
 
 /**
- * 专用于解决IDE与cmd中相对路径不同的问题，
  * 功能十分简单的一个工具类。
+ * 专用于解决IDE与cmd中相对路径不同的问题，
  * 领文件对象一定要准备好以下材料，按目录顺序依次叠放
  *  - 文件相对路径
  * 注意文件相对路径要有效，不然你自己惹出麻烦来本类概不负责。
@@ -13,20 +13,17 @@ public class PATH {
 
     /**
      * 类加载时，此变量就被确定
-     * 类加载时，以相对路径寻找"out\\production\\HDQS\\com.plzEnterCompanyName.HDQS.Launcher.class"
-     * 和"com.plzEnterCompanyName.HDQS.Launcher.class"，并以此为基准判断运行环境
-     * 赋予ABSOLUTE_ROOT_PATH相应值
      * <p>注意：{@code ABSOLUTE_ROOT_PATH}<i>的末尾自动带有\\，勿重复添加！</i>
      */
     public static final String ABSOLUTE_ROOT_PATH;
 
     static {
-        File runInIDEA = new File("out\\production\\HDQS\\com.plzEnterCompanyName.HDQS.Launcher.class");
-        File runInCmd = new File("com.plzEnterCompanyName.HDQS.Launcher.class");
+        File runInIDEA = new File("out\\batchBuild\\HDQS\\bin\\HDQS.jar");
+        File runInCmd = new File("bin\\HDQS.jar");
         if (runInIDEA.exists()) {
-            ABSOLUTE_ROOT_PATH = runInIDEA.getAbsolutePath().substring(0, runInIDEA.getAbsolutePath().lastIndexOf('\\'));
+            ABSOLUTE_ROOT_PATH = runInIDEA.getAbsolutePath().substring(0, runInIDEA.getAbsolutePath().lastIndexOf("\\") - 3);
         } else if (runInCmd.exists()) {
-            ABSOLUTE_ROOT_PATH = runInCmd.getAbsolutePath().substring(0, runInCmd.getAbsolutePath().lastIndexOf('\\'));
+            ABSOLUTE_ROOT_PATH = runInCmd.getAbsolutePath().substring(0, runInCmd.getAbsolutePath().lastIndexOf("\\") - 3);
         } else {
             throw new Error("Unsupported platform! Please reinstall this program.");
         }

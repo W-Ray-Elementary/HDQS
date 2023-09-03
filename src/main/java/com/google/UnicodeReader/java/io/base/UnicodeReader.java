@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.plzEnterCompanyName.HDQS.io.base;
+package com.google.UnicodeReader.java.io.base;
 
 import java.io.IOException;
 import java.io.InputStream;
