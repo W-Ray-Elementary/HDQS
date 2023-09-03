@@ -13,7 +13,7 @@ public class MessageManager {
     private static final String DEFAULT_BLANK_TEXT = "";
     private static final Info DEFAULT_BLANK_INFO =
             new Info("", "", false);
-    private List<String> title;
+    private final List<String> title;
     private final List<String> texts;
     private int textIndex;
     private final List<Info> infos;
