@@ -1,0 +1,1 @@
+java -jar bin\HDQS.jar -helloWorld true

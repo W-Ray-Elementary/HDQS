@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/HDQS.iml" filepath="$PROJECT_DIR$/.idea/HDQS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HDQS-Assets/HDQS-Assets.iml" filepath="$PROJECT_DIR$/HDQS-Assets/HDQS-Assets.iml" />
     </modules>
   </component>
 </project>
