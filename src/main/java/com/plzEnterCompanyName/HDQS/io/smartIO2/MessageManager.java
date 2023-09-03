@@ -13,15 +13,19 @@ public class MessageManager {
     private static final String DEFAULT_BLANK_TEXT = "";
     private static final Info DEFAULT_BLANK_INFO =
             new Info("", "", false);
-    private final List<String> title;
-    private final List<String> texts;
+    private List<String> title;
+    private List<String> texts;
     private int textIndex;
-    private final List<Info> infos;
+    private List<Info> infos;
     private int infoIndex;
-    private final List<Operation> operations;
+    private List<Operation> operations;
     private LEXICON advancedInfo;
 
     public MessageManager() {
+        clean();
+    }
+
+    public void clean() {
         this.title = new ArrayList<>();
         this.title.add(DEFAULT_BLANK_TEXT);
         this.texts = new ArrayList<>();

@@ -1,8 +1,6 @@
 package io.smartIO2;
 
-import com.plzEnterCompanyName.HDQS.io.smartIO2.Info;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.MessageManager;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.Operation;
+import com.plzEnterCompanyName.HDQS.io.smartIO2.*;
 
 public class TestMessageManager {
     public static void main(String[] args) {
@@ -24,5 +22,9 @@ public class TestMessageManager {
         mm.text("图片题注：图片题注：为了使你的文档看起来更专业化，Word 提供了页眉、页脚、封面和文本框设计，它们相互补充。");
         mm.info(new Info("小数字", "123", 5));
         mm.info(new Info("大数字", "123456789", 5));
+        mm.addOperation(new Operation("继续", new BlankReceiver()));
+        Message msg = mm.toMessage();
+        if (!"今日新闻".equals(msg.title.get(0)))
+            throw new RuntimeException();
     }
 }

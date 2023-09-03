@@ -5,11 +5,11 @@ import com.plzEnterCompanyName.HDQS.util.LEXICON;
 import java.util.List;
 
 public class Message {
-    List<String> title;
-    List<String> texts;
-    List<Info> infos;
-    List<Operation> operations;
-    LEXICON advancedInfo;
+    public List<String> title;
+    public List<String> texts;
+    public List<Info> infos;
+    public List<Operation> operations;
+    public LEXICON advancedInfo;
 
     protected Message(List<String> title, List<String> texts, List<Info> infos,
                    List<Operation> operations, LEXICON advancedInfo)
