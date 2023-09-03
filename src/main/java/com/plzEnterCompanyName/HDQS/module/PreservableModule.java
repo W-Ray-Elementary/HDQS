@@ -1,8 +1,8 @@
 package com.plzEnterCompanyName.HDQS.module;
 
-import com.plzEnterCompanyName.HDQS.util.LEXICON;
+import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
 public interface PreservableModule {
-    void load(LEXICON l);
-    LEXICON save();
+    void load(Lexicon l);
+    Lexicon save();
 }

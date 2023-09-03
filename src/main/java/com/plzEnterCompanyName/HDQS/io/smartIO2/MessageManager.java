@@ -1,7 +1,9 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
+import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
+import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
-import com.plzEnterCompanyName.HDQS.util.LEXICON;
+import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
 import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NEW_LINE;
 import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NULL;
@@ -19,7 +21,7 @@ public class MessageManager {
     private List<Info> infos;
     private int infoIndex;
     private List<Operation> operations;
-    private LEXICON advancedInfo;
+    private Lexicon advancedInfo;
 
     public MessageManager() {
         clean();

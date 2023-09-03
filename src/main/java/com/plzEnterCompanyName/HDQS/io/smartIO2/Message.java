@@ -1,6 +1,6 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
-import com.plzEnterCompanyName.HDQS.util.LEXICON;
+import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
 import java.util.List;
 
@@ -9,10 +9,10 @@ public class Message {
     public List<String> texts;
     public List<Info> infos;
     public List<Operation> operations;
-    public LEXICON advancedInfo;
+    public Lexicon advancedInfo;
 
     protected Message(List<String> title, List<String> texts, List<Info> infos,
-                   List<Operation> operations, LEXICON advancedInfo)
+                   List<Operation> operations, Lexicon advancedInfo)
     {
         this.title = title;
         this.texts = texts;

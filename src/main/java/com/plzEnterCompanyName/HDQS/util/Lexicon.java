@@ -124,26 +124,14 @@ import java.util.*;
  *
  * @version LEXICON 0.3.0
  */
-public class LEXICON {
+public class Lexicon {
 
     /**
      * {@code LEXICON}之间可能存在父子关系，而{@code LEXICON}的数据又是以键值对的
      * 方式存储。所以需要{@code 子LEXICON}的此变量作为{@code 父LEXICON}的键值对中
      * 的key
      */
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        if (name == null)
-            name = "null";
-        if (name.length() == 0)
-            throw new IllegalArgumentException("zero length String");
-        this.name = name;
-    }
+    private final String name;
 
     /**
      * {@code LEXICON}中的所有键值对集合
@@ -155,11 +143,10 @@ public class LEXICON {
      * @param name 直接作为 Lexicon 对象的 name 属性的值，传入{@code null}时会重新
      *             赋值为"null"
      */
-    public LEXICON(String name) {
-        if (name == null)
-            name = "null";
-        if (name.length() == 0)
-            throw new IllegalArgumentException("zero length String");
+    public Lexicon(String name) {
+        FormatCheck.specialString(name, FormatCheck.NULL +
+                FormatCheck.ZERO_LENGTH +
+                FormatCheck.NEW_LINE);
         this.name = name;
         this.contents = new ArrayList<>();
     }
@@ -169,8 +156,8 @@ public class LEXICON {
      * @param txtF 纯文本文件，文件编码必须与{@link SETTINGS}中{@code ENCODE}相同
      * @return 根据{@code txtF}创建的对象
      */
-    public static List<LEXICON> getInstance(File txtF) {
-        return getInstance(FileAndString.read(txtF));
+    public static List<Lexicon> valueOf(File txtF) {
+        return valueOf(FileAndString.read(txtF));
     }
 
     /**
@@ -178,7 +165,7 @@ public class LEXICON {
      * @return 根据{@code s}创建的对象
      * @param s 方法调用者必须确保此值有效并且符合格式
      */
-    public static List<LEXICON> getInstance(String s) {
+    public static List<Lexicon> valueOf(String s) {
         return read(s);
     }
 
@@ -186,9 +173,9 @@ public class LEXICON {
     * 简单粗暴，从 String s 里面读一个LEXICON出来。
     * 读取，读取，只是不知道注释怎么写
     * */
-    private static List<LEXICON> read(String s) {
+    private static List<Lexicon> read(String s) {
         Store begin = new Store(0);
-        List<LEXICON> returnVal = new ArrayList<>();
+        List<Lexicon> returnVal = new ArrayList<>();
         char c;
         int keyStart = -1;
         int keyLen = -1;
@@ -245,8 +232,8 @@ public class LEXICON {
      * 把字符串转换为Lexicon的核心，begin变量用于处理嵌套
      * 具体格式要求见类注释
      * */
-    private static LEXICON read0(String key, String s, Store begin) {
-        LEXICON returnVal = new LEXICON(key);
+    private static Lexicon read0(String key, String s, Store begin) {
+        Lexicon returnVal = new Lexicon(key);
         char c;
         int keyStart = -1;
         int keyLen = -1;
@@ -368,11 +355,11 @@ public class LEXICON {
      * 向Lexicon对象中增加子Lexicon，你不需要传入key，因为Lexicon带有name
      * 属性来作为key
      */
-    public void add(LEXICON lexicon) {
+    public void add(Lexicon lexicon) {
         Objects.requireNonNull(lexicon);
-        List<LEXICON> allLexicons = this.listOutLexicons();
+        List<Lexicon> allLexicons = this.listOutLexicons();
         allLexicons.add(this);
-        if (LEXICON.contains(allLexicons, lexicon))
+        if (Lexicon.contains(allLexicons, lexicon))
             throw new IllegalContentException();
         contents.add(new Content(lexicon));
     }
@@ -382,7 +369,7 @@ public class LEXICON {
     *     LEXICON中的 value存不存在在一个 LEXICON x，使得x与任意一个 LEXICON
     *     进行 == 逻辑运算时，返回值为 true
     * */
-    private static boolean contains(List<LEXICON> lexicons, LEXICON lexicon) {
+    private static boolean contains(List<Lexicon> lexicons, Lexicon lexicon) {
         Objects.requireNonNull(lexicons);
         Object[] ls = lexicons.toArray();
         if (lexicon == null) {
@@ -467,12 +454,12 @@ public class LEXICON {
     /*
     * 列出所有的Lexicon对象便于contains方法完成它的任务
     * */
-    private List<LEXICON> listOutLexicons() {
-        List<LEXICON> listingOutLexicons = new ArrayList<>();
+    private List<Lexicon> listOutLexicons() {
+        List<Lexicon> listingOutLexicons = new ArrayList<>();
         for (Content content : contents) {
             if (content.isLEXICON) {
-                listingOutLexicons.add((LEXICON)content.value);
-                listingOutLexicons.addAll(((LEXICON)content.value).listOutLexicons());
+                listingOutLexicons.add((Lexicon)content.value);
+                listingOutLexicons.addAll(((Lexicon)content.value).listOutLexicons());
             }
         }
         return listingOutLexicons;
@@ -481,22 +468,15 @@ public class LEXICON {
     /*
     * 按 key 移除元素
     * */
-    public boolean remove(String key) {
-        boolean returnVal = false;
+    public void remove(String key) {
         List<Content> removal = new ArrayList<>();
         for (Content content : contents) {
             if (Objects.equals(key, content.key)) {
                 removal.add(content);
-                returnVal = true;
             }
         }
         contents.removeAll(removal);
-        return returnVal;
     }
-
-    /*
-    * 设定单一元素
-    * */
 
     @Override
     public String toString() {
@@ -521,7 +501,7 @@ public class LEXICON {
         currentLineCount++;
         for (Content content : contents) {
             if (content.isLEXICON) {
-                String[] lexiconStrings = ((LEXICON)content.value).getStrings();
+                String[] lexiconStrings = ((Lexicon)content.value).getStrings();
                 for (String lexiconString : lexiconStrings) {
                     contentStrings[currentLineCount] = "    " + lexiconString;
                     currentLineCount++;
@@ -561,7 +541,7 @@ public class LEXICON {
             this.isLEXICON = false;
         }
 
-        public Content(LEXICON lexicon) {
+        public Content(Lexicon lexicon) {
             this.key = lexicon.name;
             this.value = lexicon;
             this.isLEXICON = true;
@@ -569,7 +549,7 @@ public class LEXICON {
 
         public int lineCount() {
             if (isLEXICON) {
-                return ((LEXICON)value).lineCount();
+                return ((Lexicon)value).lineCount();
             } else {
                 return 1;
             }
