@@ -1,5 +1,7 @@
 package com.plzEnterCompanyName.HDQS.module;
 
+import com.plzEnterCompanyName.HDQS.util.Lexicon;
+
 public interface Module {
-    com.plzEnterCompanyName.HDQS.util.LEXICON algorithm();
+    Lexicon algorithm();
 }
