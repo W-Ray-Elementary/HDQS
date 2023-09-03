@@ -1,3 +1,6 @@
+import io.smartIO2.TestMessageManager;
+import util.TestFormatCheck;
+
 public class TestAll {
     public static void main(String[] args) {
         io.smartIO2.TestSmartIO.main(null);
@@ -5,5 +8,7 @@ public class TestAll {
         io.TestReadJar.main(null);
         util.TestCurve.main(null);
         util.TestLEXICON.main(null);
+        TestFormatCheck.main(null);
+        TestMessageManager.main(null);
     }
 }

@@ -2,6 +2,9 @@ package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 
+import static com.plzEnterCompanyName.HDQS.util.FormatCheck.ZERO_LENGTH;
+import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NEW_LINE;
+import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NULL;
 /**
  * 如果使用本类显示数值，那么最好应该传入整数。
  * 注意，此类仅用于处理显示，不参与计算
@@ -26,6 +29,7 @@ public class Info {
     }
 
     public Info(String name, String value, int width) {
+        FormatCheck.specialString(name, NULL + ZERO_LENGTH + NEW_LINE);
         FormatCheck.intLimit(width, MIN_WIDTH, Integer.MAX_VALUE);
         this.name = name;
         this.value = value;
@@ -66,13 +70,12 @@ public class Info {
      */
     public String getValueString() {
         if (!isInteger) return value;
-        if (value.length() == 0) return "";
+        if (value.isEmpty()) return "";
         FormatCheck.integerString(value, 10);
         if (value.length() <= width) return value;
         // 运行到这说明是数值，而且必须转换
         StringBuilder sb = new StringBuilder();
         int currentDI = 0; // DI: DigitIndex
-        int targetDI = 0;
         sb.append(value.charAt(currentDI++));
         sb.append(POINT);
         for (int i = width - (POINT.length() + 1); i > 0; i--) {

@@ -1,13 +1,17 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
+import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 import com.plzEnterCompanyName.HDQS.util.LEXICON;
+
+import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NEW_LINE;
+import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NULL;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageManager {
     private static final String DEFAULT_BLANK_TEXT = "";
-    private String title;
+    private List<String> title;
     private final List<String> texts;
     private int textIndex;
     private final List<Info> infos;
@@ -16,7 +20,8 @@ public class MessageManager {
     private LEXICON advancedInfo;
 
     public MessageManager() {
-        this.title = DEFAULT_BLANK_TEXT;
+        this.title = new ArrayList<>();
+        title.add(DEFAULT_BLANK_TEXT);
         this.texts = new ArrayList<>();
         this.textIndex = 0;
         this.infos = new ArrayList<>();
@@ -37,8 +42,11 @@ public class MessageManager {
     }
 
     public void title(String s, boolean append) {
-        if (append) title += s;
-        else title = s;
+        FormatCheck.specialString(s, NULL + NEW_LINE);
+        String org = title.get(0);
+        if (append) org += s;
+        else org = s;
+        title.set(0, org);
     }
 
     public void text(String s) {
@@ -50,6 +58,7 @@ public class MessageManager {
     }
 
     public void text(String s, int index, boolean append) {
+        FormatCheck.specialString(s, NULL);
         ensureTextIndex(texts, index);
         if (append) texts.set(index, texts.get(index) + s);
         else texts.set(index, s);

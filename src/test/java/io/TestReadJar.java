@@ -13,7 +13,7 @@ public class TestReadJar {
         TEST_isJarWorking();
         TEST_ReadJar();
         long cost = System.currentTimeMillis() - startTime;
-        System.out.println("io.TestReadJar 的测试成功完成于" + ' ' + cost + ' ' + "ms");
+        System.out.println("com.plzEnterCompanyName.HDQS.io.TestReadJar 的测试成功完成于" + ' ' + cost + ' ' + "ms");
     }
 
     private static void TEST_isJarWorking() {
