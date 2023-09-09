@@ -6,6 +6,7 @@ import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Out;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.PageOutputAble;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.WarnAble;
+import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -28,6 +29,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     name = Tittle
                     titleRetraction = 3
                     titleRetractionChar = 32 // decimal : 32 = binary 00010000 = the ascii code of blank space
+                    isDrawingGameName = true
                 }
                 Layout
                 {
@@ -107,7 +109,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                 """);
     }
 
-    protected static int getCharWidth(char c) {
+    protected static int getWidth(char c) {
         String text = String.valueOf(c);
         Font font = new Font("新宋体", Font.PLAIN, 12);
         BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
@@ -124,6 +126,17 @@ public class Frame implements Out, PageOutputAble, WarnAble {
             width = 1;
         else throw new RuntimeException(String.valueOf(width));
         return width;
+    }
+
+    protected static int getWidth(String s) {
+        FormatCheck.specialString(s,
+                FormatCheck.NULL + FormatCheck.ZERO_LENGTH + FormatCheck.NEW_LINE);
+        char[] chars = s.toCharArray();
+        int returnVal = 0;
+        for (char c : chars) {
+            returnVal += getWidth(c);
+        }
+        return returnVal;
     }
 
     public Frame() {

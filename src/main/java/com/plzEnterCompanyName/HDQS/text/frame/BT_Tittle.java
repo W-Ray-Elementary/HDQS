@@ -11,13 +11,16 @@ public class BT_Tittle extends BlockTypesetter{
 
     public static final int titleRetraction;
     public static final char titleRetractionChar;
+    public static final boolean isDrawingGameName;
     static {
         Lexicon config = Lexicons.orderName(Frame.DEFAULT_CONFIG.read(),
                 "BlockTypesetter", "Tittle");
         String titleRetractionStr = config.getFirst("titleRetraction");
         String titleRetractionCharStr = config.getFirst("titleRetractionChar");
+        String isDrawingWatermarkStr = config.getFirst("isDrawingGameName");
         titleRetraction = Integer.parseInt(titleRetractionStr);
         titleRetractionChar = (char) Integer.parseInt(titleRetractionCharStr);
+        isDrawingGameName = Boolean.parseBoolean(isDrawingWatermarkStr);
     }
 
     @Override
@@ -25,7 +28,7 @@ public class BT_Tittle extends BlockTypesetter{
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
 
         } else {
-
+            throw new UnsupportedOperationException("Title can not execute vertical layout.");
         }
     }
 
