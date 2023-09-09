@@ -1,6 +1,7 @@
 package io.smartIO2;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.*;
+import util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +11,9 @@ public class TestSmartIO {
         long startTime = System.currentTimeMillis();
         TEST_Info();
         TEST_Operation();
-        Test_MessageManager();
         TEST_SmartIO();
         long cost = System.currentTimeMillis() - startTime;
         System.out.println("com.plzEnterCompanyName.HDQS.io.smartIO2 的测试成功完成于" + ' ' + cost + ' ' + "ms");
-    }
-
-    private static void Test_MessageManager() {
-
     }
 
     private static void TEST_SmartIO() {
@@ -58,11 +54,18 @@ public class TestSmartIO {
         if (!pass) {
             throw new RuntimeException("Operation这个类不行");
         }
+        // 测试Operation的toString
+        Utils.EXPECT_TRUE("1探索".equals(spo1.getTip() + spo1.getName()), "Operation的toString不行");
+        Utils.EXPECT_TRUE("2制作".equals(spo2.getTip() + spo2.getName()), "Operation的toString不行");
+        Utils.EXPECT_TRUE("3睡觉".equals(spo3.getTip() + spo3.getName()), "Operation的toString不行");
     }
 
     private static void TEST_Info() {
-        // 测试简单情况（多了）
         Info simpleInfo = new Info("simpleInfo", 57989, 6);
+        // 测试getName
+        if (!"simpleInfo".equals(simpleInfo.getName()))
+            throw new RuntimeException("com.plzEnterCompanyName.HDQS.io.smartIO2.Info无法处理 getName");
+        // 测试简单情况（多了）
         if (!"57989".equals(simpleInfo.getValueString()))
             throw new RuntimeException("com.plzEnterCompanyName.HDQS.io.smartIO2.Info无法处理 简单情况（多了）");
         // 测试简单情况（合适）
@@ -77,13 +80,5 @@ public class TestSmartIO {
         simpleInfo.setWidth(3);
         if (!"5.7e+4".equals(simpleInfo.getValueString()))
             throw new RuntimeException("com.plzEnterCompanyName.HDQS.io.smartIO2.Info无法处理 简单情况（更少）");
-    }
-
-    static class TestAutoPlay implements Out {
-
-        @Override
-        public void out(Message msg) {
-
-        }
     }
 }
