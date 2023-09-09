@@ -11,6 +11,12 @@ public class ConfigureFile {
     public final File cfgFile;
     public final Lexicon defaultValue;
 
+    private String comments = "";
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     public ConfigureFile(File cfgFile, String defaultValue) {
         this.cfgFile = cfgFile;
         this.defaultValue = Lexicon.valueOf(defaultValue).get(0);
@@ -18,7 +24,13 @@ public class ConfigureFile {
 
     public Lexicon read() {
         if (!cfgFile.exists()) {
-            FileAndString.write(cfgFile, String.valueOf(defaultValue), true);
+            String cfgStr = "";
+            if (!comments.isEmpty()) {
+                cfgStr += comments;
+                cfgStr += "\n";
+            }
+            cfgStr += String.valueOf(defaultValue);
+            FileAndString.write(cfgFile, cfgStr, true);
             return defaultValue;
         }
         return Lexicon.valueOf(cfgFile).get(0);

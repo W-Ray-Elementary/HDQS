@@ -55,6 +55,13 @@ public class FileAndString {
     }
 
     /**
+     * 防止有时候脑抽写反了形参
+     */
+    public static void write(String str, File file) {
+        write(file, str, false);
+    }
+
+    /**
      * 写入时请带上你的文件对象和写入内容
      * 注意，本类只负责写入，对文件内容没有知情权，不对文件内容负责！
      * <p>如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！

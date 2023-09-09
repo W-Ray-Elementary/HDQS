@@ -36,10 +36,17 @@ public class Layout {
 
     protected void setType(Message msg) {
         for (Layer layer : layers) {
-
             switch (layer.typesetter.position) {
-                case UP, DOWN -> {}
-                case LEFT, RIGHT -> {}
+                case UP, DOWN -> {
+                    layer.typesetter.setType(msg, widthRemain);
+                    int usage = layer.typesetter.getSecondPosLimit();
+                    heightRemain -= usage;
+                }
+                case LEFT, RIGHT -> {
+                    layer.typesetter.setType(msg, heightRemain);
+                    int usage = layer.typesetter.getSecondPosLimit();
+                    widthRemain -= usage;
+                }
             }
         }
     }
@@ -53,7 +60,8 @@ public class Layout {
             this.position = config.getFirst("position");
             SupportedBT_Position posHandle = convertEnum();
             switch (type) {
-                case "SEPARATE_LINE" -> { typesetter = new BT_SeparateLine(posHandle); }
+                case "SEPARATE_LINE" -> typesetter = new BT_SeparateLine(posHandle);
+                case "TITTLE"        -> typesetter = new BT_Tittle(      posHandle);
                 default ->
                     throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
             }

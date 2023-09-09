@@ -9,7 +9,6 @@ import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 public abstract class BlockTypesetter {
     protected SupportedBT_Position position;
     protected int firstPosLimit;
-    protected int secondPosLimit;
 
     /**
      * 表示BC当前状态的一个量。
@@ -20,14 +19,12 @@ public abstract class BlockTypesetter {
      */
     protected boolean statusFlag;
 
-    protected abstract void setType(Message message);
+    protected abstract void setType(Message message, int firstPosLimit);
 
     protected BlockTypesetter(SupportedBT_Position position) {
         this.position = position;
         this.statusFlag = false;
     }
 
-    protected int getSecondPosLimit() {
-        return secondPosLimit;
-    }
+    protected abstract int getSecondPosLimit();
 }

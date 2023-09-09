@@ -10,7 +10,7 @@ public class BT_SeparateLine extends BlockTypesetter {
     }
 
     @Override
-    protected void setType(Message message) {
+    protected void setType(Message message, int firstPosLimit) {
         statusFlag = true;
     }
 
