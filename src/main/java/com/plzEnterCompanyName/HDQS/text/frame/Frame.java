@@ -9,6 +9,7 @@ import com.plzEnterCompanyName.HDQS.io.smartIO2.WarnAble;
 
 public class Frame implements Out, PageOutputAble, WarnAble {
     private Message currentMsg;
+    private Layout layout;
     public static final String DEFAULT_CONFIG_VALUE =
             """
             Frame
@@ -83,6 +84,15 @@ public class Frame implements Out, PageOutputAble, WarnAble {
             PATH.getFile("settings\\frame"),
             DEFAULT_CONFIG_VALUE
     );
+
+    public Frame() {
+        layout = new Layout(DEFAULT_CONFIG.read());
+    }
+
+    public Frame(Layout layout) {
+        this.layout = layout;
+    }
+
     @Override
     public void out(Message msg) {
         this.currentMsg = msg;

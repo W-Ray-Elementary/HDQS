@@ -11,24 +11,29 @@ import java.util.List;
 public class Layout {
     private final int width;
     private final int height;
-    private final List layers;
+    private final List<Layer> layers;
 
     public Layout(Lexicon config) {
         this.width = Integer.parseInt(config.getFirst("width"));
         this.height = Integer.parseInt(config.getFirst("height"));
-        List<Object> layersCfgObjs = new ArrayList<>(List.of(config.getAll("Layer")));
-        List<Lexicon> layersCfg = new ArrayList<>();
+        List<Object> layersCfgObjs = new ArrayList<>(List.of(((Lexicon)config.getAll("Layout")[0]).getAll("Layer")));
+        List<Lexicon> layersCfgs = new ArrayList<>();
         for (Object layersCfgObj : layersCfgObjs) {
             if (layersCfgObj instanceof Lexicon)
-                layersCfg.add((Lexicon) layersCfgObj);
+                layersCfgs.add((Lexicon) layersCfgObj);
         }
         this.layers = new ArrayList<>();
-
+        for (Lexicon layersCfg : layersCfgs) {
+            layers.add(new Layer(layersCfg));
+        }
     }
 
     static class Layer {
+        private final String type;
+        private final String position;
         public Layer(Lexicon config) {
-
+            this.type = config.getFirst("type");
+            this.position = config.getFirst("position");
         }
     }
 }
