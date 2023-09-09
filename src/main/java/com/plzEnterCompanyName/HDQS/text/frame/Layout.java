@@ -1,5 +1,6 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
+import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
 import java.util.ArrayList;
@@ -10,13 +11,18 @@ import java.util.List;
  */
 public class Layout {
     private final int width;
+    protected int widthRemain;
     private final int height;
+    protected int heightRemain;
     private final List<Layer> layers;
 
     public Layout(Lexicon config) {
         this.width = Integer.parseInt(config.getFirst("width"));
         this.height = Integer.parseInt(config.getFirst("height"));
-        List<Object> layersCfgObjs = new ArrayList<>(List.of(((Lexicon)config.getAll("Layout")[0]).getAll("Layer")));
+        this.widthRemain = this.width;
+        this.heightRemain = this.height;
+        List<Object> layersCfgObjs;
+        layersCfgObjs = new ArrayList<>(List.of(((Lexicon)config.getAll("Layout")[0]).getAll("Layer")));
         List<Lexicon> layersCfgs = new ArrayList<>();
         for (Object layersCfgObj : layersCfgObjs) {
             if (layersCfgObj instanceof Lexicon)
@@ -28,12 +34,42 @@ public class Layout {
         }
     }
 
+    protected void setType(Message msg) {
+        for (Layer layer : layers) {
+
+            switch (layer.typesetter.position) {
+                case UP, DOWN -> {}
+                case LEFT, RIGHT -> {}
+            }
+        }
+    }
+
     static class Layer {
-        private final String type;
-        private final String position;
+        protected final String type;
+        protected final String position;
+        protected final BlockTypesetter typesetter;
         public Layer(Lexicon config) {
             this.type = config.getFirst("type");
             this.position = config.getFirst("position");
+            SupportedBT_Position posHandle = convertEnum();
+            switch (type) {
+                case "SEPARATE_LINE" -> { typesetter = new BT_SeparateLine(posHandle); }
+                default ->
+                    throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
+            }
+        }
+
+        private SupportedBT_Position convertEnum() {
+            SupportedBT_Position posHandle;
+            switch (position) {
+                case "RIGHT" -> { posHandle = SupportedBT_Position.RIGHT; }
+                case "UP"    -> { posHandle = SupportedBT_Position.UP;    }
+                case "LEFT"  -> { posHandle = SupportedBT_Position.LEFT;  }
+                case "DOWN"  -> { posHandle = SupportedBT_Position.DOWN;  }
+                default ->
+                    throw new UnsupportedOperationException("Unsupported BC_Position: " + position);
+            }
+            return posHandle;
         }
     }
 }

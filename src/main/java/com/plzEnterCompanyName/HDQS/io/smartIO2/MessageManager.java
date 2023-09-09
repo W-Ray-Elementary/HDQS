@@ -35,6 +35,7 @@ public class MessageManager {
         this.infos = new ArrayList<>();
         this.infoIndex = 0;
         this.operations = new ArrayList<>();
+        this.operationIndex = 1;
     }
 
     public Message toMessage() {
@@ -79,6 +80,10 @@ public class MessageManager {
             texts.add(DEFAULT_BLANK_TEXT);
     }
 
+    public void info(String str) {
+        info(new Info(str, "", false));
+    }
+
     public void info(Info info) {
         info(info, infoIndex++);
     }
@@ -94,6 +99,11 @@ public class MessageManager {
             infos.add(DEFAULT_BLANK_INFO);
     }
 
+    private int operationIndex;
+
+    public void operation(String s) {
+        this.operations.add(new Operation(s, new IntegerReceiver(operationIndex++)));
+    }
 
     public void addOperation(Operation ort) {
         this.operations.add(ort);

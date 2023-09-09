@@ -21,67 +21,67 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     Layer
                     {
                         type = SEPARATE_LINE
-                        position = right
+                        position = RIGHT
                     }
                     Layer
                     {
                         type = SEPARATE_LINE
-                        position = up
+                        position = UP
                     }
                     Layer
                     {
                         type = SEPARATE_LINE
-                        position = left
+                        position = LEFT
                     }
                     Layer
                     {
                         type = SEPARATE_LINE
-                        position = down
+                        position = DOWN
                     }
                     Layer
                     {
                         type = TITTLE
-                        position = up
+                        position = UP
                     }
                     Layer
                     {
                         type = SEPARATE_LINE
-                        position = up
+                        position = UP
                     }
                     Layer
                     {
                         type = INFO
-                        position = right
+                        position = RIGHT
                     }
                     Layer
                     {
                         type = SEPARATE_LINE
-                        position = right
+                        position = RIGHT
                     }
                     Layer
                     {
                         type = OPERATION
-                        position = down
+                        position = DOWN
                     }
                     Layer
                     {
                         type = SEPARATE_LINE
-                        position = down
+                        position = DOWN
                     }
                     Layer
                     {
                         type = WARNING
-                        position = down
+                        position = DOWN
                     }
                     Layer
                     {
                         type = TEXT
-                        position = up
+                        position = UP
                     }
                 }
             }""";
     public static final ConfigureFile DEFAULT_CONFIG = new ConfigureFile(
-            PATH.getFile("settings\\frame"),
+            PATH.getFile("settings\\frame.cfg"),
             DEFAULT_CONFIG_VALUE
     );
 
@@ -104,7 +104,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     }
 
     @Override
-    public void warn() {
+    public void warn(String WarnStr) {
 
     }
 }

@@ -51,6 +51,25 @@ public class FileAndString {
      * @param str 会写到文件中的内容
      */
     public static void write(File file, String str) {
+        write(file, str, false);
+    }
+
+    /**
+     * 写入时请带上你的文件对象和写入内容
+     * 注意，本类只负责写入，对文件内容没有知情权，不对文件内容负责！
+     * <p>如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
+     * @param file 建议从{@link com.plzEnterCompanyName.HDQS.io.PATH}获取
+     * @param str 会写到文件中的内容
+     */
+    public static void write(File file, String str, boolean autoCreateFile) {
+        if (!file.exists() && autoCreateFile) {
+            try {
+                if (!file.createNewFile())
+                    throw new RuntimeException("Unexpected exception, please try to solve file writing problem.");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         OutputStreamWriter osw = null;
         try {
             osw = new OutputStreamWriter(new FileOutputStream(file), SETTINGS.ENCODE);

@@ -17,8 +17,10 @@ public class ConfigureFile {
     }
 
     public Lexicon read() {
-        if (!cfgFile.exists())
+        if (!cfgFile.exists()) {
+            FileAndString.write(cfgFile, String.valueOf(defaultValue), true);
             return defaultValue;
+        }
         return Lexicon.valueOf(cfgFile).get(0);
     }
 }
