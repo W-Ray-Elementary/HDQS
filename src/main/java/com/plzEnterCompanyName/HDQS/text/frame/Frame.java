@@ -47,7 +47,8 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     singleInfoWidthMin = 29
                     singleInfoWidthMax = 40
                     horizontalSpacing = 4
-                    defaultTabStops = 8
+                    tabStops = 8
+                    infoValWidth = 8
                     alignment = LEFT
                     blankRow = AUTO
                 }

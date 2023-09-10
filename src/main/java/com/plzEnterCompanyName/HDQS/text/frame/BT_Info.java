@@ -6,6 +6,7 @@ import com.plzEnterCompanyName.HDQS.util.Lexicon;
 import com.plzEnterCompanyName.HDQS.util.Lexicons;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BT_Info extends BlockTypesetter {
@@ -20,7 +21,8 @@ public class BT_Info extends BlockTypesetter {
     public static final int MIN_SINGLE_INFO_WIDTH;
     public static final int MAX_SINGLE_INFO_WIDTH;
     public static final int HORIZONTAL_SPACING;
-    public static final int DEFAULT_TAB_STOPS;
+    public static final int TAB_STOPS;
+    public static final int INFO_VAL_WIDTH;
     public static final Aliment ALIMENT;
     public static final BlankRow BLANK_ROW;
     static {
@@ -33,7 +35,8 @@ public class BT_Info extends BlockTypesetter {
         String singleInfoWidthMinStr = config.getFirst("singleInfoWidthMin");
         String singleInfoWidthMaxStr = config.getFirst("singleInfoWidthMax");
         String horizontalSpacingStr  = config.getFirst("horizontalSpacing" );
-        String defaultTabStopsStr    = config.getFirst("defaultTabStops"   );
+        String tabStopsStr           = config.getFirst("tabStops"          );
+        String infoValWidthStr       = config.getFirst("infoValWidth"      );
         String alignmentStr          = config.getFirst("alignment"         );
         String blankRowStr           = config.getFirst("blankRow"          );
         TOTAL_WIDTH           =        Integer.parseInt(totalWidthStr        );
@@ -43,7 +46,8 @@ public class BT_Info extends BlockTypesetter {
         MIN_SINGLE_INFO_WIDTH =        Integer.parseInt(singleInfoWidthMinStr);
         MAX_SINGLE_INFO_WIDTH =        Integer.parseInt(singleInfoWidthMaxStr);
         HORIZONTAL_SPACING    =        Integer.parseInt(horizontalSpacingStr );
-        DEFAULT_TAB_STOPS     =        Integer.parseInt(defaultTabStopsStr   );
+        TAB_STOPS             =        Integer.parseInt(tabStopsStr          );
+        INFO_VAL_WIDTH        =        Integer.parseInt(infoValWidthStr      );
         switch (alignmentStr) {
             case "LEFT"  -> ALIMENT = Aliment.LEFT ;
             case "RIGHT" -> ALIMENT = Aliment.RIGHT;
@@ -62,11 +66,17 @@ public class BT_Info extends BlockTypesetter {
 
     @Override
     protected void setType(Message message, int firstPosLimit) {
+        int rW = Frame.getWidth(String.valueOf(RETRACTION_CHAR).repeat(RETRACTION));
         List<String> effectiveLines = new ArrayList<>();
+        int tasksRemain = message.infos.size();
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
-            int[] placeInfo = tryToPlace(firstPosLimit
-                    - Frame.getWidth(String.valueOf(RETRACTION_CHAR).repeat(RETRACTION))
-            );
+            int[] placeInfo = tryToPlace(firstPosLimit - rW);
+            lines : for (int l = 0; l <= TOTAL_HEIGHT; l++) {
+                Iterator<Info> it = message.infos.iterator();
+                while (it.hasNext()) {
+                    Info info = it.next();
+                }
+            }
         } else {
 
         }
@@ -98,8 +108,6 @@ public class BT_Info extends BlockTypesetter {
                             i,
                             MAX_SINGLE_INFO_WIDTH,
                             maxTotalWidth - i* MAX_SINGLE_INFO_WIDTH - (--i)*HORIZONTAL_SPACING
-                                    + i
-                                    // 这个“+ i”可能看起来很迷惑，但请不要删除，此程序依靠它运行。
                     };
             }
         }
@@ -110,23 +118,28 @@ public class BT_Info extends BlockTypesetter {
         if (info == null) return String.valueOf(' ').repeat(availableWidth);
         StringBuilder sb = new StringBuilder();
         setType : {
-            if (info.getValueString().isEmpty()) {
+            if (info.getValueString(INFO_VAL_WIDTH).isEmpty()) {
                 int w = Frame.getWidth(info.getName());
                 if (availableWidth < w) break setType;
                 availableWidth -= w;
                 sb.append(info.getName());
             }
+
         }
         sb.append(" ".repeat(Math.max(0, availableWidth)));
         return sb.toString();
+    }
+
+    public static void main(String[] args) {
+
     }
 
     @Override
     protected int getSecondPosLimit() {
         if (isTyped) {
             isTyped = false;
-            return  (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) ?
-                    TOTAL_HEIGHT : TOTAL_WIDTH;
+            return -1; // (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) ?
+                       // TOTAL_HEIGHT : TOTAL_WIDTH;
         }
         else throw new RuntimeException(untypedMsg);
     }

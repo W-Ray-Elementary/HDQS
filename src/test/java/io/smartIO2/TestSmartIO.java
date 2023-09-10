@@ -66,19 +66,19 @@ public class TestSmartIO {
         if (!"simpleInfo".equals(simpleInfo.getName()))
             throw new RuntimeException("com.plzEnterCompanyName.HDQS.io.smartIO2.Info无法处理 getName");
         // 测试简单情况（多了）
-        if (!"57989".equals(simpleInfo.getValueString()))
+        if (!"57989".equals(simpleInfo.getValueString(6)))
             throw new RuntimeException("com.plzEnterCompanyName.HDQS.io.smartIO2.Info无法处理 简单情况（多了）");
         // 测试简单情况（合适）
         simpleInfo.setWidth(5);
-        if (!"57989".equals(simpleInfo.getValueString()))
+        if (!"57989".equals(simpleInfo.getValueString(5)))
             throw new RuntimeException("com.plzEnterCompanyName.HDQS.io.smartIO2.Info无法处理 简单情况（合适）");
         // 测试简单情况（少了）
         simpleInfo.setWidth(4);
-        if (!"5.79e+4".equals(simpleInfo.getValueString()))
+        if (!"5.79e+4".equals(simpleInfo.getValueString(4)))
             throw new RuntimeException("com.plzEnterCompanyName.HDQS.io.smartIO2.Info无法处理 简单情况（少了）");
         // 测试简单情况（更少）
         simpleInfo.setWidth(3);
-        if (!"5.7e+4".equals(simpleInfo.getValueString()))
+        if (!"5.7e+4".equals(simpleInfo.getValueString(3)))
             throw new RuntimeException("com.plzEnterCompanyName.HDQS.io.smartIO2.Info无法处理 简单情况（更少）");
     }
 }

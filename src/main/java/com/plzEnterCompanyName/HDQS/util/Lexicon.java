@@ -122,7 +122,6 @@ import java.util.*;
  * {@code LEXICON}中的“键值对”实际上放在一个List集合中（这何尝不是一种......）。
  * 这可能会在未来造成问题，需要修改
  *
- * @version LEXICON 0.3.0
  */
 public class Lexicon {
 
