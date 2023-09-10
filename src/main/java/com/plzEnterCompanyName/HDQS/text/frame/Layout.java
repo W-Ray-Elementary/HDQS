@@ -62,6 +62,7 @@ public class Layout {
             switch (type) {
                 case "SEPARATE_LINE" -> typesetter = new BT_SeparateLine(posHandle);
                 case "TITTLE"        -> typesetter = new BT_Tittle(      posHandle);
+                case "INFO"          -> typesetter = new BT_Info(        posHandle);
                 default ->
                     throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
             }

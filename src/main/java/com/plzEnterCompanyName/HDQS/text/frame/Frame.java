@@ -27,9 +27,26 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                 BlockTypesetter
                 {
                     name = Tittle
-                    titleRetraction = 3
-                    titleRetractionChar = 32 // decimal : 32 = binary 00010000 = the ascii code of blank space
+                    retraction = 3
+                    retractionChar = 32 // decimal : 32 = binary 00010000 = the ascii code
+                                        // of blank space
                     isDrawingGameName = true
+                }
+                BlockTypesetter
+                {
+                    name = Info
+                    totalWidth = 45 // The max screen space that is available. Most of the
+                                    // time, Info will not take up so much screen space.
+                    totalHeight = 9 // If the position of Info that defined by Layout is UP
+                                    // or DOWN, this setting value "totalHeight" will be
+                                    // took into consideration. Otherwise Info will
+                                    // consider "totalWidth"
+                    singleInfoWidthMin = 29
+                    singleInfoWidthMax = 40
+                    horizontalSpacing = 4
+                    defaultTabStops = 8
+                    alignment = LEFT
+                    blankRow = AUTO
                 }
                 Layout
                 {
@@ -116,10 +133,10 @@ public class Frame implements Out, PageOutputAble, WarnAble {
         Graphics g = image.getGraphics();
         FontMetrics metrics = g.getFontMetrics(font);
         int width = metrics.stringWidth(text);
-        if (width == 6)
-            width = 1;
-        else if (width == 12)
+        if (width == 12)
             width = 2;
+        else if (width == 6)
+            width = 1;
         else if (width == 0)
             width = 1;
         else if (width == 24)

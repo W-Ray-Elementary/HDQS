@@ -11,12 +11,21 @@ public class BT_SeparateLine extends BlockTypesetter {
 
     @Override
     protected void setType(Message message, int firstPosLimit) {
-        statusFlag = true;
+        isTyped = true;
     }
 
     @Override
     protected int getSecondPosLimit() {
-        statusFlag = false;
-        return 1;
+        if (isTyped) {
+            isTyped = false;
+            return 1;
+        }
+        else throw new RuntimeException(untypedMsg);
+    }
+
+    @Override
+    protected String getCache() {
+        return  (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) ?
+                "-" : "|";
     }
 }
