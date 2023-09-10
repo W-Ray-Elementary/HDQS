@@ -15,11 +15,11 @@ public class BT_Tittle extends BlockTypesetter{
     static {
         Lexicon config = Lexicons.orderName(Frame.DEFAULT_CONFIG.read(),
                 "BlockTypesetter", "Tittle");
-        String titleRetractionStr = config.getFirst("retraction");
-        String titleRetractionCharStr = config.getFirst("retractionChar");
+        String retractionStr         = config.getFirst("retraction"       );
+        String retractionCharStr     = config.getFirst("retractionChar"   );
         String isDrawingWatermarkStr = config.getFirst("isDrawingGameName");
-        RETRACTION = Integer.parseInt(titleRetractionStr);
-        RETRACTION_CHAR = (char) Integer.parseInt(titleRetractionCharStr);
+        RETRACTION           = Integer.parseInt(retractionStr            );
+        RETRACTION_CHAR      = (char) Integer.parseInt(retractionCharStr );
         IS_DRAWING_GAME_NAME = Boolean.parseBoolean(isDrawingWatermarkStr);
     }
 

@@ -41,6 +41,9 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                                     // or DOWN, this setting value "totalHeight" will be
                                     // took into consideration. Otherwise Info will
                                     // consider "totalWidth"
+                    retraction = 3
+                    retractionChar = 32 // decimal : 32 = binary 00010000 = the ascii code
+                                        // of blank space
                     singleInfoWidthMin = 29
                     singleInfoWidthMax = 40
                     horizontalSpacing = 4
