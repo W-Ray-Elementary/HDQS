@@ -56,62 +56,62 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                 {
                     Layer
                     {
-                        type = SEPARATE_LINE
+                        type = SeparateLine
                         position = RIGHT
                     }
                     Layer
                     {
-                        type = SEPARATE_LINE
+                        type = SeparateLine
                         position = UP
                     }
                     Layer
                     {
-                        type = SEPARATE_LINE
+                        type = SeparateLine
                         position = LEFT
                     }
                     Layer
                     {
-                        type = SEPARATE_LINE
+                        type = SeparateLine
                         position = DOWN
                     }
                     Layer
                     {
-                        type = TITTLE
+                        type = Tittle
                         position = UP
                     }
                     Layer
                     {
-                        type = SEPARATE_LINE
+                        type = SeparateLine
                         position = UP
                     }
                     Layer
                     {
-                        type = INFO
+                        type = Info
                         position = RIGHT
                     }
                     Layer
                     {
-                        type = SEPARATE_LINE
+                        type = SeparateLine
                         position = RIGHT
                     }
                     Layer
                     {
-                        type = OPERATION
+                        type = Operation
                         position = DOWN
                     }
                     Layer
                     {
-                        type = SEPARATE_LINE
+                        type = SeparateLine
                         position = DOWN
                     }
                     Layer
                     {
-                        type = WARNING
+                        type = Warning
                         position = DOWN
                     }
                     Layer
                     {
-                        type = TEXT
+                        type = Text
                         position = UP
                     }
                 }
@@ -130,6 +130,10 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                 """);
     }
 
+    /**
+     * 获取一个字符的显示宽度
+     * @return 宽度以int计，1代表单个西文字符2代表单个中文字符
+     */
     protected static int getWidth(char c) {
         String text = String.valueOf(c);
         Font font = new Font("新宋体", Font.PLAIN, 12);
@@ -149,6 +153,13 @@ public class Frame implements Out, PageOutputAble, WarnAble {
         return width;
     }
 
+    /**
+     * 获取该字符串的显示宽度，使用了{@link Frame#getWidth(char c)}
+     * @param s 要测量宽度的字符串
+     * @return 宽度以int计，输出该字符串每个字符宽度的总和，1代表单个西文字符2代表单个中文字符
+     * @throws IllegalArgumentException 当字符串是{@code null}时抛出此异常，当字符串长度
+     *         为零时抛出此异常，当字符串包含换行符时抛出此异常
+     */
     protected static int getWidth(String s) {
         FormatCheck.specialString(s,
                 FormatCheck.NULL + FormatCheck.ZERO_LENGTH + FormatCheck.NEW_LINE);
@@ -158,6 +169,46 @@ public class Frame implements Out, PageOutputAble, WarnAble {
             returnVal += getWidth(c);
         }
         return returnVal;
+    }
+
+    /**
+     * 不断重复字符串，直到达到指定的宽度，若遇到无法整除的中文，会自动添加空格
+     * <p>例如，该方法{@code repeatW("abc", 7)}会返回{@code "abcabca"}，
+     * 而{@code repeatW("ab稀滴", 11)}会返回{@code "ab稀滴ab稀 "}.在尾部添加空格以满足宽度要求。
+     * @param s 被重复的字符串
+     * @param width 要达到的宽度
+     * @return 处理好的字符串
+     * @throws IllegalArgumentException 当字符串长度为零时抛出此异常，
+     *         当字符串包含换行符时抛出此异常
+     */
+    protected static String repeatW(String s, int width) {
+        if (s == null) s = "null";
+        FormatCheck.specialString(s,
+                FormatCheck.NULL + FormatCheck.ZERO_LENGTH + FormatCheck.NEW_LINE);
+        FormatCheck.intLimit(width, 1, Integer.MAX_VALUE);
+        StringBuilder sb = new StringBuilder();
+        char[] c = s.toCharArray();
+        int index = 0;
+        while (true) {
+            if (width == 0) break;
+            if (width == 1) {
+                if (getWidth(c[index]) == 1) {
+                    sb.append(c[index]);
+                }
+                if (getWidth(c[index]) == 2) {
+                    sb.append(' ');
+                }
+                break;
+            }
+            sb.append(c[index]);
+            width -= getWidth(c[index]);
+            if (index+1 == c.length) {
+                index = 0;
+            } else {
+                index++;
+            }
+        }
+        return sb.toString();
     }
 
     public Frame() {

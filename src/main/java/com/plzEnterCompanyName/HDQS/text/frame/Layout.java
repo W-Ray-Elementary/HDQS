@@ -2,6 +2,7 @@ package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.util.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.Lexicons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,12 @@ public class Layout {
     private final int height;
     protected int heightRemain;
     private final List<Layer> layers;
+    protected List<Lexicon> BT_GlobalConfigs;
 
     public Layout(Lexicon config) {
         this.width = Integer.parseInt(config.getFirst("width"));
         this.height = Integer.parseInt(config.getFirst("height"));
+        this.BT_GlobalConfigs = Lexicons.listOut(config, "BlockTypesetter");
         this.widthRemain = this.width;
         this.heightRemain = this.height;
         List<Object> layersCfgObjs;
@@ -30,7 +33,7 @@ public class Layout {
         }
         this.layers = new ArrayList<>();
         for (Lexicon layersCfg : layersCfgs) {
-            layers.add(new Layer(layersCfg));
+            layers.add(new Layer(layersCfg, BT_GlobalConfigs));
         }
     }
 
@@ -55,17 +58,41 @@ public class Layout {
         protected final String type;
         protected final String position;
         protected final BlockTypesetter typesetter;
-        public Layer(Lexicon config) {
-            this.type = config.getFirst("type");
-            this.position = config.getFirst("position");
+        public Layer(Lexicon layerConfig, List<Lexicon> bTConfigs) {
+            this.type = layerConfig.getFirst("type");
+            this.position = layerConfig.getFirst("position");
+            List<Object> contentsObjs = new ArrayList<>(List.of(layerConfig.getAll("", true)));
+            List<Lexicon> ls = new ArrayList<>();
+            for (Object contentObj : contentsObjs) {
+                if (contentObj instanceof Lexicon l) {
+                    ls.add(l);
+                }
+            }
             SupportedBT_Position posHandle = convertEnum();
             switch (type) {
-                case "SEPARATE_LINE" -> typesetter = new BT_SeparateLine(posHandle);
-                case "TITTLE"        -> typesetter = new BT_Tittle(      posHandle);
-                case "INFO"          -> typesetter = new BT_Info(        posHandle);
+                case "SeparateLine" -> typesetter = new BT_SeparateLine(
+                        posHandle,
+                        priority(ls, bTConfigs, "BlockTypesetter", "SeparateLine"));
+                case "Tittle"        -> typesetter = new BT_Tittle(
+                        posHandle,
+                        priority(ls, bTConfigs, "BlockTypesetter", "Tittle"));
+                case "Info"          -> typesetter = new BT_Info(
+                        posHandle,
+                        priority(ls, bTConfigs, "BlockTypesetter", "Info"));
                 default ->
                     throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
             }
+        }
+
+        private static Lexicon priority(
+                List<Lexicon> first,
+                List<Lexicon> second,
+                String moduleType,
+                String name)
+        {
+            Lexicon firstContent = Lexicons.orderName(first, moduleType, name);
+            return firstContent == null ?
+                    Lexicons.strictOrderName(second, moduleType, name) : firstContent;
         }
 
         private SupportedBT_Position convertEnum() {

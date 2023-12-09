@@ -13,7 +13,7 @@ public class TestLEXICON {
         long startTime = System.currentTimeMillis();
         TEST_LEXICON();
         long cost = System.currentTimeMillis() - startTime;
-        System.out.println("com.plzEnterCompanyName.HDQS.util.LEXICON 的测试成功完成于" + ' ' + cost + ' ' + "ms");
+        System.out.println("com.plzEnterCompanyName.HDQS.util.Lexicon 的测试成功完成于" + ' ' + cost + ' ' + "ms");
     }
 
     public static void BenchMark() {

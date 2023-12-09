@@ -5,16 +5,8 @@ import com.plzEnterCompanyName.HDQS.util.Lexicon;
 import com.plzEnterCompanyName.HDQS.util.Lexicons;
 
 public class BT_Tittle extends BlockTypesetter{
-    protected BT_Tittle(SupportedBT_Position position) {
+    protected BT_Tittle(SupportedBT_Position position, Lexicon config) {
         super(position);
-    }
-
-    public static final int RETRACTION;
-    public static final char RETRACTION_CHAR;
-    public static final boolean IS_DRAWING_GAME_NAME;
-    static {
-        Lexicon config = Lexicons.orderName(Frame.DEFAULT_CONFIG.read(),
-                "BlockTypesetter", "Tittle");
         String retractionStr         = config.getFirst("retraction"       );
         String retractionCharStr     = config.getFirst("retractionChar"   );
         String isDrawingWatermarkStr = config.getFirst("isDrawingGameName");
@@ -22,6 +14,20 @@ public class BT_Tittle extends BlockTypesetter{
         RETRACTION_CHAR      = (char) Integer.parseInt(retractionCharStr );
         IS_DRAWING_GAME_NAME = Boolean.parseBoolean(isDrawingWatermarkStr);
     }
+
+    /**
+     * 要缩进几个字符，该数值会将RETRACTION_CHAR代表的字符重复RETRACTION次后
+     * 加在开头的地方。
+     */
+    protected final int RETRACTION;
+    /**
+     * 缩进字符,RETRACTION_CHAR重复RETRACTION次后加在开头的地方。
+     */
+    protected final char RETRACTION_CHAR;
+    /**
+     * 是否绘制游戏名，默认状态下游戏名字右对齐
+     */
+    protected final boolean IS_DRAWING_GAME_NAME;
 
     @Override
     protected void setType(Message message, int firstPosLimit) {

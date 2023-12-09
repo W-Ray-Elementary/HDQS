@@ -1,11 +1,12 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
+import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
 public class BT_SeparateLine extends BlockTypesetter {
     protected SupportedBT_Position position;
 
-    public BT_SeparateLine(SupportedBT_Position position) {
+    public BT_SeparateLine(SupportedBT_Position position, Lexicon config) {
         super(position);
     }
 
