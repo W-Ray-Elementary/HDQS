@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class BT_Info extends BlockTypesetter {
 
-    protected SupportedBT_Position position;
-
     /**
      * <i>当且仅当position为LEFT, RIGHT时，TOTAL_WIDTH有效</i>
      *
@@ -200,23 +198,18 @@ public class BT_Info extends BlockTypesetter {
     }
 
     @Override
-    protected void setType(Message message, int firstPosLimit) {
-        int rW = Frame.getWidth(String.valueOf(RETRACTION_CHAR).repeat(RETRACTION));
-        List<String> effectiveLines = new ArrayList<>();
-        int tasksRemain = message.infos.size();
-        if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
-            int[] placeInfo = tryToPlace(firstPosLimit - rW);
-            lines : for (int l = 0; l <= TOTAL_HEIGHT; l++) {
-                Iterator<Info> it = message.infos.iterator();
-                while (it.hasNext()) {
-                    Info info = it.next();
-                }
-            }
-        } else {
-
-        }
-        isTyped = true;
+    protected int setType(Message message, int posLimit) {
+        String $ = String.valueOf('$').repeat(TOTAL_WIDTH);
+        if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN)
+            cache = new String[TOTAL_HEIGHT];
+        else
+            cache = new String[posLimit];
+        Arrays.fill(cache, $);
         cacheIndex = 0;
+        return switch (position) {
+            case UP, DOWN -> TOTAL_HEIGHT;
+            case LEFT, RIGHT -> TOTAL_WIDTH;
+        };
     }
     /**
      * 便捷地计算一下，对于当前的可用显示宽度，屏幕上可以放得下几栏info
@@ -250,16 +243,6 @@ public class BT_Info extends BlockTypesetter {
         }
         sb.append(" ".repeat(Math.max(0, availableWidth)));
         return sb.toString();
-    }
-
-    @Override
-    protected int getSecondPosLimit() {
-        if (isTyped) {
-            isTyped = false;
-            return -1; // (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) ?
-                       // TOTAL_HEIGHT : TOTAL_WIDTH;
-        }
-        else throw new RuntimeException(untypedMsg);
     }
 
     @Override

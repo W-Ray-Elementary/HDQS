@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 public class Frame implements Out, PageOutputAble, WarnAble {
     private Message currentMsg;
     private Layout layout;
+    public static final String DEFAULT_CONFIG__FILE_PATH = "settings\\frame.cfg";
     private static final String DEFAULT_CONFIG_VALUE =
             """
             Frame
@@ -31,13 +32,14 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     retractionChar = 32 // decimal : 32 = binary 00010000 = the ascii code
                                         // of blank space
                     isDrawingGameName = true
+                    gameName = [未定义 undefined]
                 }
                 BlockTypesetter
                 {
                     name = Info
                     totalWidth = 45 // The max screen space that is available. Most of the
                                     // time, Info will not take up so much screen space.
-                    totalHeight = 9 // If the position of Info that defined by Layout is UP
+                    totalHeight = 5 // If the position of Info that defined by Layout is UP
                                     // or DOWN, this setting value "totalHeight" will be
                                     // took into consideration. Otherwise Info will
                                     // consider "totalWidth"
@@ -51,6 +53,18 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     infoValWidth = 8
                     alignment = LEFT
                     blankRow = AUTO
+                }
+                BlockTypesetter
+                {
+                    name = Operation
+                }
+                BlockTypesetter
+                {
+                    name = Warning
+                }
+                BlockTypesetter
+                {
+                    name = Text
                 }
                 Layout
                 {
@@ -120,7 +134,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
 
     static {
         DEFAULT_CONFIG = new ConfigureFile(
-                PATH.getFile("settings\\frame.cfg"),
+                PATH.getFile(DEFAULT_CONFIG__FILE_PATH),
                 DEFAULT_CONFIG_VALUE
         );
         DEFAULT_CONFIG.setComments("""
@@ -222,6 +236,8 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     @Override
     public void out(Message msg) {
         this.currentMsg = msg;
+        String typed = layout.setType(msg);
+        System.out.println(typed);
     }
 
     @Override

@@ -3,25 +3,26 @@ package com.plzEnterCompanyName.HDQS.text.frame;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
+import java.util.Arrays;
+
 public class BT_SeparateLine extends BlockTypesetter {
-    protected SupportedBT_Position position;
+    String[] cache;
+    private int cacheIndex;
 
     public BT_SeparateLine(SupportedBT_Position position, Lexicon config) {
         super(position);
     }
 
     @Override
-    protected void setType(Message message, int firstPosLimit) {
-        isTyped = true;
-    }
-
-    @Override
-    protected int getSecondPosLimit() {
-        if (isTyped) {
-            isTyped = false;
-            return 1;
+    protected int setType(Message message, int posLimit) {
+        switch (position) {
+            case UP  , DOWN  -> cache = new String[]{ String.valueOf('-').repeat(posLimit) };
+            case LEFT, RIGHT -> {
+                cache = new String[posLimit];
+                Arrays.fill(cache, String.valueOf('|'));
+            }
         }
-        else throw new RuntimeException(untypedMsg);
+        return 1;
     }
 
     @Override

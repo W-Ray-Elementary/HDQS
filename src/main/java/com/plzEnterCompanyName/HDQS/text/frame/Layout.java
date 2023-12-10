@@ -5,6 +5,7 @@ import com.plzEnterCompanyName.HDQS.util.Lexicon;
 import com.plzEnterCompanyName.HDQS.util.Lexicons;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,8 +23,8 @@ public class Layout {
         this.width = Integer.parseInt(config.getFirst("width"));
         this.height = Integer.parseInt(config.getFirst("height"));
         this.BT_GlobalConfigs = Lexicons.listOut(config, "BlockTypesetter");
-        this.widthRemain = this.width;
-        this.heightRemain = this.height;
+        reset();
+        // \begin{} 这里的代码与Lexicons中重复，但是能run就别改
         List<Object> layersCfgObjs;
         layersCfgObjs = new ArrayList<>(List.of(((Lexicon)config.getAll("Layout")[0]).getAll("Layer")));
         List<Lexicon> layersCfgs = new ArrayList<>();
@@ -31,30 +32,56 @@ public class Layout {
             if (layersCfgObj instanceof Lexicon)
                 layersCfgs.add((Lexicon) layersCfgObj);
         }
+        // \end{} 这里的代码与Lexicons中重复，但是能run就别改
         this.layers = new ArrayList<>();
         for (Lexicon layersCfg : layersCfgs) {
             layers.add(new Layer(layersCfg, BT_GlobalConfigs));
         }
     }
 
-    protected void setType(Message msg) {
-        for (Layer layer : layers) {
+    protected String setType(Message msg) {
+        for (int i = 0; i < layers.size() - 1; i++) {
+            Layer layer = layers.get(i);
             switch (layer.typesetter.position) {
                 case UP, DOWN -> {
-                    layer.typesetter.setType(msg, widthRemain);
-                    int usage = layer.typesetter.getSecondPosLimit();
+                    int usage = layer.typesetter.setType(msg, widthRemain);
                     heightRemain -= usage;
                 }
                 case LEFT, RIGHT -> {
-                    layer.typesetter.setType(msg, heightRemain);
-                    int usage = layer.typesetter.getSecondPosLimit();
+                    int usage = layer.typesetter.setType(msg, heightRemain);
                     widthRemain -= usage;
                 }
             }
         }
+        BlockTypesetter lastTypesetter = layers.get(layers.size()-1).typesetter;
+        AdjustableBT adjustableBT;
+        if (lastTypesetter instanceof AdjustableBT)
+            adjustableBT = (AdjustableBT)lastTypesetter;
+        else throw new RuntimeException(lastTypesetter.getClass().getName() + " cannot be the last element of layers");
+        switch (lastTypesetter.position) {
+            case UP, DOWN -> {
+                adjustableBT.tellAvailSpace(heightRemain);
+                lastTypesetter.setType(msg, widthRemain);
+            }
+            case LEFT, RIGHT -> {
+                adjustableBT.tellAvailSpace(widthRemain);
+                lastTypesetter.setType(msg, heightRemain);
+            }
+        }
+        reset();
+        return write();
     }
 
+    private void reset() {
+        this.widthRemain = this.width;
+        this.heightRemain = this.height;
+    }
+
+    private String write() {
+        return null;
+    }
     static class Layer {
+
         protected final String type;
         protected final String position;
         protected final BlockTypesetter typesetter;
@@ -79,6 +106,15 @@ public class Layout {
                 case "Info"          -> typesetter = new BT_Info(
                         posHandle,
                         priority(ls, bTConfigs, "BlockTypesetter", "Info"));
+                case "Operation"     -> typesetter = new BT_Operation(
+                        posHandle,
+                        priority(ls, bTConfigs, "BlockTypesetter", "Operation"));
+                case "Warning"       -> typesetter = new BT_Warning(
+                        posHandle,
+                        priority(ls, bTConfigs, "BlockTypesetter", "Warning"));
+                case "Text"       -> typesetter = new BT_Text(
+                        posHandle,
+                        priority(ls, bTConfigs, "BlockTypesetter", "Text"));
                 default ->
                     throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
             }
@@ -106,6 +142,11 @@ public class Layout {
                     throw new UnsupportedOperationException("Unsupported BC_Position: " + position);
             }
             return posHandle;
+        }
+
+        @Override
+        public String toString() {
+            return typesetter.toString();
         }
     }
 }

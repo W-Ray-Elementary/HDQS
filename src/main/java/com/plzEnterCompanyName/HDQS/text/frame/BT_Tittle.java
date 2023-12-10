@@ -4,7 +4,12 @@ import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.util.Lexicon;
 import com.plzEnterCompanyName.HDQS.util.Lexicons;
 
-public class BT_Tittle extends BlockTypesetter{
+/**
+ * 用于标题绘制的BlockTypesetter，只占一行。
+ * 标题内容左对齐，若有游戏名字则游戏名右对齐
+ */
+public class BT_Tittle extends BlockTypesetter {
+    protected String[] cache;
     protected BT_Tittle(SupportedBT_Position position, Lexicon config) {
         super(position);
         String retractionStr         = config.getFirst("retraction"       );
@@ -20,48 +25,29 @@ public class BT_Tittle extends BlockTypesetter{
      * 加在开头的地方。
      */
     protected final int RETRACTION;
+
     /**
      * 缩进字符,RETRACTION_CHAR重复RETRACTION次后加在开头的地方。
      */
     protected final char RETRACTION_CHAR;
+
     /**
      * 是否绘制游戏名，默认状态下游戏名字右对齐
      */
     protected final boolean IS_DRAWING_GAME_NAME;
 
+    /**
+     *
+     * @return 通常情况下，标题只占1行，故返回1
+     */
     @Override
-    protected void setType(Message message, int firstPosLimit) {
+    protected int setType(Message message, int posLimit) {
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
-            String s = message.title.get(0);
-            int available = firstPosLimit;
-            StringBuilder sb = new StringBuilder();
-            int rW = RETRACTION * Frame.getWidth(RETRACTION_CHAR);
-            setType : {
-                if (available < rW) break setType;
-                available -= rW;
-                sb.append(String.valueOf(RETRACTION_CHAR).repeat(RETRACTION));
-                for (char c : s.toCharArray()) {
-                    int cW = Frame.getWidth(c);
-                    if (available < cW) break;
-                    available -= cW;
-                    sb.append(c);
-                }
-            }
-            sb.append(" ".repeat(Math.max(0, available)));
-            cache = new String[]{ sb.toString() };
+            cache = new String[]{ String.valueOf('$').repeat(posLimit) };
         } else {
-            throw new UnsupportedOperationException("Title can not execute vertical layout.");
+            throw new UnsupportedOperationException("BT_Title can not execute vertical layout.");
         }
-        isTyped = true;
-    }
-
-    @Override
-    protected int getSecondPosLimit() {
-        if (isTyped) {
-            isTyped = false;
-            return 1;
-        }
-        else throw new RuntimeException(untypedMsg);
+        return 1;
     }
 
     @Override
