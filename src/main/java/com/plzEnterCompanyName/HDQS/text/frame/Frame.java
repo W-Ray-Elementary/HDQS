@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 
 public class Frame implements Out, PageOutputAble, WarnAble {
     private Message currentMsg;
-    private Layout layout;
+    private final Layout layout;
     public static final String DEFAULT_CONFIG__FILE_PATH = "settings\\frame.cfg";
     private static final String DEFAULT_CONFIG_VALUE =
             """
@@ -148,7 +148,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
      * 获取一个字符的显示宽度
      * @return 宽度以int计，1代表单个西文字符2代表单个中文字符
      */
-    protected static int getWidth(char c) {
+    protected static int measureWidth(char c) {
         String text = String.valueOf(c);
         Font font = new Font("新宋体", Font.PLAIN, 12);
         BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
@@ -168,19 +168,19 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     }
 
     /**
-     * 获取该字符串的显示宽度，使用了{@link Frame#getWidth(char c)}
+     * 获取该字符串的显示宽度，使用了{@link Frame#measureWidth(char c)}
      * @param s 要测量宽度的字符串
      * @return 宽度以int计，输出该字符串每个字符宽度的总和，1代表单个西文字符2代表单个中文字符
      * @throws IllegalArgumentException 当字符串是{@code null}时抛出此异常，当字符串长度
      *         为零时抛出此异常，当字符串包含换行符时抛出此异常
      */
-    protected static int getWidth(String s) {
+    protected static int measureWidth(String s) {
         FormatCheck.specialString(s,
                 FormatCheck.NULL + FormatCheck.ZERO_LENGTH + FormatCheck.NEW_LINE);
         char[] chars = s.toCharArray();
         int returnVal = 0;
         for (char c : chars) {
-            returnVal += getWidth(c);
+            returnVal += measureWidth(c);
         }
         return returnVal;
     }
@@ -206,16 +206,16 @@ public class Frame implements Out, PageOutputAble, WarnAble {
         while (true) {
             if (width == 0) break;
             if (width == 1) {
-                if (getWidth(c[index]) == 1) {
+                if (measureWidth(c[index]) == 1) {
                     sb.append(c[index]);
                 }
-                if (getWidth(c[index]) == 2) {
+                if (measureWidth(c[index]) == 2) {
                     sb.append(' ');
                 }
                 break;
             }
             sb.append(c[index]);
-            width -= getWidth(c[index]);
+            width -= measureWidth(c[index]);
             if (index+1 == c.length) {
                 index = 0;
             } else {

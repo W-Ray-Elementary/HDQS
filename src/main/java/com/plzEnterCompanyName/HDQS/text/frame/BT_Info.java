@@ -3,12 +3,8 @@ package com.plzEnterCompanyName.HDQS.text.frame;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Info;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.util.Lexicon;
-import com.plzEnterCompanyName.HDQS.util.Lexicons;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * 本java类注释中，Info指代{@link com.plzEnterCompanyName.HDQS.io.smartIO2.Info Info}
@@ -234,7 +230,7 @@ public class BT_Info extends BlockTypesetter {
         StringBuilder sb = new StringBuilder();
         setType : {
             if (info.getValueString(INFO_VAL_WIDTH).isEmpty()) {
-                int w = Frame.getWidth(info.getName());
+                int w = Frame.measureWidth(info.getName());
                 if (availableWidth < w) break setType;
                 availableWidth -= w;
                 sb.append(info.getName());

@@ -84,7 +84,9 @@ public abstract class BlockTypesetter {
     protected abstract String getCache();
 
     /**
-     * （空）
+     * 对于不同的BlockTypesetter来说，有的实现了{@link AdjustableBT}接口，有的没实现。
+     * 而Frame又支持翻页，翻页时，不是所有的BT_XXX都要翻页，因此，不需要翻页的就把
+     * cacheIndex重新设置为0，才好重新输出一样的内容。
      */
-    protected abstract void nextPage(); // TODO: 提交commit之前，务必补上注释！！！
+    protected abstract void nextPage();
 }
