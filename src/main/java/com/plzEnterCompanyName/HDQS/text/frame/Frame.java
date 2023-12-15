@@ -28,8 +28,8 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                 BlockTypesetter
                 {
                     name = Tittle
-                    retraction = 3
-                    retractionChar = 32 // decimal : 32 = binary 00010000 = the ascii code
+                    indentation = 1
+                    indentationChar = 32 // decimal : 32 = binary 00010000 = the ascii code
                                         // of blank space
                     isDrawingGameName = true
                     gameName = [未定义 undefined]
@@ -43,8 +43,8 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                                     // or DOWN, this setting value "totalHeight" will be
                                     // took into consideration. Otherwise Info will
                                     // consider "totalWidth"
-                    retraction = 3
-                    retractionChar = 32 // decimal : 32 = binary 00010000 = the ascii code
+                    indentation = 1
+                    indentationChar = 32 // decimal : 32 = binary 00010000 = the ascii code
                                         // of blank space
                     singleInfoWidthMin = 29
                     singleInfoWidthMax = 40
@@ -57,6 +57,9 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                 BlockTypesetter
                 {
                     name = Operation
+                    indentation = 1
+                    indentationChar = 32
+                    horizontalSpacing = 4
                 }
                 BlockTypesetter
                 {

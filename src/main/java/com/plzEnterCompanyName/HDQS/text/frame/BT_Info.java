@@ -43,15 +43,15 @@ public class BT_Info extends BlockTypesetter {
     protected final int TOTAL_HEIGHT;
 
     /**
-     * 要缩进几个字符，该数值会将RETRACTION_CHAR代表的字符重复RETRACTION次后
+     * 要缩进几个字符，该数值会将INDENTATION_CHAR代表的字符重复INDENTATION次后
      * 加在开头的地方。
      */
-    protected final int RETRACTION;
+    protected final int INDENTATION;
 
     /**
-     * 缩进字符,RETRACTION_CHAR重复RETRACTION次后加在开头的地方。
+     * 缩进字符,INDENTATION_CHAR重复INDENTATION次后加在开头的地方。
      */
-    protected final char RETRACTION_CHAR;
+    protected final char INDENTATION_CHAR;
 
     /**
      * <i>当一行有2倍MAX_SINGLE_INFO_WIDTH及以上的空间时，此值无效</i>
@@ -134,7 +134,7 @@ public class BT_Info extends BlockTypesetter {
     protected final Aliment ALIMENT;
 
     enum Aliment {
-        LEFT, RIGHT, BAR;
+        LEFT, RIGHT, BAR
     }
 
     /**
@@ -161,8 +161,8 @@ public class BT_Info extends BlockTypesetter {
         super(position);
         String totalWidthStr         = config.getFirst("totalWidth"        );
         String totalHeightStr        = config.getFirst("totalHeight"       );
-        String retractionStr         = config.getFirst("retraction"        );
-        String retractionCharStr     = config.getFirst("retractionChar"    );
+        String indentationStr        = config.getFirst("indentation"       );
+        String indentationCharStr    = config.getFirst("indentationChar"   );
         String singleInfoWidthMinStr = config.getFirst("singleInfoWidthMin");
         String singleInfoWidthMaxStr = config.getFirst("singleInfoWidthMax");
         String horizontalSpacingStr  = config.getFirst("horizontalSpacing" );
@@ -172,8 +172,8 @@ public class BT_Info extends BlockTypesetter {
         String blankRowStr           = config.getFirst("blankRow"          );
         TOTAL_WIDTH           =        Integer.parseInt(totalWidthStr        );
         TOTAL_HEIGHT          =        Integer.parseInt(totalHeightStr       );
-        RETRACTION            =        Integer.parseInt(retractionStr        );
-        RETRACTION_CHAR       = (char) Integer.parseInt(retractionCharStr    );
+        INDENTATION           =        Integer.parseInt(indentationStr       );
+        INDENTATION_CHAR      = (char) Integer.parseInt(indentationCharStr   );
         MIN_SINGLE_INFO_WIDTH =        Integer.parseInt(singleInfoWidthMinStr);
         MAX_SINGLE_INFO_WIDTH =        Integer.parseInt(singleInfoWidthMaxStr);
         HORIZONTAL_SPACING    =        Integer.parseInt(horizontalSpacingStr );

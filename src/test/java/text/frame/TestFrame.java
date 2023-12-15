@@ -41,9 +41,12 @@ public class TestFrame {
         mm.text("-------------------------------");
         mm.text("请选择你现在要做什么");
 
-        mm.operation("战斗");
-        mm.operation("怪物信息");
-        mm.operation("释放技能");
+        mm.operation("1.【战斗】");
+        mm.operation("2.【怪物信息】");
+        mm.operation("3.【释放技能】");
+        mm.operation("4.【更多功能】");
+        mm.operation("5.【More function】");
+        mm.operation("6.【その他の機能】");
         messageForTest = mm.toMessage();
     }
     private static void TEST_Frame() {

@@ -12,26 +12,26 @@ public class BT_Tittle extends BlockTypesetter {
     protected BT_Tittle(SupportedBT_Position position, Lexicon config) {
         super(position);
         cache = new String[]{""};
-        String retractionStr         = config.getFirst("retraction"       );
-        String retractionCharStr     = config.getFirst("retractionChar"   );
+        String indentationStr        = config.getFirst("indentation"      );
+        String indentationCharStr    = config.getFirst("indentationChar"  );
         String isDrawingWatermarkStr = config.getFirst("isDrawingGameName");
         String gameNameStr           = config.getFirst("gameName");
-        RETRACTION           = Integer.parseInt(retractionStr            );
-        RETRACTION_CHAR      = (char) Integer.parseInt(retractionCharStr );
+        INDENTATION          = Integer.parseInt(indentationStr           );
+        INDENTATION_CHAR     = (char) Integer.parseInt(indentationCharStr);
         IS_DRAWING_GAME_NAME = Boolean.parseBoolean(isDrawingWatermarkStr);
         GAME_NAME            = gameNameStr;
     }
 
     /**
-     * 要缩进几个字符，该数值会将RETRACTION_CHAR代表的字符重复RETRACTION次后
+     * 要缩进几个字符，该数值会将INDENTATION_CHAR代表的字符重复INDENTATION次后
      * 加在开头的地方。
      */
-    protected final int RETRACTION;
+    protected final int INDENTATION;
 
     /**
-     * 缩进字符,RETRACTION_CHAR重复RETRACTION次后加在开头的地方。
+     * 缩进字符,INDENTATION_CHAR重复INDENTATION次后加在开头的地方。
      */
-    protected final char RETRACTION_CHAR;
+    protected final char INDENTATION_CHAR;
 
     /**
      * 是否绘制游戏名，默认状态下游戏名字右对齐
@@ -47,7 +47,7 @@ public class BT_Tittle extends BlockTypesetter {
     @Override
     protected int setType(Message message, int posLimit) {
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
-            String retraction = String.valueOf(RETRACTION_CHAR).repeat(RETRACTION);
+            String retraction = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
             String title = message.title.get(0);
             String gameName = "";
             if (IS_DRAWING_GAME_NAME) {
