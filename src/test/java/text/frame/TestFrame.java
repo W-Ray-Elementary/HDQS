@@ -52,5 +52,7 @@ public class TestFrame {
     private static void TEST_Frame() {
         Frame f = new Frame();
         f.out(messageForTest);
+        java.util.Scanner sc = new java.util.Scanner(System.in);
+        sc.nextLine();
     }
 }

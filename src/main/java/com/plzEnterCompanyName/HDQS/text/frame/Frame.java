@@ -240,7 +240,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     public void out(Message msg) {
         this.currentMsg = msg;
         String typed = layout.setType(msg);
-        System.out.println(typed);
+        System.out.print(typed);
     }
 
     @Override
