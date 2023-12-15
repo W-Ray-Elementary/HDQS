@@ -26,4 +26,9 @@ public class BT_Operation extends BlockTypesetter {
     protected String getCache() {
         return cache[cacheIndex++];
     }
+
+    @Override
+    protected void nextPage() {
+        cacheIndex = 0;
+    }
 }

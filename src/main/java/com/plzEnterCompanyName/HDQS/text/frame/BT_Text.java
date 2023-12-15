@@ -32,4 +32,9 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
     public void tellAvailSpace(int availSpace) {
         this.availSpace = availSpace;
     }
+
+    @Override
+    protected void nextPage() {
+        cacheIndex = 0;
+    }
 }

@@ -54,4 +54,7 @@ public class BT_Tittle extends BlockTypesetter {
     protected String getCache() {
         return cache[0];
     }
+
+    @Override
+    protected void nextPage() {  }
 }

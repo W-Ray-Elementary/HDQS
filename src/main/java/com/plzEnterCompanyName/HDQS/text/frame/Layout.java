@@ -23,7 +23,8 @@ public class Layout {
         this.width = Integer.parseInt(config.getFirst("width"));
         this.height = Integer.parseInt(config.getFirst("height"));
         this.BT_GlobalConfigs = Lexicons.listOut(config, "BlockTypesetter");
-        reset();
+        this.widthRemain = this.width;
+        this.heightRemain = this.height;
         // \begin{} 这里的代码与Lexicons中重复，但是能run就别改
         List<Object> layersCfgObjs;
         layersCfgObjs = new ArrayList<>(List.of(((Lexicon)config.getAll("Layout")[0]).getAll("Layer")));
@@ -40,16 +41,38 @@ public class Layout {
     }
 
     protected String setType(Message msg) {
+        int[][] table = new int[height][width];
+        for (int[] ints : table) Arrays.fill(ints, -1);
+        int x_1 = 0;
+        int y_1 = 0;
+        int x_2 = width;
+        int y_2 = height;
         for (int i = 0; i < layers.size() - 1; i++) {
             Layer layer = layers.get(i);
             switch (layer.typesetter.position) {
-                case UP, DOWN -> {
+                case UP -> {
                     int usage = layer.typesetter.setType(msg, widthRemain);
                     heightRemain -= usage;
+                    fillTable(table, x_1, y_1, x_2, y_1 + usage, i);
+                    y_1 += usage;
                 }
-                case LEFT, RIGHT -> {
+                case RIGHT -> {
                     int usage = layer.typesetter.setType(msg, heightRemain);
                     widthRemain -= usage;
+                    fillTable(table, x_2 - usage, y_1, x_2, y_2, i);
+                    x_2 -= usage;
+                }
+                case DOWN -> {
+                    int usage = layer.typesetter.setType(msg, widthRemain);
+                    heightRemain -= usage;
+                    fillTable(table, x_1, y_2 - usage, x_2, y_2, i);
+                    y_2 -= usage;
+                }
+                case LEFT -> {
+                    int usage = layer.typesetter.setType(msg, heightRemain);
+                    widthRemain -= usage;
+                    fillTable(table, x_1, y_1, x_1 + usage, y_2, i);
+                    x_1 += usage;
                 }
             }
         }
@@ -68,17 +91,41 @@ public class Layout {
                 lastTypesetter.setType(msg, heightRemain);
             }
         }
+        fillTable(table, x_1, y_1, x_2, y_2, layers.size()-1);
         reset();
-        return write();
+        return write(table);
+    }
+
+    private static void fillTable(
+            int[][] table,
+            int x_1,
+            int y_1,
+            int x_2,
+            int y_2,
+            int ink)
+    {
+        for (int y = y_1; y < y_2; y++)
+            for (int x = x_1; x < x_2; x++)
+                table[y][x] = ink;
     }
 
     private void reset() {
         this.widthRemain = this.width;
         this.heightRemain = this.height;
+        for (Layer layer : layers)
+            layer.typesetter.nextPage();
     }
 
-    private String write() {
-        return null;
+    private String write(int[][] marker) {
+        StringBuilder sb = new StringBuilder();
+        int m = -1;
+        for (int y = 0; y < marker.length; y++)
+            for (int x = 0; x < marker[y].length; x++)
+                if (m != marker[y][x]) {
+                    m = marker[y][x];
+                    sb.append(layers.get(m).typesetter.getCache());
+                }
+        return sb.toString();
     }
     static class Layer {
 

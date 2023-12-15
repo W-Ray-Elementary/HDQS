@@ -249,4 +249,9 @@ public class BT_Info extends BlockTypesetter {
     protected String getCache() {
         return cache[cacheIndex++];
     }
+
+    @Override
+    protected void nextPage() {
+        cacheIndex = 0;
+    }
 }

@@ -11,11 +11,14 @@ public class BT_Warning extends BlockTypesetter {
 
     @Override
     protected int setType(Message message, int posLimit) {
-        return 1;
+        return 0;
     }
 
     @Override
     protected String getCache() {
         return null;
     }
+
+    @Override
+    protected void nextPage() {  }
 }

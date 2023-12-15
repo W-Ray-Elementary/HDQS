@@ -82,4 +82,9 @@ public abstract class BlockTypesetter {
      * 照配置文件的要求把它排列好。
      */
     protected abstract String getCache();
+
+    /**
+     * （空）
+     */
+    protected abstract void nextPage(); // TODO: 提交commit之前，务必补上注释！！！
 }

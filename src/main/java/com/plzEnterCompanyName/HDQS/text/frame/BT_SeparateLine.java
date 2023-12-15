@@ -27,7 +27,11 @@ public class BT_SeparateLine extends BlockTypesetter {
 
     @Override
     protected String getCache() {
-        return  (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) ?
-                "-" : "|";
+        return  cache[0];
+    }
+
+    @Override
+    protected void nextPage() {
+        cacheIndex = 0;
     }
 }
