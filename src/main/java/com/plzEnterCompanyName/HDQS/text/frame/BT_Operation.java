@@ -29,6 +29,8 @@ public class BT_Operation extends BlockTypesetter {
 
     protected BT_Operation(SupportedBT_Position position, Lexicon config) {
         super(position);
+        if (position == SupportedBT_Position.LEFT || position == SupportedBT_Position.RIGHT)
+            throw new UnsupportedOperationException("BT_Operation can not execute vertical layout.");
         String indentationStr       = config.getFirst("indentation"      );
         String indentationCharStr   = config.getFirst("indentationChar"  );
         String horizontalSpacingStr = config.getFirst("horizontalSpacing");
@@ -39,13 +41,50 @@ public class BT_Operation extends BlockTypesetter {
 
     @Override
     protected int setType(Message message, int posLimit) {
+        List<StringBuilder> lines = new ArrayList<>();
+        List<String> operationStrings = new ArrayList<>(message.operations.size());
+        for (Operation operation : message.operations)
+            operationStrings.add(operation.getName());
+        String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
+        String spacing = String.valueOf(' ').repeat(HORIZONTAL_SPACING);
+        int lineCount = 0;
+        boolean isLineBegin = true;
+        int lineSpaceAvail = posLimit;
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
-        cache = new String[]{ String.valueOf('$').repeat(posLimit) };
+            for (String str : operationStrings) {
+                if (isLineBegin) {
+                    lines.add(new StringBuilder());
+                    lines.get(lineCount).append(indentationStr);
+                    lines.get(lineCount).append(str);
+                    lineSpaceAvail -= Frame.measureWidth(indentationStr);
+                    lineSpaceAvail -= Frame.measureWidth(str);
+                    isLineBegin = false;
+                    continue;
+                }
+                int neededSpace = Frame.measureWidth(spacing) + Frame.measureWidth(str);
+                if (neededSpace > lineSpaceAvail) {
+                    lines.get(lineCount).append(String.valueOf(' ').repeat(lineSpaceAvail));
+                    lineCount++;
+                    lineSpaceAvail = posLimit;
+                    lines.add(new StringBuilder());
+                    lines.get(lineCount).append(indentationStr);
+                    lines.get(lineCount).append(str);
+                    lineSpaceAvail -= Frame.measureWidth(indentationStr);
+                    lineSpaceAvail -= Frame.measureWidth(str);
+                    continue;
+                }
+                lineSpaceAvail -= neededSpace;
+                lines.get(lineCount).append(spacing);
+                lines.get(lineCount).append(str);
+            }
+            lines.get(lineCount).append(String.valueOf(' ').repeat(lineSpaceAvail));
+            cache = new String[lines.size()];
+            for (int i = 0; i < lines.size(); i++)
+                cache[i] = lines.get(i).toString();
+            return lines.size();
         } else {
-            throw new UnsupportedOperationException("BT_Operation can not execute vertical layout.");
+            throw new RuntimeException("Operation LEFT and RIGHT is still developing!");
         }
-        cacheIndex = 0;
-        return 1;
     }
 
     @Override

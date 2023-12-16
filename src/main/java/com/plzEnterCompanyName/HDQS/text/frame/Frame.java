@@ -1,17 +1,56 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
+import com.plzEnterCompanyName.HDQS.SETTINGS;
 import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
 import com.plzEnterCompanyName.HDQS.io.PATH;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.Out;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.PageOutputAble;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.WarnAble;
+import com.plzEnterCompanyName.HDQS.io.smartIO2.*;
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Frame implements Out, PageOutputAble, WarnAble {
+
+    public static void demo() {
+        Frame f = new Frame();
+        MessageManager mm = new MessageManager();
+        Message messageForTest;
+        mm.title("MYRPG-VersionAlpha0.1" + SETTINGS.GAME_NAME);
+
+        mm.info("等级    1");
+        mm.info("经验    100/0");
+        mm.info("属性点  0");
+        mm.info("生命值  100/100");
+        mm.info("魔力值  200/200");
+        mm.info("攻击力  10");
+        mm.info("防御力  2");
+        mm.info("敏捷    5");
+        mm.info("距离    1000/0");
+        mm.info("武器    训练战士用的木剑      伤害:3");
+        mm.info("盔甲    新手木甲      盔甲值:3.0");
+        mm.info("输入6以查看详细信息....");
+
+        mm.text("你遭遇了怪物,进入战斗状态!!");
+        mm.text("==========================");
+        mm.text("现在是战斗的第1回合!");
+        mm.text("-------------------------------");
+        mm.text("你的血量:100.0/100.0        僵尸血量:50.0/50.0      等级:1");
+        mm.text("你的魔力值:200.0/200.0");
+        mm.text("-------------------------------");
+        mm.text("请选择你现在要做什么");
+
+        mm.operation("1.【战斗】");
+        mm.operation("2.【怪物信息】");
+        mm.operation("3.【释放技能】");
+        mm.operation("4.【更多功能】");
+        mm.operation("5.【More function】");
+        mm.operation("6.【その他の機能】");
+        messageForTest = mm.toMessage();
+
+        f.out(messageForTest);
+        new java.util.Scanner(System.in).nextLine();
+    }
+
     private Message currentMsg;
     private final Layout layout;
     public static final String DEFAULT_CONFIG__FILE_PATH = "settings\\frame.cfg";
@@ -37,7 +76,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                 BlockTypesetter
                 {
                     name = Info
-                    totalWidth = 45 // The max screen space that is available. Most of the
+                    totalWidth = 41 // The max screen space that is available. Most of the
                                     // time, Info will not take up so much screen space.
                     totalHeight = 5 // If the position of Info that defined by Layout is UP
                                     // or DOWN, this setting value "totalHeight" will be
@@ -47,7 +86,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     indentationChar = 32 // decimal : 32 = binary 00010000 = the ascii code
                                         // of blank space
                     singleInfoWidthMin = 29
-                    singleInfoWidthMax = 40
+                    singleInfoWidthMax = 39
                     horizontalSpacing = 4
                     tabStops = 8
                     infoValWidth = 8
@@ -59,7 +98,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     name = Operation
                     indentation = 1
                     indentationChar = 32
-                    horizontalSpacing = 4
+                    horizontalSpacing = 3
                 }
                 BlockTypesetter
                 {
@@ -174,12 +213,13 @@ public class Frame implements Out, PageOutputAble, WarnAble {
      * 获取该字符串的显示宽度，使用了{@link Frame#measureWidth(char c)}
      * @param s 要测量宽度的字符串
      * @return 宽度以int计，输出该字符串每个字符宽度的总和，1代表单个西文字符2代表单个中文字符
-     * @throws IllegalArgumentException 当字符串是{@code null}时抛出此异常，当字符串长度
-     *         为零时抛出此异常，当字符串包含换行符时抛出此异常
+     * @throws IllegalArgumentException 当字符串是{@code null}时抛出此异常，当字符串包含
+     * 换行符时抛出此异常
      */
     protected static int measureWidth(String s) {
+        if (s.isEmpty()) return 0;
         FormatCheck.specialString(s,
-                FormatCheck.NULL + FormatCheck.ZERO_LENGTH + FormatCheck.NEW_LINE);
+                FormatCheck.NULL + FormatCheck.NEW_LINE);
         char[] chars = s.toCharArray();
         int returnVal = 0;
         for (char c : chars) {

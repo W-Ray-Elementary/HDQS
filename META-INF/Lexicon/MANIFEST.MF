@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Class-Path: ..\lib\HDQS-FileIO.jar
+Class-Path: ..\lib\HDQS-FileIO.jar ..\lib\UnicodeReader.jar 

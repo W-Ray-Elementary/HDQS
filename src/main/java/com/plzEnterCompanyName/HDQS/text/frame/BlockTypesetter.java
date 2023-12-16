@@ -31,13 +31,6 @@ public abstract class BlockTypesetter {
     protected SupportedBT_Position position;
 
     /**
-     * 有些时候，要么是开发者塞了太多，要么是玩家把窗口调得太小，总之，屏
-     * 幕空间不够时就可能抛出此异常。
-     */
-    protected static final String spaceInsufficientMsg = "Screen space is insufficient, " +
-            "please try to adjust settings in " + Frame.DEFAULT_CONFIG__FILE_PATH;
-
-    /**
      * 当
      * {@link BlockTypesetter#setType(Message, int) setType(Message, int)}
      * 方法完毕后，BT的子类应当把排版好的字符输出到此cache中，并且在下一次

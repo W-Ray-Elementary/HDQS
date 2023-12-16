@@ -4,7 +4,9 @@ import com.plzEnterCompanyName.HDQS.io.smartIO2.Info;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 本java类注释中，Info指代{@link com.plzEnterCompanyName.HDQS.io.smartIO2.Info Info}
@@ -78,66 +80,6 @@ public class BT_Info extends BlockTypesetter {
     protected final int HORIZONTAL_SPACING;
 
     /**
-     * 懒得解释了，上案例！
-     *
-     * <p>TAB_STOPS 为4时：
-     * <blockquote><pre>{@code
-     *     字  123
-     *     A字 123
-     *     字字    123
-     *     A字字   123
-     *     字字字  123
-     *     A字字字 123
-     *     字字字字    123
-     * }</pre></blockquote>
-     *
-     * <p>TAB_STOPS 为5时：
-     * <blockquote><pre>{@code
-     *      字   123
-     *      A字  123
-     *      字字 123
-     *      A字字     123
-     *      字字字    123
-     *      A字字字   123
-     *      字字字字  123
-     * }</pre></blockquote>
-     *
-     * <p>TAB_STOPS 为6时：
-     * <blockquote><pre>{@code
-     *      字    123
-     *      A字   123
-     *      字字  123
-     *      A字字 123
-     *      字字字      123
-     *      A字字字     123
-     *      字字字字    123
-     * }</pre></blockquote>
-     */
-    protected final int TAB_STOPS;
-
-    /**
-     * Info是包含名字和数值的，有的时候，数值很长，不得不使用科学计数法
-     * <p>INFO_VAL_WIDTH 为8时：
-     * <blockquote><pre>{@code
-     *      名字    123      // 123
-     *      名字    12345678 // 123
-     *      名字    1.234e+9 // 123456789
-     *      名字    1.23e+11 // 12345678901
-     * }</pre></blockquote>
-     */
-    protected final int INFO_VAL_WIDTH;
-
-    /**
-     * 数值是左对齐，中对齐，还是在名字后面直接加TAB_STOPS个空格？
-     * 这个数值就是解决这个问题的。
-     */
-    protected final Aliment ALIMENT;
-
-    enum Aliment {
-        LEFT, RIGHT, BAR
-    }
-
-    /**
      * 有时，Microsoft Windows cmd 的行距会显得过于拥挤，就要看看加不加空行
      *
      * <p>TRUE, FALSE都挺好理解的，就是AUTO。AUTO代表着，空间够的时候空行，
@@ -177,14 +119,6 @@ public class BT_Info extends BlockTypesetter {
         MIN_SINGLE_INFO_WIDTH =        Integer.parseInt(singleInfoWidthMinStr);
         MAX_SINGLE_INFO_WIDTH =        Integer.parseInt(singleInfoWidthMaxStr);
         HORIZONTAL_SPACING    =        Integer.parseInt(horizontalSpacingStr );
-        TAB_STOPS             =        Integer.parseInt(tabStopsStr          );
-        INFO_VAL_WIDTH        =        Integer.parseInt(infoValWidthStr      );
-        switch (alignmentStr) {
-            case "LEFT"  -> ALIMENT = Aliment.LEFT ;
-            case "RIGHT" -> ALIMENT = Aliment.RIGHT;
-            case "BAR"   -> ALIMENT = Aliment.BAR  ;
-            default -> throw new RuntimeException("Unsupported alignment : " + alignmentStr);
-        }
         switch (blankRowStr) {
             case "TRUE"  -> BLANK_ROW = BlankRow.TRUE ;
             case "FALSE" -> BLANK_ROW = BlankRow.FALSE;
@@ -195,15 +129,19 @@ public class BT_Info extends BlockTypesetter {
 
     @Override
     protected int setType(Message message, int posLimit) {
-        String $ = String.valueOf('$').repeat(TOTAL_WIDTH);
+        List<String> infoString = new ArrayList<>(message.infos.size());
+        for (Info info : message.infos)
+            infoString.add(info.getName());
+        String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
+        String spacing = String.valueOf(' ').repeat(HORIZONTAL_SPACING);
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN)
-            cache = new String[TOTAL_HEIGHT];
-        else
-            cache = new String[posLimit];
-        Arrays.fill(cache, $);
-        cacheIndex = 0;
+            throw new RuntimeException("Info UP and DOWN is still developing!");
+        else {
+            int lineSpaceAvail = posLimit - Frame.measureWidth(indentationStr);
+            int[] places = tryToPlace(lineSpaceAvail);
+        }
         return switch (position) {
-            case UP, DOWN -> TOTAL_HEIGHT;
+            case UP, DOWN -> throw new RuntimeException("Info UP and DOWN is still developing!");
             case LEFT, RIGHT -> TOTAL_WIDTH;
         };
     }
@@ -215,30 +153,22 @@ public class BT_Info extends BlockTypesetter {
      */
     private int[] tryToPlace(int availableWidth) {
         if(availableWidth < MIN_SINGLE_INFO_WIDTH) {
-            throw new RuntimeException(spaceInsufficientMsg);
+            throw new RuntimeException(Layout.spaceInsufficientMsg);
         }
         if(availableWidth >= MAX_SINGLE_INFO_WIDTH) return new int[]{(int) (double) (availableWidth / MAX_SINGLE_INFO_WIDTH),MAX_SINGLE_INFO_WIDTH,availableWidth % MAX_SINGLE_INFO_WIDTH};
         return new int[]{1,availableWidth,0};
     }
 
-    /*
-    *
-    * */
-
     private String setType0(Info info, int availableWidth) {
         if (info == null) return Frame.repeatW(null, availableWidth);
-        StringBuilder sb = new StringBuilder();
-        setType : {
-            if (info.getValueString(INFO_VAL_WIDTH).isEmpty()) {
-                int w = Frame.measureWidth(info.getName());
-                if (availableWidth < w) break setType;
-                availableWidth -= w;
-                sb.append(info.getName());
-            }
-
-        }
-        sb.append(" ".repeat(Math.max(0, availableWidth)));
-        return sb.toString();
+        String returnVal = "";
+        String infoStr = info.getName();
+        int neededWidth = Frame.measureWidth(infoStr);
+        if (neededWidth > availableWidth)
+            return String.valueOf('#').repeat(availableWidth);
+        int endBlanks = neededWidth - availableWidth;
+        returnVal += infoStr + String.valueOf(' ').repeat(endBlanks);
+        return returnVal;
     }
 
     @Override

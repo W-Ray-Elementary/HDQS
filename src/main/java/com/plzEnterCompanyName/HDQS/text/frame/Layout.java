@@ -19,6 +19,13 @@ public class Layout {
     private final List<Layer> layers;
     protected List<Lexicon> BT_GlobalConfigs;
 
+    /**
+     * 有些时候，要么是开发者塞了太多，要么是玩家把窗口调得太小，总之，屏
+     * 幕空间不够时就可能抛出此异常。
+     */
+    protected static final String spaceInsufficientMsg = "Screen space is insufficient, " +
+            "please try to adjust settings in " + Frame.DEFAULT_CONFIG__FILE_PATH;
+
     public Layout(Lexicon config) {
         this.width = Integer.parseInt(config.getFirst("width"));
         this.height = Integer.parseInt(config.getFirst("height"));
@@ -75,6 +82,8 @@ public class Layout {
                     x_1 += usage;
                 }
             }
+            if (x_2 - x_1 <= 1 || y_2 - y_1 <= 1)
+                throw new RuntimeException(Layout.spaceInsufficientMsg);
         }
         BlockTypesetter lastTypesetter = layers.get(layers.size()-1).typesetter;
         AdjustableBT adjustableBT;
