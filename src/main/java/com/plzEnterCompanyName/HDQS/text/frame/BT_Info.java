@@ -85,9 +85,9 @@ public class BT_Info extends BlockTypesetter {
      * <p>TRUE, FALSE都挺好理解的，就是AUTO。AUTO代表着，空间够的时候空行，
      * 不够的时候不空行，实在不够就输出'##########'以期望玩家进行调整。
      */
-    protected final BlankRow BLANK_ROW;
+    protected final BlankRowStatus BLANK_ROW;
 
-    enum BlankRow {
+    enum BlankRowStatus {
         TRUE, FALSE, AUTO
     }
 
@@ -120,25 +120,48 @@ public class BT_Info extends BlockTypesetter {
         MAX_SINGLE_INFO_WIDTH =        Integer.parseInt(singleInfoWidthMaxStr);
         HORIZONTAL_SPACING    =        Integer.parseInt(horizontalSpacingStr );
         switch (blankRowStr) {
-            case "TRUE"  -> BLANK_ROW = BlankRow.TRUE ;
-            case "FALSE" -> BLANK_ROW = BlankRow.FALSE;
-            case "AUTO"  -> BLANK_ROW = BlankRow.AUTO ;
+            case "TRUE"  -> BLANK_ROW = BlankRowStatus.TRUE ;
+            case "FALSE" -> BLANK_ROW = BlankRowStatus.FALSE;
+            case "AUTO"  -> BLANK_ROW = BlankRowStatus.AUTO ;
             default -> throw new RuntimeException("Unsupported blank row action : " + blankRowStr);
         }
     }
 
     @Override
     protected int setType(Message message, int posLimit) {
-        List<String> infoString = new ArrayList<>(message.infos.size());
-        for (Info info : message.infos)
-            infoString.add(info.getName());
         String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
         String spacing = String.valueOf(' ').repeat(HORIZONTAL_SPACING);
-        if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN)
+        List<String> infosStr = new ArrayList<>(message.infos.size());
+        if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
             throw new RuntimeException("Info UP and DOWN is still developing!");
+        }
         else {
-            int lineSpaceAvail = posLimit - Frame.measureWidth(indentationStr);
+            cache = new String[posLimit];
+            int lineSpaceAvail = TOTAL_WIDTH - Frame.measureWidth(indentationStr);
             int[] places = tryToPlace(lineSpaceAvail);
+            for (Info info : message.infos)
+                infosStr.add(setType0(info, places[1]));
+            String blankBlock = String.valueOf(' ').repeat(places[1]);
+            Arrays.fill(cache, blankBlock);
+            BlankRowStatus currentBlankRow;
+            if (BLANK_ROW == BlankRowStatus.AUTO) {
+                if (posLimit >= (infosStr.size() * 2 - 1))
+                    currentBlankRow = BlankRowStatus.TRUE;
+                else
+                    currentBlankRow = BlankRowStatus.FALSE;
+            } else
+                currentBlankRow = BLANK_ROW;
+            int lineCount = 0;
+            int infosStrIndex = 0;
+            cache[lineCount++] = infosStr.get(infosStrIndex++);
+            for (; infosStrIndex < infosStr.size();) {
+                if (currentBlankRow == BlankRowStatus.TRUE) {
+                    lineCount++;
+                    cache[lineCount++] = infosStr.get(infosStrIndex++);
+                } else {
+                    cache[lineCount++] = infosStr.get(infosStrIndex++);
+                }
+            }
         }
         return switch (position) {
             case UP, DOWN -> throw new RuntimeException("Info UP and DOWN is still developing!");
@@ -166,7 +189,7 @@ public class BT_Info extends BlockTypesetter {
         int neededWidth = Frame.measureWidth(infoStr);
         if (neededWidth > availableWidth)
             return String.valueOf('#').repeat(availableWidth);
-        int endBlanks = neededWidth - availableWidth;
+        int endBlanks = availableWidth - neededWidth;
         returnVal += infoStr + String.valueOf(' ').repeat(endBlanks);
         return returnVal;
     }
