@@ -70,6 +70,7 @@ public class Launcher {
         messageForTest = mm.toMessage();
 
         f.out(messageForTest);
+        new java.util.Scanner(System.in).nextLine();
     }
 
     private static void cleanUp() {

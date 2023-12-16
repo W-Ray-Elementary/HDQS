@@ -1,3 +1,5 @@
 Manifest-Version: 1.0
 Main-Class: com.plzEnterCompanyName.HDQS.Launcher
+Class-Path: ..\lib\SmartIO.jar  ..\lib\Frame.jar 
+ ..\lib\HDQS-FileIO.jar ..\lib\Lexicon.jar ..\lib\UnicodeReader.jar
 
