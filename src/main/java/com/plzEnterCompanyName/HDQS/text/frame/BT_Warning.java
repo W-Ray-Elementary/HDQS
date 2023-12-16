@@ -10,7 +10,7 @@ public class BT_Warning extends BlockTypesetter {
     }
 
     @Override
-    protected int setType(Message message, int posLimit) {
+    protected int setType(Message message, final int posLimit) {
         return 0;
     }
 

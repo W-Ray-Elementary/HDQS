@@ -14,7 +14,7 @@ public class BT_SeparateLine extends BlockTypesetter {
     }
 
     @Override
-    protected int setType(Message message, int posLimit) {
+    protected int setType(Message message, final int posLimit) {
         switch (position) {
             case UP  , DOWN  -> cache = new String[]{ String.valueOf('-').repeat(posLimit) };
             case LEFT, RIGHT -> {

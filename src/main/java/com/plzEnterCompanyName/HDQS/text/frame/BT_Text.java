@@ -15,7 +15,7 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
     }
 
     @Override
-    protected int setType(Message message, int posLimit) {
+    protected int setType(Message message, final int posLimit) {
         String $ = String.valueOf('$').repeat(posLimit);
         cache = new String[availSpace];
         Arrays.fill(cache, $);

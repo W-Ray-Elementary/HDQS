@@ -40,7 +40,7 @@ public class BT_Operation extends BlockTypesetter {
     }
 
     @Override
-    protected int setType(Message message, int posLimit) {
+    protected int setType(Message message, final int posLimit) {
         List<StringBuilder> lines = new ArrayList<>();
         List<String> operationStrings = new ArrayList<>(message.operations.size());
         for (Operation operation : message.operations)

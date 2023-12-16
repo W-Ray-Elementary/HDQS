@@ -63,7 +63,7 @@ public abstract class BlockTypesetter {
      * 定宽度，posLimit就代表高度。而使用高度决定宽度的矩形，就会把决定
      * 好的宽度返回，供Layout排版。
      */
-    protected abstract int setType(Message message, int posLimit);
+    protected abstract int setType(Message message, final int posLimit);
 
     /**
      * 一次排版中，单个{@code  List<Layer>}中的元素通常会被遍历两次，

@@ -45,7 +45,7 @@ public class BT_Tittle extends BlockTypesetter {
      * @return 通常情况下，标题只占1行，故返回1
      */
     @Override
-    protected int setType(Message message, int posLimit) {
+    protected int setType(Message message, final int posLimit) {
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
             String retraction = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
             String title = message.title.get(0);

@@ -128,7 +128,7 @@ public class BT_Info extends BlockTypesetter {
     }
 
     @Override
-    protected int setType(Message message, int posLimit) {
+    protected int setType(Message message, final int posLimit) {
         String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
         String spacing = String.valueOf(' ').repeat(HORIZONTAL_SPACING);
         List<String> infosStr = new ArrayList<>(message.infos.size());
@@ -139,9 +139,10 @@ public class BT_Info extends BlockTypesetter {
             cache = new String[posLimit];
             int lineSpaceAvail = TOTAL_WIDTH - Frame.measureWidth(indentationStr);
             int[] places = tryToPlace(lineSpaceAvail);
+            String endBlankStr = String.valueOf(' ').repeat(places[2]);
+            String blankBlock = indentationStr + String.valueOf(' ').repeat(places[1]) + endBlankStr;
             for (Info info : message.infos)
                 infosStr.add(setType0(info, places[1]));
-            String blankBlock = String.valueOf(' ').repeat(places[1]);
             Arrays.fill(cache, blankBlock);
             BlankRowStatus currentBlankRow;
             if (BLANK_ROW == BlankRowStatus.AUTO) {
@@ -153,20 +154,21 @@ public class BT_Info extends BlockTypesetter {
                 currentBlankRow = BLANK_ROW;
             int lineCount = 0;
             int infosStrIndex = 0;
-            cache[lineCount++] = infosStr.get(infosStrIndex++);
-            for (; infosStrIndex < infosStr.size();) {
+            if (infosStr.size() > posLimit) {
+                Arrays.fill(cache, String.valueOf('#').repeat(TOTAL_WIDTH));
+                return TOTAL_WIDTH;
+            }
+            cache[lineCount++] = indentationStr + infosStr.get(infosStrIndex++) + endBlankStr;
+            while (infosStrIndex < infosStr.size()) {
                 if (currentBlankRow == BlankRowStatus.TRUE) {
                     lineCount++;
-                    cache[lineCount++] = infosStr.get(infosStrIndex++);
+                    cache[lineCount++] = indentationStr + infosStr.get(infosStrIndex++) + endBlankStr;
                 } else {
-                    cache[lineCount++] = infosStr.get(infosStrIndex++);
+                    cache[lineCount++] = indentationStr + infosStr.get(infosStrIndex++) + endBlankStr;
                 }
             }
+            return TOTAL_WIDTH;
         }
-        return switch (position) {
-            case UP, DOWN -> throw new RuntimeException("Info UP and DOWN is still developing!");
-            case LEFT, RIGHT -> TOTAL_WIDTH;
-        };
     }
     /**
      * 便捷地计算一下，对于当前的可用显示宽度，屏幕上可以放得下几栏info
