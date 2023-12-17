@@ -1,6 +1,5 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
-import com.plzEnterCompanyName.HDQS.SETTINGS;
 import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
 import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.*;
@@ -15,7 +14,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
         Frame f = new Frame();
         MessageManager mm = new MessageManager();
         Message messageForTest;
-        mm.title("MYRPG-VersionAlpha0.1" + SETTINGS.GAME_NAME);
+        mm.title("MYRPG-VersionAlpha0.1");
 
         mm.info("等级    1");
         mm.info("经验    100/0");
@@ -51,7 +50,6 @@ public class Frame implements Out, PageOutputAble, WarnAble {
         new java.util.Scanner(System.in).nextLine();
     }
 
-    private Message currentMsg;
     private final Layout layout;
     public static final String DEFAULT_CONFIG__FILE_PATH = "settings\\frame.cfg";
     private static final String DEFAULT_CONFIG_VALUE =
@@ -63,6 +61,8 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                 BlockTypesetter
                 {
                     name = SeparateLine
+                    horizontalStyle = 45
+                    verticalStyle = 124
                 }
                 BlockTypesetter
                 {
@@ -113,22 +113,22 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     Layer
                     {
                         type = SeparateLine
-                        position = RIGHT
-                    }
-                    Layer
-                    {
-                        type = SeparateLine
                         position = UP
                     }
                     Layer
                     {
                         type = SeparateLine
-                        position = LEFT
+                        position = DOWN
                     }
                     Layer
                     {
                         type = SeparateLine
-                        position = DOWN
+                        position = RIGHT
+                    }
+                    Layer
+                    {
+                        type = SeparateLine
+                        position = LEFT
                     }
                     Layer
                     {
@@ -230,7 +230,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
 
     /**
      * 不断重复字符串，直到达到指定的宽度，若遇到无法整除的中文，会自动添加空格
-     * <p>例如，该方法{@code repeatW("abc", 7)}会返回{@code "abcabca"}，
+     * <p>例如，该方法{@code repeatW("ab", 3)}会返回{@code "aba"}，
      * 而{@code repeatW("ab稀滴", 11)}会返回{@code "ab稀滴ab稀 "}.在尾部添加空格以满足宽度要求。
      * @param s 被重复的字符串
      * @param width 要达到的宽度
@@ -278,7 +278,6 @@ public class Frame implements Out, PageOutputAble, WarnAble {
 
     @Override
     public void out(Message msg) {
-        this.currentMsg = msg;
         String typed = layout.setType(msg);
         System.out.print(typed);
     }

@@ -128,10 +128,10 @@ public class Layout {
     private String write(int[][] marker) {
         StringBuilder sb = new StringBuilder();
         int m = -1;
-        for (int y = 0; y < marker.length; y++)
-            for (int x = 0; x < marker[y].length; x++)
-                if (m != marker[y][x]) {
-                    m = marker[y][x];
+        for (int[] ints : marker)
+            for (int anInt : ints)
+                if (m != anInt) {
+                    m = anInt;
                     sb.append(layers.get(m).typesetter.getCache());
                 }
         return sb.toString();
@@ -155,45 +155,44 @@ public class Layout {
             switch (type) {
                 case "SeparateLine" -> typesetter = new BT_SeparateLine(
                         posHandle,
-                        priority(ls, bTConfigs, "BlockTypesetter", "SeparateLine"));
+                        priorityForBT(ls, bTConfigs, "SeparateLine"));
                 case "Tittle"        -> typesetter = new BT_Tittle(
                         posHandle,
-                        priority(ls, bTConfigs, "BlockTypesetter", "Tittle"));
+                        priorityForBT(ls, bTConfigs, "Tittle"));
                 case "Info"          -> typesetter = new BT_Info(
                         posHandle,
-                        priority(ls, bTConfigs, "BlockTypesetter", "Info"));
+                        priorityForBT(ls, bTConfigs, "Info"));
                 case "Operation"     -> typesetter = new BT_Operation(
                         posHandle,
-                        priority(ls, bTConfigs, "BlockTypesetter", "Operation"));
+                        priorityForBT(ls, bTConfigs, "Operation"));
                 case "Warning"       -> typesetter = new BT_Warning(
                         posHandle,
-                        priority(ls, bTConfigs, "BlockTypesetter", "Warning"));
+                        priorityForBT(ls, bTConfigs, "Warning"));
                 case "Text"       -> typesetter = new BT_Text(
                         posHandle,
-                        priority(ls, bTConfigs, "BlockTypesetter", "Text"));
+                        priorityForBT(ls, bTConfigs, "Text"));
                 default ->
                     throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
             }
         }
 
-        private static Lexicon priority(
+        private static Lexicon priorityForBT(
                 List<Lexicon> first,
                 List<Lexicon> second,
-                String moduleType,
                 String name)
         {
-            Lexicon firstContent = Lexicons.orderName(first, moduleType, name);
+            Lexicon firstContent = Lexicons.orderName(first, "BlockTypesetter", name);
             return firstContent == null ?
-                    Lexicons.strictOrderName(second, moduleType, name) : firstContent;
+                    Lexicons.strictOrderName(second, "BlockTypesetter", name) : firstContent;
         }
 
         private SupportedBT_Position convertEnum() {
             SupportedBT_Position posHandle;
             switch (position) {
-                case "RIGHT" -> { posHandle = SupportedBT_Position.RIGHT; }
-                case "UP"    -> { posHandle = SupportedBT_Position.UP;    }
-                case "LEFT"  -> { posHandle = SupportedBT_Position.LEFT;  }
-                case "DOWN"  -> { posHandle = SupportedBT_Position.DOWN;  }
+                case "RIGHT" -> posHandle = SupportedBT_Position.RIGHT;
+                case "UP"    -> posHandle = SupportedBT_Position.UP;
+                case "LEFT"  -> posHandle = SupportedBT_Position.LEFT;
+                case "DOWN"  -> posHandle = SupportedBT_Position.DOWN;
                 default ->
                     throw new UnsupportedOperationException("Unsupported BC_Position: " + position);
             }

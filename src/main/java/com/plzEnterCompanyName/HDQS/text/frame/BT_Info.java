@@ -9,7 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 本java类注释中，Info指代{@link com.plzEnterCompanyName.HDQS.io.smartIO2.Info Info}
+ * <i>此类编码水平较高，乃BlockTypesetter中的典范</i>
+ *
+ * <p>本java类注释中，Info指代{@link com.plzEnterCompanyName.HDQS.io.smartIO2.Info Info}
  * 而BT_Info指代{@link com.plzEnterCompanyName.HDQS.text.frame.BT_Info BT_Info}
  */
 public class BT_Info extends BlockTypesetter {
@@ -87,10 +89,6 @@ public class BT_Info extends BlockTypesetter {
      */
     protected final BlankRowStatus BLANK_ROW;
 
-    enum BlankRowStatus {
-        TRUE, FALSE, AUTO
-    }
-
     private int cacheIndex;
 
     /**
@@ -108,9 +106,6 @@ public class BT_Info extends BlockTypesetter {
         String singleInfoWidthMinStr = config.getFirst("singleInfoWidthMin");
         String singleInfoWidthMaxStr = config.getFirst("singleInfoWidthMax");
         String horizontalSpacingStr  = config.getFirst("horizontalSpacing" );
-        String tabStopsStr           = config.getFirst("tabStops"          );
-        String infoValWidthStr       = config.getFirst("infoValWidth"      );
-        String alignmentStr          = config.getFirst("alignment"         );
         String blankRowStr           = config.getFirst("blankRow"          );
         TOTAL_WIDTH           =        Integer.parseInt(totalWidthStr        );
         TOTAL_HEIGHT          =        Integer.parseInt(totalHeightStr       );
@@ -130,7 +125,7 @@ public class BT_Info extends BlockTypesetter {
     @Override
     protected int setType(Message message, final int posLimit) {
         String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
-        String spacing = String.valueOf(' ').repeat(HORIZONTAL_SPACING);
+        String spacing = Frame.repeatW(" ", HORIZONTAL_SPACING);
         List<String> infosStr = new ArrayList<>(message.infos.size());
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
             throw new RuntimeException("Info UP and DOWN is still developing!");
@@ -162,10 +157,8 @@ public class BT_Info extends BlockTypesetter {
             while (infosStrIndex < infosStr.size()) {
                 if (currentBlankRow == BlankRowStatus.TRUE) {
                     lineCount++;
-                    cache[lineCount++] = indentationStr + infosStr.get(infosStrIndex++) + endBlankStr;
-                } else {
-                    cache[lineCount++] = indentationStr + infosStr.get(infosStrIndex++) + endBlankStr;
                 }
+                cache[lineCount++] = indentationStr + infosStr.get(infosStrIndex++) + endBlankStr;
             }
             return TOTAL_WIDTH;
         }

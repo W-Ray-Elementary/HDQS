@@ -9,7 +9,6 @@ public interface AdjustableBT {
 
     /**
      * 通过这个方法，Layout就可以告诉这个BlockTypesetter还有多少空间可用。
-     * @param availSpace
      */
     void tellAvailSpace(int availSpace);
 }

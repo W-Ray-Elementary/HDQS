@@ -6,20 +6,28 @@ import com.plzEnterCompanyName.HDQS.util.Lexicon;
 import java.util.Arrays;
 
 public class BT_SeparateLine extends BlockTypesetter {
-    String[] cache;
-    private int cacheIndex;
+
+    protected final char HORIZONTAL_STYLE;
+
+    protected final char VERTICAL_STYLE;
 
     public BT_SeparateLine(SupportedBT_Position position, Lexicon config) {
         super(position);
+        String horizontalStyleStr = config.getFirst("horizontalStyle");
+        String verticalStyleStr   = config.getFirst("verticalStyle"  );
+        HORIZONTAL_STYLE = (char) Integer.parseInt(horizontalStyleStr);
+        VERTICAL_STYLE   = (char) Integer.parseInt(verticalStyleStr  );
     }
 
     @Override
     protected int setType(Message message, final int posLimit) {
         switch (position) {
-            case UP  , DOWN  -> cache = new String[]{ String.valueOf('-').repeat(posLimit) };
+            case UP  , DOWN  -> cache = new String[]{
+                    Frame.repeatW(String.valueOf(HORIZONTAL_STYLE), posLimit)
+            };
             case LEFT, RIGHT -> {
                 cache = new String[posLimit];
-                Arrays.fill(cache, String.valueOf('|'));
+                Arrays.fill(cache, String.valueOf(VERTICAL_STYLE));
             }
         }
         return 1;
@@ -31,7 +39,5 @@ public class BT_SeparateLine extends BlockTypesetter {
     }
 
     @Override
-    protected void nextPage() {
-        cacheIndex = 0;
-    }
+    protected void nextPage() {  }
 }
