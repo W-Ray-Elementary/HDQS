@@ -94,10 +94,12 @@ public class Layout {
             case UP, DOWN -> {
                 adjustableBT.tellAvailSpace(heightRemain);
                 lastTypesetter.setType(msg, widthRemain);
+                adjustableBT.tellBTThisFactThatItIsTheLastOne();
             }
             case LEFT, RIGHT -> {
                 adjustableBT.tellAvailSpace(widthRemain);
                 lastTypesetter.setType(msg, heightRemain);
+                adjustableBT.tellBTThisFactThatItIsTheLastOne();
             }
         }
         fillTable(table, x_1, y_1, x_2, y_2, layers.size()-1);

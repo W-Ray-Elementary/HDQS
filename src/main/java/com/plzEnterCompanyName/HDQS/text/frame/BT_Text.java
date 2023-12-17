@@ -9,23 +9,31 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
 
     private int availSpace;
     private int cacheIndex;
-    protected String[] cache;
+    private boolean areYouTheLastOne;
+    private static final boolean I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE = false;
     protected BT_Text(SupportedBT_Position position, Lexicon config) {
         super(position);
+        areYouTheLastOne = I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE;
     }
 
     @Override
     protected int setType(Message message, final int posLimit) {
-        String $ = String.valueOf('$').repeat(posLimit);
-        cache = new String[availSpace];
-        Arrays.fill(cache, $);
-        cacheIndex = 0;
+        if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
+
+        } else {
+            throw new RuntimeException("Text LEFT and RIGHT is still developing.");
+        }
         return availSpace;
     }
 
     @Override
     protected String getCache() {
         return cache[cacheIndex++];
+    }
+
+    @Override
+    public void tellBTThisFactThatItIsTheLastOne() {
+        areYouTheLastOne = true;
     }
 
     @Override

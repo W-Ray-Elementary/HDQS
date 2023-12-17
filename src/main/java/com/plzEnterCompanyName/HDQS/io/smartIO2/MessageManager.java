@@ -37,12 +37,15 @@ public class MessageManager {
     }
 
     public Message toMessage() {
-        return new Message(
+        Message returnVal = new Message(
                 this.title,
                 this.texts,
                 this.infos,
                 this.operations,
                 this.advancedInfo);
+        clean();
+        return returnVal;
+
     }
 
     public void title(String s) {
@@ -55,6 +58,10 @@ public class MessageManager {
         if (append) org += s;
         else org = s;
         this.title.set(0, org);
+    }
+
+    public void text() {
+        text(DEFAULT_BLANK_TEXT);
     }
 
     public void text(String s) {

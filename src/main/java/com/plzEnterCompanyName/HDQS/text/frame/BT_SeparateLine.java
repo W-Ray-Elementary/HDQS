@@ -23,7 +23,7 @@ public class BT_SeparateLine extends BlockTypesetter {
     protected int setType(Message message, final int posLimit) {
         switch (position) {
             case UP  , DOWN  -> cache = new String[]{
-                    Frame.repeatW(String.valueOf(HORIZONTAL_STYLE), posLimit)
+                    Frame.AWT_RULER.repeatW(String.valueOf(HORIZONTAL_STYLE), posLimit)
             };
             case LEFT, RIGHT -> {
                 cache = new String[posLimit];

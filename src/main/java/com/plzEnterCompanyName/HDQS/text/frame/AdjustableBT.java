@@ -8,6 +8,11 @@ package com.plzEnterCompanyName.HDQS.text.frame;
 public interface AdjustableBT {
 
     /**
+     * 告诉他，你是最后一个。
+     */
+    void tellBTThisFactThatItIsTheLastOne();
+
+    /**
      * 通过这个方法，Layout就可以告诉这个BlockTypesetter还有多少空间可用。
      */
     void tellAvailSpace(int availSpace);

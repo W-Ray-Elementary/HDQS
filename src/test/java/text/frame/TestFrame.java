@@ -17,7 +17,7 @@ public class TestFrame {
     public static final Message messageForTest;
     static {
         MessageManager mm = new MessageManager();
-        mm.title("MYRPG-VersionAlpha0.1" + SETTINGS.GAME_NAME);
+        mm.title("MYRPG-VersionAlpha0.1");
 
         mm.info("等级    1");
         mm.info("经验    100/0");
@@ -52,7 +52,6 @@ public class TestFrame {
     private static void TEST_Frame() {
         Frame f = new Frame();
         f.out(messageForTest);
-        java.util.Scanner sc = new java.util.Scanner(System.in);
-        sc.nextLine();
+        System.out.println();
     }
 }

@@ -125,20 +125,23 @@ public class BT_Info extends BlockTypesetter {
     @Override
     protected int setType(Message message, final int posLimit) {
         String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
-        String spacing = Frame.repeatW(" ", HORIZONTAL_SPACING);
+        String spacing = Frame.AWT_RULER.repeatW(" ", HORIZONTAL_SPACING);
         List<String> infosStr = new ArrayList<>(message.infos.size());
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
             throw new RuntimeException("Info UP and DOWN is still developing!");
         }
         else {
             cache = new String[posLimit];
-            int lineSpaceAvail = TOTAL_WIDTH - Frame.measureWidth(indentationStr);
+            int lineSpaceAvail = TOTAL_WIDTH - Frame.AWT_RULER.measureWidth(indentationStr);
             int[] places = tryToPlace(lineSpaceAvail);
             String endBlankStr = String.valueOf(' ').repeat(places[2]);
             String blankBlock = indentationStr + String.valueOf(' ').repeat(places[1]) + endBlankStr;
             for (Info info : message.infos)
                 infosStr.add(setType0(info, places[1]));
             Arrays.fill(cache, blankBlock);
+            if (infosStr.isEmpty()) {
+                return TOTAL_WIDTH;
+            }
             BlankRowStatus currentBlankRow;
             if (BLANK_ROW == BlankRowStatus.AUTO) {
                 if (posLimit >= (infosStr.size() * 2 - 1))
@@ -178,10 +181,10 @@ public class BT_Info extends BlockTypesetter {
     }
 
     private String setType0(Info info, int availableWidth) {
-        if (info == null) return Frame.repeatW(null, availableWidth);
+        if (info == null) return Frame.AWT_RULER.repeatW(null, availableWidth);
         String returnVal = "";
         String infoStr = info.getName();
-        int neededWidth = Frame.measureWidth(infoStr);
+        int neededWidth = Frame.AWT_RULER.measureWidth(infoStr);
         if (neededWidth > availableWidth)
             return String.valueOf('#').repeat(availableWidth);
         int endBlanks = availableWidth - neededWidth;
