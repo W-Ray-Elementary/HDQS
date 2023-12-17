@@ -3,7 +3,7 @@ package com.plzEnterCompanyName.HDQS.text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class zh_CN_Typography {
+public class zh_CN_Typography implements Typography {
     private final Ruler ruler;
     private static final char[] noFirstChars = "!%%),.:;>?]}¢¨°·ˇˉ―‖’”…‰′″›℃∶、。〃〉》」』】〕〗〞︶︺︾﹀﹄﹚﹜﹞！＂％＇），．：；？］｀｜｝～￠".toCharArray();
     private static final char[] noLastChars = "$([{£¥·‘“〈《「『【〔〖〝﹙﹛﹝＄（．［｛￡￥".toCharArray();

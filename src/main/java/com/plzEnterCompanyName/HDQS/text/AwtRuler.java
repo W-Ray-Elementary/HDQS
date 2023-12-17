@@ -97,4 +97,9 @@ public class AwtRuler implements Ruler {
         }
         return sb.toString();
     }
+
+    @Override
+    public String repeatW(char c, int availWidth) {
+        return repeatW(String.valueOf(c), availWidth);
+    }
 }
