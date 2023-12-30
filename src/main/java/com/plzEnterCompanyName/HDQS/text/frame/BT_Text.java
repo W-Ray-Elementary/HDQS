@@ -53,7 +53,7 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
             if (!areYouTheLastOne) {
                 throw new RuntimeException("Text is not the last is still developing");
             } else {
-                
+
             }
         } else {
             throw new RuntimeException("Text LEFT and RIGHT is still developing.");
