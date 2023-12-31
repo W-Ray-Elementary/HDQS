@@ -5,6 +5,8 @@ import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.*;
 import com.plzEnterCompanyName.HDQS.text.AwtRuler;
 import com.plzEnterCompanyName.HDQS.text.Ruler;
+import com.plzEnterCompanyName.HDQS.text.Typography;
+import com.plzEnterCompanyName.HDQS.text.zh_CN_Typography;
 
 public class Frame implements Out, PageOutputAble, WarnAble {
 
@@ -55,6 +57,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
 
     private final Layout layout;
     public static final Ruler AWT_RULER = new AwtRuler();
+    public static final Typography TYPO = new zh_CN_Typography(AWT_RULER);
     public static final String DEFAULT_CONFIG__FILE_PATH = "settings\\frame.cfg";
     private static final String DEFAULT_CONFIG_VALUE =
             """
@@ -113,7 +116,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     indentationLeft = 1
                     indentationRight = 1
                     indentationChar = 32
-                    lineSpacing = 1
+                    widowOrphanControl = 1
                 }
                 Layout
                 {

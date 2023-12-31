@@ -21,11 +21,7 @@ public class zh_CN_Typography implements Typography {
     }
 
     /**
-     * 按照中文排版习惯进行断行，有如下原则
-     * <blockquote><pre>
-     *     1. 当字符串宽度超过限度时，进行断行，若断行后仍然超出限度，则继续断行；
-     *     2. 断行后若出现不规范的标点符号使用，则从上一行寻找可断行处进行断行。
-     * </pre></blockquote>
+     * 按照中文排版习惯进行断行，里边有24个if，断行原则你就猜吧。
      *
      * @param s 要进行断行的字符串
      * @param width 进行断行时遵循的宽度，由Ruler测量值为准进行比较

@@ -26,6 +26,9 @@ rmdir /S /Q "out\batchBuild\temp"
 :: SmartIO.jar
 javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\Message.java"
 javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\MessageManager.java"
+javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\Out.java"
+javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\PageOutputAble.java"
+javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\WarnAble.java"
 Xcopy "META-INF\SmartIO" "out\batchBuild\temp\META-INF\" /s/e/y
 jar -cvfm out\batchBuild\HDQS\lib\SmartIO.jar out\batchBuild\temp\META-INF\MANIFEST.MF -C out\batchBuild\temp .
 rmdir /S /Q "out\batchBuild\temp"
