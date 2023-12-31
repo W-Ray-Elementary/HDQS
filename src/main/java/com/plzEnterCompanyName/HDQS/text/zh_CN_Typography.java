@@ -8,6 +8,7 @@ public class zh_CN_Typography implements Typography {
     private static final char[] NO_FIRST_CHARS = "!%%),.:;>?]}¢¨°·ˇˉ―‖’”…‰′″›℃∶、。〃〉》」』】〕〗〞︶︺︾﹀﹄﹚﹜﹞！＂％＇），．：；？］｀｜｝～￠".toCharArray();
     private static final char[] NO_LAST_CHARS = "$([{£¥·‘“〈《「『【〔〖〝﹙﹛﹝＄（．［｛￡￥".toCharArray();
     private static final char[] NO_BREAK_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ—…".toCharArray();
+    private static final char[] IGNORED_CHARS = " ".toCharArray();
     public zh_CN_Typography(Ruler ruler) {
         this.ruler = ruler;
     }
@@ -32,6 +33,7 @@ public class zh_CN_Typography implements Typography {
      * @return 完成断行的字符串
      */
     public List<String> lineBreak(String s, final int width, boolean isAddEndBlanks) {
+        if (width < 2) throw new IllegalArgumentException("width: " + width + " is too short.");
         List<String> returnVal = new ArrayList<>();
         if (s.isEmpty()) {
             String emptyLine;
@@ -50,23 +52,41 @@ public class zh_CN_Typography implements Typography {
             if (i != 0) last = chars[i-1];
             char current = chars[i];
             int usage = last == null ? 0 : ruler.measureWidth(last);
-            if (usage > availWidth) {
-                if (enterMarker == canPressEnter) {
+            if (usage > availWidth || current == '\n') {
+                if (current == '\n') {
+                    currentLine = s.substring(enterMarker, i);
+                    enterMarker = i + 1;
+                    canPressEnter = i;
+                } else if (enterMarker == canPressEnter) {
                     // 在这里无论如何断行，都一定会违反语法
                     // 所以这里要把语法废除（bushi）
-                    currentLine = s.substring(enterMarker, i);
-                    enterMarker = i;
-                    canPressEnter = i;
+                    currentLine = s.substring(enterMarker, i - 1);
+                    enterMarker = i - 1;
+                    canPressEnter = i - 1;
                 } else {
                     currentLine = s.substring(enterMarker, canPressEnter);
                     enterMarker = canPressEnter;
+                    String ignoreCharCriterion = s.substring(canPressEnter, i);
+                    while (contains(IGNORED_CHARS, ignoreCharCriterion.charAt(0))) {
+                        ignoreCharCriterion = ignoreCharCriterion.substring(1);
+                        enterMarker++;
+                        if (ignoreCharCriterion.isEmpty()) break;
+                    }
                 }
                 if (isAddEndBlanks) currentLine = makeSureSameWidth(currentLine, width);
                 returnVal.add(currentLine);
                 availWidth = width;
-                String addonLine = s.substring(canPressEnter+1, i);
-                int future = ruler.measureWidth(addonLine);
-                availWidth -= future;
+                if (canPressEnter == i) {
+                    if (!(i + 1 == chars.length)) {
+                        String breakLine = s.substring(i + 1, i + 3);
+                        int rest = ruler.measureWidth(breakLine);
+                        availWidth += rest;
+                    }
+                } else {
+                    String addonLine = s.substring(canPressEnter+1, i);
+                    int future = ruler.measureWidth(addonLine);
+                    availWidth -= future;
+                }
             }
             availWidth -= usage;
             if (chars.length == 1) break;
@@ -78,10 +98,21 @@ public class zh_CN_Typography implements Typography {
                 continue;
             canPressEnter = i;
         }
-        //TODO:最后的处理
         currentLine = s.substring(enterMarker);
-        if (isAddEndBlanks) currentLine = makeSureSameWidth(currentLine, width);
-        returnVal.add(currentLine);
+        if (enterMarker == canPressEnter) {
+            canPressEnter = chars.length-1;
+        }
+        if (ruler.measureWidth(currentLine) > width) {
+            String line1 = s.substring(enterMarker, canPressEnter);
+            if (isAddEndBlanks) line1 = makeSureSameWidth(line1, width);
+            String line2 = s.substring(canPressEnter);
+            if (isAddEndBlanks) line2 = makeSureSameWidth(line2, width);
+            returnVal.add(line1);
+            returnVal.add(line2);
+        } else {
+            if (isAddEndBlanks) currentLine = makeSureSameWidth(currentLine, width);
+            returnVal.add(currentLine);
+        }
         return returnVal;
     }
 

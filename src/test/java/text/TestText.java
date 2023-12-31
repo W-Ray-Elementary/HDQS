@@ -23,7 +23,7 @@ public class TestText {
 
     private static void TEST_zh_CN_Typography() {
         zh_CN_Typography typography = new zh_CN_Typography(new AwtRuler());
-        final int expectWidth = 30;
+        final int expectWidth = 72;
         List<String> p0 = typography.lineBreak(s0, expectWidth);
         List<String> p1 = typography.lineBreak(s1, expectWidth);
         List<String> p2 = typography.lineBreak(s2, expectWidth);
@@ -40,9 +40,11 @@ public class TestText {
         boolean flag = false;
         AwtRuler aRuler = new AwtRuler();
         for (String s : all)
-            if (aRuler.measureWidth(s) != expectWidth)
+            if (aRuler.measureWidth(s) != expectWidth) {
+                System.out.println(s);
                 flag = true;
+            }
         if (flag)
             throw new RuntimeException("zh_CN_Typography未能如期断行！");
-    }
+        }
 }
