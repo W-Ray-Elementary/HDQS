@@ -1,15 +1,13 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
-import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
-import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
-import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NEW_LINE;
-import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NULL;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NEW_LINE;
+import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NULL;
 
 public class MessageManager {
     private static final String DEFAULT_BLANK_TEXT = "";
@@ -35,15 +33,19 @@ public class MessageManager {
         this.infos = new ArrayList<>();
         this.infoIndex = 0;
         this.operations = new ArrayList<>();
+        this.operationIndex = 1;
     }
 
     public Message toMessage() {
-        return new Message(
+        Message returnVal = new Message(
                 this.title,
                 this.texts,
                 this.infos,
                 this.operations,
                 this.advancedInfo);
+        clean();
+        return returnVal;
+
     }
 
     public void title(String s) {
@@ -56,6 +58,10 @@ public class MessageManager {
         if (append) org += s;
         else org = s;
         this.title.set(0, org);
+    }
+
+    public void text() {
+        text(DEFAULT_BLANK_TEXT);
     }
 
     public void text(String s) {
@@ -79,6 +85,10 @@ public class MessageManager {
             texts.add(DEFAULT_BLANK_TEXT);
     }
 
+    public void info(String str) {
+        info(new Info(str, "", false));
+    }
+
     public void info(Info info) {
         info(info, infoIndex++);
     }
@@ -94,6 +104,11 @@ public class MessageManager {
             infos.add(DEFAULT_BLANK_INFO);
     }
 
+    private int operationIndex;
+
+    public void operation(String s) {
+        this.operations.add(new Operation(s, new IntegerReceiver(operationIndex++)));
+    }
 
     public void addOperation(Operation ort) {
         this.operations.add(ort);

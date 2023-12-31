@@ -1,4 +1,5 @@
 import io.smartIO2.TestMessageManager;
+import text.frame.TestFrame;
 import util.TestFormatCheck;
 
 public class TestAll {
@@ -8,7 +9,9 @@ public class TestAll {
         io.TestReadJar.main(null);
         util.TestCurve.main(null);
         util.TestLEXICON.main(null);
+        util.TestLexicons.main(null);
         TestFormatCheck.main(null);
         TestMessageManager.main(null);
+        TestFrame.main(null);
     }
 }

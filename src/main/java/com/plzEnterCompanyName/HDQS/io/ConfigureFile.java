@@ -4,20 +4,35 @@ import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
 import java.io.File;
 
+/**
+ * A read only configure file.
+ */
 public class ConfigureFile {
-    public final String name;
     public final File cfgFile;
-    public final String defaultValue;
+    public final Lexicon defaultValue;
 
-    public ConfigureFile(String name, File cfgFile, String defaultValue) {
-        this.name = name;
+    private String comments = "";
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public ConfigureFile(File cfgFile, String defaultValue) {
         this.cfgFile = cfgFile;
-        this.defaultValue = defaultValue;
+        this.defaultValue = Lexicon.valueOf(defaultValue).get(0);
     }
 
     public Lexicon read() {
-        if (!cfgFile.exists())
-            return new Lexicon(defaultValue);
+        if (!cfgFile.exists()) {
+            String cfgStr = "";
+            if (!comments.isEmpty()) {
+                cfgStr += comments;
+                cfgStr += "\n";
+            }
+            cfgStr += String.valueOf(defaultValue);
+            FileAndString.write(cfgFile, cfgStr, true);
+            return defaultValue;
+        }
         return Lexicon.valueOf(cfgFile).get(0);
     }
 }

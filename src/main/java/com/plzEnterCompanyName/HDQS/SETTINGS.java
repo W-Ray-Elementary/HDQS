@@ -9,4 +9,10 @@ public class SETTINGS {
      * 为了与国际接轨，本项目使用编码为 UTF-8.
      */
     public static final String ENCODE = "UTF-8";
+
+    /**
+     * 游戏的名字，静态变量利于全局访问。
+     * 不考虑本地化，因为这可是游戏的名字啊！
+     */
+    public static final String GAME_NAME = "荒岛求生";
 }

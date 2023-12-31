@@ -122,7 +122,6 @@ import java.util.*;
  * {@code LEXICON}中的“键值对”实际上放在一个List集合中（这何尝不是一种......）。
  * 这可能会在未来造成问题，需要修改
  *
- * @version LEXICON 0.3.0
  */
 public class Lexicon {
 
@@ -402,7 +401,7 @@ public class Lexicon {
      * 获取这一Lexicon中全部匹配key的数据，一般用于读取属性
      * @param fuzzy 是否启用模糊查询
      * @return 全部匹配的key的对应的value将会被返回，若无匹配的key，返回零
-     *         长度数组
+     *         长度数组，返回的类型可能是Lexicon与String
      */
     public Object[] getAll(String key, boolean fuzzy) {
         if (key == null)

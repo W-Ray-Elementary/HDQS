@@ -1,5 +1,7 @@
 package com.plzEnterCompanyName.HDQS;
 
+import com.plzEnterCompanyName.HDQS.text.frame.Frame;
+
 public class Launcher {
     private static void configureLaunch() {
 
@@ -10,6 +12,9 @@ public class Launcher {
         for (int i = 0; i < args.length; i++) {
             if ("-helloWorld".equals(args[i])) {
                 helloWorld(args[i + 1]);
+            }
+            if ("-frame".equals(args[i])) {
+                Frame.demo();
             }
         }
         cleanUp();

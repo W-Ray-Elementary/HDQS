@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Class-Path: ..\lib\HDQS-FileIO.jar ..\lib\SmartIO.jar ..\lib\Lexicon.jar

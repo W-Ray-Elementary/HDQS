@@ -67,18 +67,20 @@ public class Info {
      * 按设定的宽度来。
      * 数值显示宽度不计科学计数法
      * 非数值显示直接忽略宽度
+     * 结果呢，还得满足Frame的特殊需求
      */
-    public String getValueString() {
+    public String getValueString(int widthF) {
+        FormatCheck.intLimit(widthF, MIN_WIDTH, Integer.MAX_VALUE);
         if (!isInteger) return value;
         if (value.isEmpty()) return "";
         FormatCheck.integerString(value, 10);
-        if (value.length() <= width) return value;
+        if (value.length() <= widthF) return value;
         // 运行到这说明是数值，而且必须转换
         StringBuilder sb = new StringBuilder();
         int currentDI = 0; // DI: DigitIndex
         sb.append(value.charAt(currentDI++));
         sb.append(POINT);
-        for (int i = width - (POINT.length() + 1); i > 0; i--) {
+        for (int i = widthF - (POINT.length() + 1); i > 0; i--) {
             //                ↑ 1是小数点前一位，POINT.length()是小数点本身
             sb.append(value.charAt(currentDI++));
         }

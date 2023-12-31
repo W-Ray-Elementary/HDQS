@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: com.plzEnterCompanyName.HDQS.Launcher
+Class-Path:  ..\lib\Frame.jar
 

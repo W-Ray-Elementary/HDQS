@@ -52,15 +52,15 @@ public class FormatCheck {
     public static final int NULL = 0x00000001;
     public static final int ZERO_LENGTH = 0x00000002;
     public static final int NEW_LINE = 0x00000004;
-    public static void specialString(String val, int option) {
-        if ((option   )%2 == 1) {
+    public static void specialString(String val, int options) {
+        if ((options   )%2 == 1) {
             Objects.requireNonNull(val);
         }
-        if ((option>>1)%2 == 1) {
+        if ((options>>1)%2 == 1) {
             if (val.isEmpty())
                 throw new IllegalArgumentException("Zero length String");
         }
-        if ((option>>2)%2 == 1) {
+        if ((options>>2)%2 == 1) {
             if (val.contains("\n") && val.contains("\r")) {
                 throw new IllegalArgumentException("Newline is unsupported");
             }
