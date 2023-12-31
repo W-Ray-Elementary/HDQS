@@ -52,18 +52,16 @@ public class zh_CN_Typography implements Typography {
             if (i != 0) last = chars[i-1];
             char current = chars[i];
             int usage = last == null ? 0 : ruler.measureWidth(last);
-            if (usage > availWidth || current == '\n') {
-                if (current == '\n') {
-                    currentLine = s.substring(enterMarker, i);
-                    enterMarker = i + 1;
-                    canPressEnter = i;
-                } else if (enterMarker == canPressEnter) {
+            if (usage > availWidth) {
+                if (enterMarker == canPressEnter) {
                     // 在这里无论如何断行，都一定会违反语法
                     // 所以这里要把语法废除（bushi）
                     currentLine = s.substring(enterMarker, i - 1);
                     enterMarker = i - 1;
                     canPressEnter = i - 1;
                 } else {
+                    // 普通断行，绝对符合语法
+                    if (enterMarker > canPressEnter) enterMarker = canPressEnter;
                     currentLine = s.substring(enterMarker, canPressEnter);
                     enterMarker = canPressEnter;
                     String ignoreCharCriterion = s.substring(canPressEnter, i);
@@ -73,20 +71,28 @@ public class zh_CN_Typography implements Typography {
                         if (ignoreCharCriterion.isEmpty()) break;
                     }
                 }
+                // 进行宽度计算
                 if (isAddEndBlanks) currentLine = makeSureSameWidth(currentLine, width);
                 returnVal.add(currentLine);
                 availWidth = width;
-                if (canPressEnter == i) {
-                    if (!(i + 1 == chars.length)) {
-                        String breakLine = s.substring(i + 1, i + 3);
-                        int rest = ruler.measureWidth(breakLine);
-                        availWidth += rest;
-                    }
-                } else {
-                    String addonLine = s.substring(canPressEnter+1, i);
-                    int future = ruler.measureWidth(addonLine);
-                    availWidth -= future;
+                String addonLine = s.substring(canPressEnter+1, i);
+                int future = ruler.measureWidth(addonLine);
+                availWidth -= future;
+            }
+            if (current == '\n') {
+                // 包含\n，进行强制断行
+                currentLine = s.substring(enterMarker, i);
+                canPressEnter = i + 1;
+                enterMarker = i + 1;
+                // 进行宽度计算
+                if (isAddEndBlanks) currentLine = makeSureSameWidth(currentLine, width);
+                returnVal.add(currentLine);
+                availWidth = width;
+                String tail = "";
+                if (i != 0) {
+                    tail = s.substring(i - 1, i);
                 }
+                availWidth += (1 + ruler.measureWidth(tail));
             }
             availWidth -= usage;
             if (chars.length == 1) break;
