@@ -1,12 +1,9 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.text.Typography;
-import com.plzEnterCompanyName.HDQS.text.zh_CN_Typography;
 import com.plzEnterCompanyName.HDQS.util.Lexicon;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class BT_Text extends BlockTypesetter implements AdjustableBT {
@@ -20,12 +17,10 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
     private int availSpace;
     private int cacheIndex;
     private boolean areYouTheLastOne;
-    private final Typography typography;
     private static final boolean I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE = false;
     protected BT_Text(SupportedBT_Position position, Lexicon config) {
         super(position);
         areYouTheLastOne = I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE;
-        typography = new zh_CN_Typography(Frame.AWT_RULER);
         String totalWidthStr         = config.getFirst("totalWidth"        );
         String totalHeightStr        = config.getFirst("totalHeight"       );
         String indentationLeftStr    = config.getFirst("indentationLeft"   );
@@ -52,20 +47,20 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
             blockWidth = areYouTheLastOne ? availSpace : TOTAL_WIDTH;
         }
         List<List<String>> paragraphs = new ArrayList<>();
-        String indentationLeftStr = Frame.AWT_RULER.repeatW(INDENTATION_CHAR, INDENTATION_LEFT);
-        String indentationRightStr = Frame.AWT_RULER.repeatW(INDENTATION_CHAR, INDENTATION_RIGHT);
+        String indentationLeftStr = Frame.RULER.repeatW(INDENTATION_CHAR, INDENTATION_LEFT);
+        String indentationRightStr = Frame.RULER.repeatW(INDENTATION_CHAR, INDENTATION_RIGHT);
         int widthAvail = blockWidth - INDENTATION_LEFT - INDENTATION_RIGHT;
-        String blankLineStr = Frame.AWT_RULER.repeatW(' ', widthAvail);
+        String blankLineStr = Frame.RULER.repeatW(' ', widthAvail);
         for (String s : message.texts) {
             paragraphs.add(Frame.TYPO.lineBreak(s, widthAvail));
         }
         int linesAvail = blockHeight;
         List<String> preCache = new ArrayList<>();
-        for (int i = 0; i < paragraphs.size(); i++) {
+        for (List<String> paragraph : paragraphs) {
             if (linesAvail == blockHeight) {
-                for (int j = 0; j < paragraphs.get(i).size(); j++) {
+                for (String s : paragraph) {
                     if (linesAvail > 0) {
-                        preCache.add(indentationLeftStr + paragraphs.get(i).get(j) + indentationRightStr);
+                        preCache.add(indentationLeftStr + s + indentationRightStr);
                         linesAvail--;
                         continue;
                     }
@@ -76,9 +71,9 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
                     preCache.add(indentationLeftStr + blankLineStr + indentationRightStr);
                     linesAvail--;
                 }
-                for (int j = 0; j < paragraphs.get(i).size(); j++) {
+                for (String s : paragraph) {
                     if (linesAvail > 0) {
-                        preCache.add(indentationLeftStr + paragraphs.get(i).get(j) + indentationRightStr);
+                        preCache.add(indentationLeftStr + s + indentationRightStr);
                         linesAvail--;
                         continue;
                     }

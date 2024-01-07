@@ -57,12 +57,12 @@ public class BT_Operation extends BlockTypesetter {
                     lines.add(new StringBuilder());
                     lines.get(lineCount).append(indentationStr);
                     lines.get(lineCount).append(str);
-                    lineSpaceAvail -= Frame.AWT_RULER.measureWidth(indentationStr);
-                    lineSpaceAvail -= Frame.AWT_RULER.measureWidth(str);
+                    lineSpaceAvail -= Frame.RULER.measureWidth(indentationStr);
+                    lineSpaceAvail -= Frame.RULER.measureWidth(str);
                     isLineBegin = false;
                     continue;
                 }
-                int neededSpace = Frame.AWT_RULER.measureWidth(spacing) + Frame.AWT_RULER.measureWidth(str);
+                int neededSpace = Frame.RULER.measureWidth(spacing) + Frame.RULER.measureWidth(str);
                 if (neededSpace > lineSpaceAvail) {
                     lines.get(lineCount).append(String.valueOf(' ').repeat(lineSpaceAvail));
                     lineCount++;
@@ -70,8 +70,8 @@ public class BT_Operation extends BlockTypesetter {
                     lines.add(new StringBuilder());
                     lines.get(lineCount).append(indentationStr);
                     lines.get(lineCount).append(str);
-                    lineSpaceAvail -= Frame.AWT_RULER.measureWidth(indentationStr);
-                    lineSpaceAvail -= Frame.AWT_RULER.measureWidth(str);
+                    lineSpaceAvail -= Frame.RULER.measureWidth(indentationStr);
+                    lineSpaceAvail -= Frame.RULER.measureWidth(str);
                     continue;
                 }
                 lineSpaceAvail -= neededSpace;

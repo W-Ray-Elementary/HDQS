@@ -53,7 +53,7 @@ public class BT_Tittle extends BlockTypesetter {
             if (IS_DRAWING_GAME_NAME) {
                 gameName = GAME_NAME;
             }
-            int usedWidth = Frame.AWT_RULER.measureWidth(retraction + title + gameName);
+            int usedWidth = Frame.RULER.measureWidth(retraction + title + gameName);
             if (usedWidth >= posLimit) {
                 cache[0] = String.valueOf('#').repeat(posLimit);
                 return 1;
