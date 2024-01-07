@@ -51,14 +51,14 @@ public class FileAndString {
      * @param str 会写到文件中的内容
      */
     public static void write(File file, String str) {
-        write(file, str, false);
+        write(file, str, true);
     }
 
     /**
      * 防止有时候脑抽写反了形参
      */
     public static void write(String str, File file) {
-        write(file, str, false);
+        write(file, str, true);
     }
 
     /**
@@ -69,6 +69,10 @@ public class FileAndString {
      * @param str 会写到文件中的内容
      */
     public static void write(File file, String str, boolean autoCreateFile) {
+        if (!file.getParentFile().exists() && autoCreateFile) {
+            if (!file.getParentFile().mkdirs())
+                throw new RuntimeException("Unexpected exception, please try to solve file writing problem.");
+        }
         if (!file.exists() && autoCreateFile) {
             try {
                 if (!file.createNewFile())

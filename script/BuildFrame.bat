@@ -48,4 +48,6 @@ jar -cvfm out\batchBuild\HDQS\bin\HDQS.jar out\batchBuild\temp\META-INF\MANIFEST
 rmdir /S /Q "out\batchBuild\temp"
 
 copy "src\main\batch\FrameDemo.exe" "out\batchBuild\HDQS\" /y
+xcopy "src\main\resourses\*" "out\batchBuild\HDQS" /s /e /y
+xcopy "src\test\resources\*" "out\batchBuild\HDQS" /s /e /y
 cd script

@@ -1,19 +1,35 @@
 package com.plzEnterCompanyName.HDQS.text;
 
+import com.plzEnterCompanyName.HDQS.RequireBoot;
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class AwtRuler implements Ruler {
+public class AwtRuler implements Ruler, RequireBoot {
+
+    @Override
+    public void boot() {
+        bootMetrics = getMetrics();
+    }
+
+    private static FontMetrics getMetrics() {
+        Font font = new Font("新宋体", Font.PLAIN, 12);
+        BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.getGraphics();
+        return g.getFontMetrics(font);
+    }
+
+    private static FontMetrics bootMetrics;
 
     private final FontMetrics metrics;
 
     public AwtRuler() {
-        Font font = new Font("新宋体", Font.PLAIN, 12);
-        BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
-        Graphics g = image.getGraphics();
-        metrics = g.getFontMetrics(font);
+        if (bootMetrics == null) {
+            metrics = getMetrics();
+        } else {
+            metrics = bootMetrics;
+        }
     }
 
     /**
