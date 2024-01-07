@@ -125,14 +125,14 @@ public class BT_Info extends BlockTypesetter {
     @Override
     protected int setType(Message message, final int posLimit) {
         String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
-        String spacing = Frame.AWT_RULER.repeatW(" ", HORIZONTAL_SPACING);
+        String spacing = Frame.RULER.repeatW(" ", HORIZONTAL_SPACING);
         List<String> infosStr = new ArrayList<>(message.infos.size());
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
             throw new RuntimeException("Info UP and DOWN is still developing!");
         }
         else {
             cache = new String[posLimit];
-            int lineSpaceAvail = TOTAL_WIDTH - Frame.AWT_RULER.measureWidth(indentationStr);
+            int lineSpaceAvail = TOTAL_WIDTH - Frame.RULER.measureWidth(indentationStr);
             int[] places = tryToPlace(lineSpaceAvail);
             String endBlankStr = String.valueOf(' ').repeat(places[2]);
             String blankBlock = indentationStr + String.valueOf(' ').repeat(places[1]) + endBlankStr;
@@ -181,10 +181,10 @@ public class BT_Info extends BlockTypesetter {
     }
 
     private String setType0(Info info, int availableWidth) {
-        if (info == null) return Frame.AWT_RULER.repeatW(null, availableWidth);
+        if (info == null) return Frame.RULER.repeatW(null, availableWidth);
         String returnVal = "";
         String infoStr = info.getName();
-        int neededWidth = Frame.AWT_RULER.measureWidth(infoStr);
+        int neededWidth = Frame.RULER.measureWidth(infoStr);
         if (neededWidth > availableWidth)
             return String.valueOf('#').repeat(availableWidth);
         int endBlanks = availableWidth - neededWidth;

@@ -51,13 +51,14 @@ public class Frame implements Out, PageOutputAble, WarnAble {
         mm.text("    主题和样式也有助于文档保持协调。当您单击设计并选择新的主题时，图片、图表或 SmartArt 图形将会更改以匹配新的主题。当应用样式时，您的标题会进行更改以匹配新的主题。");
         mm.text("    使用在需要位置出现的新按钮在 Word 中保存时间。若要更改图片适应文档的方式，请单击该图片，图片旁边将会显示布局选项按钮。当处理表格时，单击要添加行或列的位置，然后单击加号。");
         mm.text("    在新的阅读视图中阅读更加容易。可以折叠文档某些部分并关注所需文本。如果在达到结尾处之前需要停止读取，Word 会记住您的停止位置 - 即使在另一个设备上。");
+        mm.text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.");
         f.out(mm.toMessage());
         new java.util.Scanner(System.in).nextLine();
     }
 
     private final Layout layout;
-    public static final Ruler AWT_RULER = new AwtRuler();
-    public static final Typography TYPO = new zh_CN_Typography(AWT_RULER);
+    public static final Ruler RULER = new AwtRuler();
+    public static final Typography TYPO = new zh_CN_Typography(RULER);
     public static final String DEFAULT_CONFIG__FILE_PATH = "settings\\frame.cfg";
     private static final String DEFAULT_CONFIG_VALUE =
             """
