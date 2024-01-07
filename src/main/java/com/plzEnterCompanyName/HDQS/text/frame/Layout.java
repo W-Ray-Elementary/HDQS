@@ -24,7 +24,7 @@ public class Layout {
      * 幕空间不够时就可能抛出此异常。
      */
     protected static final String spaceInsufficientMsg = "Screen space is insufficient, " +
-            "please try to adjust settings in " + Frame.DEFAULT_CONFIG__FILE_PATH;
+            "please try to adjust settings in " + Frame.DEFAULT_CONFIG_FILE_PATH;
 
     public Layout(Lexicon config) {
         this.width = Integer.parseInt(config.getFirst("width"));

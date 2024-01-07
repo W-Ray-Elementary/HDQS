@@ -1,11 +1,16 @@
 package text.frame;
 
 import com.plzEnterCompanyName.HDQS.SETTINGS;
+import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.MessageManager;
 import com.plzEnterCompanyName.HDQS.text.frame.BT_Tittle;
 import com.plzEnterCompanyName.HDQS.text.frame.Frame;
 import com.plzEnterCompanyName.HDQS.text.frame.SupportedBT_Position;
+
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 public class TestFrame {
     public static void main(String[] args) {
@@ -51,7 +56,7 @@ public class TestFrame {
     }
     private static void TEST_Frame() {
         Frame f = new Frame();
+        f.setPrintStream(new PrintStream(OutputStream.nullOutputStream()));
         f.out(messageForTest);
-        System.out.println();
     }
 }
