@@ -11,6 +11,7 @@ public class AwtRuler implements Ruler, RequireBoot {
     @Override
     public void boot() {
         bootMetrics = getMetrics();
+        RequireBoot.out.println(getClass().getName());
     }
 
     private static FontMetrics getMetrics() {

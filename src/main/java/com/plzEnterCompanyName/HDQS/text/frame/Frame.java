@@ -1,5 +1,6 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
+import com.plzEnterCompanyName.HDQS.RequireBoot;
 import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
 import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.*;
@@ -12,8 +13,15 @@ import com.plzEnterCompanyName.HDQS.util.Lexicons;
 
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Objects;
 
-public class Frame implements Out, PageOutputAble, WarnAble {
+public class Frame implements Out, PageOutputAble, WarnAble, RequireBoot {
+
+    @Override
+    public void boot() {
+        DEFAULT_LAYOUT = new Layout(DEFAULT_CONFIG.read());
+        RequireBoot.out.println(getClass().getName());
+    }
 
     private PrintStream printStream;
 
@@ -32,49 +40,6 @@ public class Frame implements Out, PageOutputAble, WarnAble {
         List<Lexicon> messageLs = Lexicons.listOut(read, "Message");
         for (Lexicon messageLexicon : messageLs) {
         }
-//        Frame f = new Frame();
-//        MessageManager mm = new MessageManager();
-//        mm.title("MYRPG-VersionAlpha0.1");
-//
-//        mm.info("等级    1");
-//        mm.info("经验    100/0");
-//        mm.info("属性点  0");
-//        mm.info("生命值  100/100");
-//        mm.info("魔力值  200/200");
-//        mm.info("攻击力  10");
-//        mm.info("防御力  2");
-//        mm.info("敏捷    5");
-//        mm.info("距离    1000/0");
-//        mm.info("武器    训练战士用的木剑      伤害:3");
-//        mm.info("盔甲    新手木甲      盔甲值:3.0");
-//        mm.info("输入6以查看详细信息....");
-//
-//        mm.text("你遭遇了怪物,进入战斗状态!!");
-//        mm.text("==========================");
-//        mm.text("现在是战斗的第1回合!");
-//        mm.text("-------------------------------");
-//        mm.text("你的血量:100.0/100.0        僵尸血量:50.0/50.0      等级:1");
-//        mm.text("你的魔力值:200.0/200.0");
-//        mm.text("-------------------------------");
-//        mm.text();
-//        mm.text("请选择你现在要做什么");
-//
-//        mm.operation("1.【战斗】");
-//        mm.operation("2.【怪物信息】");
-//        mm.operation("3.【释放技能】");
-//        mm.operation("4.【更多功能】");
-//        mm.operation("5.【More function】");
-//        mm.operation("6.【その他の機能】");
-//        f.out(mm.toMessage());
-//        new java.util.Scanner(System.in).nextLine();
-//        mm.text("    视频提供了功能强大的方法帮助您证明您的观点。当您单击联机视频时，可以在想要添加的视频的嵌入代码中进行粘贴。您也可以键入一个关键字以联机搜索最适合您的文档的视频。");
-//        mm.text("    为使您的文档具有专业外观，Word 提供了页眉、页脚、封面和文本框设计，这些设计可互为补充。例如，您可以添加匹配的封面、页眉和提要栏。单击“插入”，然后从不同库中选择所需元素。");
-//        mm.text("    主题和样式也有助于文档保持协调。当您单击设计并选择新的主题时，图片、图表或 SmartArt 图形将会更改以匹配新的主题。当应用样式时，您的标题会进行更改以匹配新的主题。");
-//        mm.text("    使用在需要位置出现的新按钮在 Word 中保存时间。若要更改图片适应文档的方式，请单击该图片，图片旁边将会显示布局选项按钮。当处理表格时，单击要添加行或列的位置，然后单击加号。");
-//        mm.text("    在新的阅读视图中阅读更加容易。可以折叠文档某些部分并关注所需文本。如果在达到结尾处之前需要停止读取，Word 会记住您的停止位置 - 即使在另一个设备上。");
-//        mm.text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.");
-//        f.out(mm.toMessage());
-//        new java.util.Scanner(System.in).nextLine();
     }
 
     private static ConfigureFile getDemoRes() {
@@ -129,8 +94,8 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                 }""";
         return new ConfigureFile(PATH.getFile(DEMO_RES_FILEPATH), DEMO_RES_VALUE);
     }
-
     private final Layout layout;
+    private static Layout DEFAULT_LAYOUT;
     public static final Ruler RULER = new AwtRuler();
     public static final Typography TYPO = new zh_CN_Typography(RULER);
     public static final String DEFAULT_CONFIG_FILE_PATH = "settings\\frame.cfg";
@@ -257,6 +222,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
                     }
                 }
             }""";
+
     public static final ConfigureFile DEFAULT_CONFIG;
 
     static {
@@ -269,7 +235,7 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     }
 
     public Frame() {
-        this(new Layout(DEFAULT_CONFIG.read()));
+        layout = Objects.requireNonNullElseGet(DEFAULT_LAYOUT, () -> new Layout(DEFAULT_CONFIG.read()));
     }
 
     public Frame(Layout layout) {

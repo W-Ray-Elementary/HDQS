@@ -1,10 +1,19 @@
 package com.plzEnterCompanyName.HDQS;
 
+import com.plzEnterCompanyName.HDQS.text.AwtRuler;
 import com.plzEnterCompanyName.HDQS.text.frame.Frame;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Launcher {
     private static void configureLaunch() {
-
+        List<RequireBoot> rbs = new ArrayList<>();
+        rbs.add(new AwtRuler());
+        rbs.add(new Frame());
+        for (RequireBoot rb : rbs) {
+            rb.boot();
+        }
     }
 
     public static void main(String[] args) {
