@@ -2,7 +2,7 @@ package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Operation;
-import com.plzEnterCompanyName.HDQS.util.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 import java.util.ArrayList;
 import java.util.List;

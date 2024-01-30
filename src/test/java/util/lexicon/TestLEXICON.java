@@ -1,8 +1,8 @@
-package util;
+package util.lexicon;
 
 import com.plzEnterCompanyName.HDQS.io.PATH;
-import com.plzEnterCompanyName.HDQS.util.IllegalContentException;
-import com.plzEnterCompanyName.HDQS.util.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.IllegalContentException;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -13,7 +13,7 @@ public class TestLEXICON {
         long startTime = System.currentTimeMillis();
         TEST_LEXICON();
         long cost = System.currentTimeMillis() - startTime;
-        System.out.println("com.plzEnterCompanyName.HDQS.util.Lexicon 的测试成功完成于" + ' ' + cost + ' ' + "ms");
+        System.out.println("com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon 的测试成功完成于" + ' ' + cost + ' ' + "ms");
     }
 
     public static void BenchMark() {
@@ -25,7 +25,7 @@ public class TestLEXICON {
         long startTime = System.currentTimeMillis();
         benchmark = Lexicon.valueOf(benchmark.toString()).get(0);
         long cost = System.currentTimeMillis() - startTime;
-        System.out.println("com.plzEnterCompanyName.HDQS.util 的基准测试成功完成于" + ' ' + cost + ' ' + "ms");
+        System.out.println("com.plzEnterCompanyName.HDQS.util.lexicon 的基准测试成功完成于" + ' ' + cost + ' ' + "ms");
     }
 
     private static void TEST_LEXICON() {
@@ -33,7 +33,7 @@ public class TestLEXICON {
         // 测试 空白LEXICON 的 lineCount()
         Lexicon blankLexicon = new Lexicon("BLANK");
         if (blankLexicon.lineCount() != 3)
-            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.LEXICON 在空白返回了错误的文本行数量，" +
+            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.lexicon.LEXICON 在空白返回了错误的文本行数量，" +
                     "正确值：" + 3 + "返回值：" + blankLexicon.lineCount() + "\n测试未完成");
 
         // 测试 纯文本LEXICON 的 lineCount()
@@ -43,7 +43,7 @@ public class TestLEXICON {
         textLexicon.add("员工", "王五");
         textLexicon.add("设备", "1 普通设备套装");
         if (textLexicon.lineCount() != 7)
-            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.LEXICON 在纯文本返回了错误的文本行数量，" +
+            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.lexicon.LEXICON 在纯文本返回了错误的文本行数量，" +
                     "正确值：" + 7 + "返回值：" + textLexicon.lineCount() + "\n测试未完成");
 
         // 测试 嵌套LEXICON 的 lineCount()
@@ -53,7 +53,7 @@ public class TestLEXICON {
         nestLexicon.add("生产力指标", "");
         nestLexicon.add(textLexicon);
         if (nestLexicon.lineCount() != 13)
-            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.LEXICON 在嵌套返回了错误的文本行数量，" +
+            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.lexicon.LEXICON 在嵌套返回了错误的文本行数量，" +
                     "正确值：" + 13 + "返回值：" + textLexicon.lineCount() + "\n测试未完成");
 
         // 测试列举LEXICON内部的所有LEXICON
@@ -69,7 +69,7 @@ public class TestLEXICON {
                 pass = true;
             }
             if (!pass) {
-                throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.LEXICON 在自指时不抛异常");
+                throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.lexicon.LEXICON 在自指时不抛异常");
             }
         }
 

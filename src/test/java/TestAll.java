@@ -1,5 +1,7 @@
 import com.plzEnterCompanyName.HDQS.RequireBoot;
 import com.plzEnterCompanyName.HDQS.text.AwtRuler;
+import util.lexicon.TestLEXICON;
+import util.lexicon.TestLexicons;
 
 public class TestAll {
     public static void main(String[] args) {
@@ -13,7 +15,7 @@ public class TestAll {
         text.TestText.main(null);
         util.TestCurve.main(null);
         util.TestFormatCheck.main(null);
-        util.TestLEXICON.main(null);
-        util.TestLexicons.main(null);
+        TestLEXICON.main(null);
+        TestLexicons.main(null);
     }
 }

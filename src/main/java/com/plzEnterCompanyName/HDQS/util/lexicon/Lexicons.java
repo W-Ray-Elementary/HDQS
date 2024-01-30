@@ -1,9 +1,10 @@
-package com.plzEnterCompanyName.HDQS.util;
+package com.plzEnterCompanyName.HDQS.util.lexicon;
+
+import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 
 /**
  * 原版Lexicon的功能太少了，用着不方便！

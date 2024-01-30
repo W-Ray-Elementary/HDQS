@@ -8,8 +8,8 @@ import com.plzEnterCompanyName.HDQS.text.AwtRuler;
 import com.plzEnterCompanyName.HDQS.text.Ruler;
 import com.plzEnterCompanyName.HDQS.text.Typography;
 import com.plzEnterCompanyName.HDQS.text.zh_CN_Typography;
-import com.plzEnterCompanyName.HDQS.util.Lexicon;
-import com.plzEnterCompanyName.HDQS.util.Lexicons;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicons;
 
 import java.io.PrintStream;
 import java.util.List;
