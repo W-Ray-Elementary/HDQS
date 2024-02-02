@@ -3,6 +3,7 @@ package util.lexicon;
 import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.util.lexicon.IllegalContentException;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -94,11 +95,11 @@ public class TestLEXICON {
                 text.contains("{")&&
                 text.contains("=") &&
                 text.contains("员工")&&
-                text.contains("张三")&&
-                text.contains("李四")&&
-                text.contains("王五")&&
+                text.contains(StringEscapeUtils.escapeJava("张三"))&&
+                text.contains(StringEscapeUtils.escapeJava("李四"))&&
+                text.contains(StringEscapeUtils.escapeJava("王五"))&&
                 text.contains("设备")&&
-                text.contains("1 普通设备套装")&&
+                text.contains(StringEscapeUtils.escapeJava("1 普通设备套装"))&&
                 text.contains("}")
         )) {
             throw new RuntimeException("纯文本LEXICON 的 toString() 方法未包含所有要点");
@@ -114,16 +115,16 @@ public class TestLEXICON {
                 nest.contains("ROOT")&&
                 nest.contains("{")&&
                 nest.contains("=") &&
-                nest.contains("市场"   )&&
-                nest.contains("市场容量" )&&
+                nest.contains("市场")&&
+                nest.contains("市场容量")&&
                 nest.contains("生产力指标")&&
-                nest.contains("COMPANY") &&
+                nest.contains(StringEscapeUtils.escapeJava("COMPANY"))&&
                 nest.contains("员工")&&
-                nest.contains("张三")&&
-                nest.contains("李四")&&
-                nest.contains("王五")&&
+                nest.contains(StringEscapeUtils.escapeJava("张三"))&&
+                nest.contains(StringEscapeUtils.escapeJava("李四"))&&
+                nest.contains(StringEscapeUtils.escapeJava("王五"))&&
                 nest.contains("设备")&&
-                nest.contains("1 普通设备套装")&&
+                nest.contains(StringEscapeUtils.escapeJava("1 普通设备套装"))&&
                 nest.contains("}")
                 )) {
             throw new RuntimeException("嵌套LEXICON 的 toString() 方法未包含所有要点");

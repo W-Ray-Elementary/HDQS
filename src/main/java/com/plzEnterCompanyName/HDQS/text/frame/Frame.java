@@ -116,7 +116,7 @@ public class Frame implements Out, PageOutputAble, WarnAble, RequireBoot {
                     name = Tittle
                     indentation = 1
                     indentationChar = 32 // decimal : 32 = binary 00010000 = the ascii code
-                                        // of blank space
+                                         // of blank space
                     isDrawingGameName = true
                     gameName = [未定义 undefined]
                 }
@@ -131,7 +131,7 @@ public class Frame implements Out, PageOutputAble, WarnAble, RequireBoot {
                                     // consider "totalWidth"
                     indentation = 1
                     indentationChar = 32 // decimal : 32 = binary 00010000 = the ascii code
-                                        // of blank space
+                                         // of blank space
                     singleInfoWidthMin = 29
                     singleInfoWidthMax = 39
                     horizontalSpacing = 4

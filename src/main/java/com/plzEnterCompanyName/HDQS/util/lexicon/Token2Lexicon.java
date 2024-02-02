@@ -78,7 +78,6 @@ public class Token2Lexicon {
 
     private Lexicon readLexicon(Token head) {
         Lexicon returnVal = new Lexicon(head.value());
-        advance(); // skip left brace
         while (!isAtEnd()) {
             Token subHead = advance();
             switch (subHead.type) {
