@@ -1,5 +1,8 @@
 package com.plzEnterCompanyName.HDQS.util.lexicon;
 
+import org.apache.commons.text.StringEscapeUtils;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +12,15 @@ public class Token2Lexicon {
     private final List<Token> source;
     private final List<Lexicon> lexicons = new ArrayList<>();
     private int current = 0;
+    private File sourceFile;
 
     Token2Lexicon(List<Token> source) {
         this.source = source;
+    }
+
+    public Token2Lexicon(List<Token> source, File sourceFile) {
+        this.source = source;
+        this.sourceFile = sourceFile;
     }
 
     public List<Lexicon> convert() {
@@ -36,7 +45,7 @@ public class Token2Lexicon {
                             break;
                         case LEFT_BRACE:
                             lexicons.add(readLexicon(t));
-                            break;
+                            return;
                         case WHITESPACE, NEWLINE, EOF:
                             break;
                         case STRING:
@@ -73,18 +82,56 @@ public class Token2Lexicon {
         while (!isAtEnd()) {
             Token subHead = advance();
             switch (subHead.type) {
+                case EQUAL:
+                    System.err.println(errMsg(subHead, "missing name", 0, 1));
+                    break;
                 case LEFT_BRACE:
                     System.err.println(errMsg(subHead, "missing name", 0, 1));
+                    readLexicon(head);
                     break;
                 case RIGHT_BRACE:
                     return returnVal;
                 case WHITESPACE, NEWLINE:
                     break;
                 case STRING:
+                    boolean canContinue = true;
+                    while (!isAtEnd() && canContinue) {
+                        Token criterion = advance();
+                        switch (criterion.type) {
+                            case EOF:
+                                System.err.println(errMsg(criterion, "unexpected EOF", criterion.value().length(), 1));
+                                return returnVal;
+                            case WHITESPACE, NEWLINE:
+                                break;
+                            case RIGHT_BRACE:
+                                System.err.println(errMsg(subHead, "RIGHT_BRACE, cannot find an '=' or '{'", 0, subHead.value().length()));
+                                return returnVal;
+                            case STRING:
+                                System.err.println(errMsg(criterion, "multiple String as a name", 0, criterion.value().length()));
+                                break;
+                            case LEFT_BRACE:
+                                returnVal.add(readLexicon(subHead));
+                                canContinue = false;
+                                break;
+                            case EQUAL:
+                                Token vToken = advance();
+                                if (vToken.type == WHITESPACE) vToken = advance();
+                                StringBuilder sb = new StringBuilder();
+                                while (vToken.type != NEWLINE) {
+                                    sb.append(vToken.value());
+                                    vToken = advance();
+                                }
+                                String unescaped = sb.toString();
+                                String escaped = StringEscapeUtils.unescapeJava(unescaped);
+                                returnVal.add(subHead.value(), escaped);
+                                canContinue = false;
+                                break;
+                        }
+                    }
                     break;
-                case EQUAL:
-                    System.err.println(errMsg(subHead, "Key-Value should be surrounded by a lexicon", 0, 0));
-                    break;
+                case EOF:
+                    System.err.println(errMsg(subHead, "expect '}'", 0, 0));
+                    return returnVal;
             }
         }
         System.err.println(errMsg(source.get(current-1), "expect '}'", source.get(current-1).value().length(), 1));
@@ -112,6 +159,11 @@ public class Token2Lexicon {
         sb.append("Error: ");
         sb.append(msg);
         sb.append(".\n");
+        if (sourceFile != null) {
+            sb.append("In \"");
+            sb.append(sourceFile.getAbsolutePath());
+            sb.append("\"\n");
+        }
         sb.append('\n');
         String line = String.valueOf(t.line);
         sb.append(" ".repeat(Math.max(0, 6 - line.length())));

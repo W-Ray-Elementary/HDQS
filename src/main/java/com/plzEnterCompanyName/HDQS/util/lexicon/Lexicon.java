@@ -2,7 +2,9 @@ package com.plzEnterCompanyName.HDQS.util.lexicon;
 
 import com.plzEnterCompanyName.HDQS.SETTINGS;
 import com.plzEnterCompanyName.HDQS.io.FileAndString;
+import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.File;
 import java.util.*;
@@ -133,7 +135,11 @@ public class Lexicon {
      * @return 根据{@code txtF}创建的对象
      */
     public static List<Lexicon> valueOf(File txtF) {
-        return valueOf(FileAndString.read(txtF));
+        String s = FileAndString.read(txtF);
+        LScanner scanner = new LScanner(s);
+        List<Token> tokens = scanner.scanTokens();
+        Token2Lexicon converter = new Token2Lexicon(tokens, txtF);
+        return converter.convert();
     }
 
     /**
@@ -146,14 +152,6 @@ public class Lexicon {
         List<Token> tokens = scanner.scanTokens();
         Token2Lexicon converter = new Token2Lexicon(tokens);
         return converter.convert();
-    }
-
-    public static void main(String[] args) {
-        String testInstance = """
-                Test
-                {}""";
-        List<Lexicon> l = Lexicon.valueOf(testInstance);
-        l.get(0).listOutLexicons();
     }
 
     /**
@@ -319,8 +317,10 @@ public class Lexicon {
                     currentLineCount++;
                 }
             } else {
+                String escaped = content.value.toString();
+                String unescaped = StringEscapeUtils.escapeJava(escaped);
                 contentStrings[currentLineCount] =
-                        "    " + content.key + " = " + content.value;
+                        "    " + content.key + " = " + unescaped;
                 currentLineCount++;
             }
         }
