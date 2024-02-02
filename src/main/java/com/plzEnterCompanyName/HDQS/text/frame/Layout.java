@@ -1,8 +1,8 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.util.Lexicon;
-import com.plzEnterCompanyName.HDQS.util.Lexicons;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicons;
 
 import java.util.ArrayList;
 import java.util.Arrays;

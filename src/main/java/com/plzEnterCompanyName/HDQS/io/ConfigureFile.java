@@ -1,6 +1,6 @@
 package com.plzEnterCompanyName.HDQS.io;
 
-import com.plzEnterCompanyName.HDQS.util.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 import java.io.File;
 

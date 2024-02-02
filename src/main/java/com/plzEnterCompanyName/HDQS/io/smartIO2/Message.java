@@ -1,6 +1,6 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
-import com.plzEnterCompanyName.HDQS.util.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 import java.util.List;
 

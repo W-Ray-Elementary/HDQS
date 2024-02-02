@@ -1,7 +1,7 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.util.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 public class BT_Warning extends BlockTypesetter {
 

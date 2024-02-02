@@ -1,7 +1,7 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.util.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 /**
  * 用于标题绘制的BlockTypesetter，只占一行。

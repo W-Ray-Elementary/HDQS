@@ -1,4 +1,4 @@
-package com.plzEnterCompanyName.HDQS.util;
+package com.plzEnterCompanyName.HDQS.util.lexicon;
 
 public class ContentNotFoundException extends RuntimeException {
     public ContentNotFoundException() {
