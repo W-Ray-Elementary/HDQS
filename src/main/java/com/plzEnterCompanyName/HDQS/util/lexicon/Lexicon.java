@@ -2,12 +2,13 @@ package com.plzEnterCompanyName.HDQS.util.lexicon;
 
 import com.plzEnterCompanyName.HDQS.SETTINGS;
 import com.plzEnterCompanyName.HDQS.io.FileAndString;
-import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 用于以cfg格式读取、写入配置文件

@@ -4,6 +4,11 @@
       <root url="jar://$PROJECT_DIR$/lib/StringEscapeUtils.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../DoNotDelete/StringEscapeUtils-src.zip!/src/main/java" />
+    </SOURCES>
+    <excluded>
+      <root url="jar://$PROJECT_DIR$/../DoNotDelete/StringEscapeUtils-src.zip!/" />
+    </excluded>
   </library>
 </component>

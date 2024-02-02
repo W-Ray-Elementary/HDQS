@@ -115,13 +115,12 @@ public class Token2Lexicon {
                                 break;
                             case EQUAL:
                                 Token vToken = advance();
-                                if (vToken.type == WHITESPACE) vToken = advance();
                                 StringBuilder sb = new StringBuilder();
                                 while (vToken.type != NEWLINE) {
                                     sb.append(vToken.value());
                                     vToken = advance();
                                 }
-                                String unescaped = sb.toString();
+                                String unescaped = sb.toString().strip();
                                 String escaped = StringEscapeUtils.unescapeJava(unescaped);
                                 returnVal.add(subHead.value(), escaped);
                                 canContinue = false;
