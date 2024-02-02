@@ -117,7 +117,7 @@ public class Lexicon {
      * 方式存储。所以需要{@code 子LEXICON}的此变量作为{@code 父LEXICON}的键值对中
      * 的key
      */
-    private final String name;
+    protected final String name;
 
     /**
      * {@code LEXICON}中的所有键值对集合
@@ -346,33 +346,5 @@ public class Lexicon {
             lineCount += content.lineCount();
         }
         return lineCount + 3; // 额外的3行中，一行为LEXICON名，一行为正大括号，一行为反大括号。
-    }
-
-    /* 懒得写注释了 */
-    static class Content {
-
-        String key;
-        Object value;
-        boolean isLEXICON;
-
-        public Content(String key, String value) {
-            this.key = key;
-            this.value = value;
-            this.isLEXICON = false;
-        }
-
-        public Content(Lexicon lexicon) {
-            this.key = lexicon.name;
-            this.value = lexicon;
-            this.isLEXICON = true;
-        }
-
-        public int lineCount() {
-            if (isLEXICON) {
-                return ((Lexicon)value).lineCount();
-            } else {
-                return 1;
-            }
-        }
     }
 }
