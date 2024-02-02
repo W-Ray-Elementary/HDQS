@@ -9,7 +9,7 @@ import java.io.File;
  */
 public class ConfigureFile {
     public final File cfgFile;
-    public final Lexicon defaultValue;
+    public final String defaultValue;
 
     private String comments = "";
 
@@ -19,7 +19,7 @@ public class ConfigureFile {
 
     public ConfigureFile(File cfgFile, String defaultValue) {
         this.cfgFile = cfgFile;
-        this.defaultValue = Lexicon.valueOf(defaultValue).get(0);
+        this.defaultValue = defaultValue;
     }
 
     public Lexicon read() {
@@ -31,7 +31,7 @@ public class ConfigureFile {
             }
             cfgStr += String.valueOf(defaultValue);
             FileAndString.write(cfgFile, cfgStr, true);
-            return defaultValue;
+            return Lexicon.valueOf(defaultValue).get(0);
         }
         return Lexicon.valueOf(cfgFile).get(0);
     }

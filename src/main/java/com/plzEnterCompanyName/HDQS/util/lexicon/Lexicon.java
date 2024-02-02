@@ -96,6 +96,13 @@ import java.util.Objects;
  * </pre>
  *
  * <p>
+ * Lexicon将换行符视为单独的Token类型，标志着一个KV的结束，这在一定程度上简化了代
+ * 码，毕竟Lexicon设计的初衷就是存储不同的数值，并且支持嵌套。后来在Frame的开发过
+ * 程中，出现了KV中包含换行符的情况，所以我们适时引入了转义机制。然而，虽然\\n可以被
+ * 正确转换为换行符并且换行符也可以正确转换为\\n，但是一切非ASCII字符都会被转换为
+ * \\u****的形式。
+ *
+ * <p>
  * {@code LEXICON}中的数据通过键值对(key-value)的方式存储，类似于
  * {@link java.util.Map}。但这不代表{@code LEXICON}实现了{@code Map}。相反，
  * {@code Map}中的绝大多数方法都无法在{@code LEXICON}中找到对应。同时，
