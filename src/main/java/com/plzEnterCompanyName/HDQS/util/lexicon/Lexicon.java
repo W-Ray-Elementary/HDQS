@@ -124,6 +124,10 @@ public class Lexicon {
      */
     private final List<Content> contents;
 
+    public List<Content> getContents() {
+        return contents;
+    }
+
     /**
      * 构造一个没有元素在内的 Lexicon 对象
      * @param name 直接作为 Lexicon 对象的 name 属性的值，传入{@code null}时会重新
