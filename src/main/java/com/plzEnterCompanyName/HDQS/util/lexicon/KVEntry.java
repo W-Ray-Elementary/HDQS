@@ -14,10 +14,12 @@ public class KVEntry {
         return key;
     }
 
-    public Object getValue() {
-        return value;
+    public String getValue() {
+        return String.valueOf(value);
     }
 
     /* 一个空KV是不成立的 */
-    private KVEntry() {}
+    private KVEntry() {
+        throw new UnsupportedOperationException();
+    }
 }

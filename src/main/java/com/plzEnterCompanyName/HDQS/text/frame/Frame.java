@@ -8,12 +8,12 @@ import com.plzEnterCompanyName.HDQS.text.AwtRuler;
 import com.plzEnterCompanyName.HDQS.text.Ruler;
 import com.plzEnterCompanyName.HDQS.text.Typography;
 import com.plzEnterCompanyName.HDQS.text.zh_CN_Typography;
+import com.plzEnterCompanyName.HDQS.util.lexicon.KVEntry;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicons;
 
 import java.io.PrintStream;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Frame implements Out, PageOutputAble, WarnAble, RequireBoot {
 
@@ -39,6 +39,29 @@ public class Frame implements Out, PageOutputAble, WarnAble, RequireBoot {
         Lexicon read = DEMO_RES.read();
         List<Lexicon> messageLs = Lexicons.listOut(read, "Message");
         for (Lexicon messageLexicon : messageLs) {
+            List<KVEntry> entries = messageLexicon.getAllKVEntry();
+            Iterator<KVEntry> it = entries.iterator();
+            MessageManager mm = new MessageManager();
+            while (it.hasNext()) {
+                KVEntry entry = it.next();
+                switch (entry.getKey()) {
+                    case "title":
+                        mm.title(entry.getValue());
+                        break;
+                    case "info":
+                        mm.info(entry.getValue());
+                        break;
+                    case "text":
+                        mm.text(entry.getValue());
+                        break;
+                    case "operation":
+                        mm.operation(entry.getValue());
+                        break;
+                }
+            }
+            Frame f = new Frame();
+            f.out(mm.toMessage());
+            new Scanner(System.in).nextLine();
         }
     }
 
@@ -236,6 +259,7 @@ public class Frame implements Out, PageOutputAble, WarnAble, RequireBoot {
 
     public Frame() {
         layout = Objects.requireNonNullElseGet(DEFAULT_LAYOUT, () -> new Layout(DEFAULT_CONFIG.read()));
+        printStream = System.out;
     }
 
     public Frame(Layout layout) {
