@@ -3,7 +3,7 @@ package com.plzEnterCompanyName.HDQS.util.lexicon;
 import com.plzEnterCompanyName.HDQS.SETTINGS;
 import com.plzEnterCompanyName.HDQS.io.FileAndString;
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
-import org.apache.commons.text.StringEscapeUtils;
+import com.plzEnterCompanyName.HDQS.util.StringEscapeUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -338,7 +338,7 @@ public class Lexicon {
                 }
             } else {
                 String escaped = content.value.toString();
-                String unescaped = StringEscapeUtils.escapeJava(escaped);
+                String unescaped = StringEscapeUtils.escapeLexicon(escaped);
                 contentStrings[currentLineCount] =
                         "    " + content.key + " = " + unescaped;
                 currentLineCount++;

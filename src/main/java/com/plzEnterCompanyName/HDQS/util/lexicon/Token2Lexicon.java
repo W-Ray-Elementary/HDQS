@@ -1,12 +1,12 @@
 package com.plzEnterCompanyName.HDQS.util.lexicon;
 
-import org.apache.commons.text.StringEscapeUtils;
+import com.plzEnterCompanyName.HDQS.util.StringEscapeUtils;
+
+import static com.plzEnterCompanyName.HDQS.util.lexicon.TokenType.*;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.plzEnterCompanyName.HDQS.util.lexicon.TokenType.*;
 
 public class Token2Lexicon {
     private final List<Token> source;
@@ -120,7 +120,7 @@ public class Token2Lexicon {
                                     vToken = advance();
                                 }
                                 String unescaped = sb.toString().strip();
-                                String escaped = StringEscapeUtils.unescapeJava(unescaped);
+                                String escaped = StringEscapeUtils.unescapeLexicon(unescaped);
                                 returnVal.add(subHead.value(), escaped);
                                 canContinue = false;
                                 break;

@@ -18,9 +18,9 @@ jar -cvfm out\batchBuild\HDQS\lib\HDQS-FileIO.jar out\batchBuild\temp\META-INF\M
 rmdir /S /Q "out\batchBuild\temp"
 
 :: Lexicon.jar
-javac -classpath "out\batchBuild\HDQS\lib\StringEscapeUtils.jar;out\batchBuild\HDQS\lib\HDQS-FileIO.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\util\lexicon\Lexicon.java"
-javac -classpath "out\batchBuild\HDQS\lib\StringEscapeUtils.jar;out\batchBuild\HDQS\lib\HDQS-FileIO.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\util\lexicon\Lexicons.java"
-javac -classpath "out\batchBuild\HDQS\lib\StringEscapeUtils.jar;out\batchBuild\HDQS\lib\HDQS-FileIO.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\ConfigureFile.java"
+javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\util\lexicon\Lexicon.java"
+javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\util\lexicon\Lexicons.java"
+javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\ConfigureFile.java"
 Xcopy "META-INF\Lexicon" "out\batchBuild\temp\META-INF\" /s/e/y
 jar -cvfm out\batchBuild\HDQS\lib\Lexicon.jar out\batchBuild\temp\META-INF\MANIFEST.MF -C out\batchBuild\temp .
 rmdir /S /Q "out\batchBuild\temp"
