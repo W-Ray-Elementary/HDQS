@@ -3,7 +3,6 @@ package util.lexicon;
 import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.util.lexicon.IllegalContentException;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
-import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -34,7 +33,7 @@ public class TestLEXICON {
         // 测试 空白LEXICON 的 lineCount()
         Lexicon blankLexicon = new Lexicon("BLANK");
         if (blankLexicon.lineCount() != 3)
-            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.lexicon.LEXICON 在空白返回了错误的文本行数量，" +
+            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.LEXICON 在空白返回了错误的文本行数量，" +
                     "正确值：" + 3 + "返回值：" + blankLexicon.lineCount() + "\n测试未完成");
 
         // 测试 纯文本LEXICON 的 lineCount()
@@ -44,7 +43,7 @@ public class TestLEXICON {
         textLexicon.add("员工", "王五");
         textLexicon.add("设备", "1 普通设备套装");
         if (textLexicon.lineCount() != 7)
-            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.lexicon.LEXICON 在纯文本返回了错误的文本行数量，" +
+            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.LEXICON 在纯文本返回了错误的文本行数量，" +
                     "正确值：" + 7 + "返回值：" + textLexicon.lineCount() + "\n测试未完成");
 
         // 测试 嵌套LEXICON 的 lineCount()
@@ -54,7 +53,7 @@ public class TestLEXICON {
         nestLexicon.add("生产力指标", "");
         nestLexicon.add(textLexicon);
         if (nestLexicon.lineCount() != 13)
-            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.lexicon.LEXICON 在嵌套返回了错误的文本行数量，" +
+            throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.LEXICON 在嵌套返回了错误的文本行数量，" +
                     "正确值：" + 13 + "返回值：" + textLexicon.lineCount() + "\n测试未完成");
 
         // 测试列举LEXICON内部的所有LEXICON
@@ -70,7 +69,7 @@ public class TestLEXICON {
                 pass = true;
             }
             if (!pass) {
-                throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.lexicon.LEXICON 在自指时不抛异常");
+                throw new RuntimeException("类 com.plzEnterCompanyName.HDQS.util.LEXICON 在自指时不抛异常");
             }
         }
 
@@ -78,8 +77,8 @@ public class TestLEXICON {
         String blank = blankLexicon.toString();
         if (!(
                 blank.contains("BLANK") &&
-                blank.contains("{")&&
-                blank.contains("}")
+                        blank.contains("{")&&
+                        blank.contains("}")
         )) {
             throw new RuntimeException("空白LEXICON 的 toString() 方法未包含所有要点");
         }
@@ -92,15 +91,15 @@ public class TestLEXICON {
         String text = textLexicon.toString();
         if (!(
                 text.contains("COMPANY") &&
-                text.contains("{")&&
-                text.contains("=") &&
-                text.contains("员工")&&
-                text.contains(StringEscapeUtils.escapeJava("张三"))&&
-                text.contains(StringEscapeUtils.escapeJava("李四"))&&
-                text.contains(StringEscapeUtils.escapeJava("王五"))&&
-                text.contains("设备")&&
-                text.contains(StringEscapeUtils.escapeJava("1 普通设备套装"))&&
-                text.contains("}")
+                        text.contains("{")&&
+                        text.contains("=") &&
+                        text.contains("员工")&&
+                        text.contains("张三")&&
+                        text.contains("李四")&&
+                        text.contains("王五")&&
+                        text.contains("设备")&&
+                        text.contains("1 普通设备套装")&&
+                        text.contains("}")
         )) {
             throw new RuntimeException("纯文本LEXICON 的 toString() 方法未包含所有要点");
         }
@@ -113,20 +112,20 @@ public class TestLEXICON {
         String nest = nestLexicon.toString();
         if (!(
                 nest.contains("ROOT")&&
-                nest.contains("{")&&
-                nest.contains("=") &&
-                nest.contains("市场")&&
-                nest.contains("市场容量")&&
-                nest.contains("生产力指标")&&
-                nest.contains(StringEscapeUtils.escapeJava("COMPANY"))&&
-                nest.contains("员工")&&
-                nest.contains(StringEscapeUtils.escapeJava("张三"))&&
-                nest.contains(StringEscapeUtils.escapeJava("李四"))&&
-                nest.contains(StringEscapeUtils.escapeJava("王五"))&&
-                nest.contains("设备")&&
-                nest.contains(StringEscapeUtils.escapeJava("1 普通设备套装"))&&
-                nest.contains("}")
-                )) {
+                        nest.contains("{")&&
+                        nest.contains("=") &&
+                        nest.contains("市场"   )&&
+                        nest.contains("市场容量" )&&
+                        nest.contains("生产力指标")&&
+                        nest.contains("COMPANY") &&
+                        nest.contains("员工")&&
+                        nest.contains("张三")&&
+                        nest.contains("李四")&&
+                        nest.contains("王五")&&
+                        nest.contains("设备")&&
+                        nest.contains("1 普通设备套装")&&
+                        nest.contains("}")
+        )) {
             throw new RuntimeException("嵌套LEXICON 的 toString() 方法未包含所有要点");
         }
 
@@ -188,8 +187,8 @@ public class TestLEXICON {
         String members = Arrays.toString(textLexicon.getAll("员工"));
         if (!(
                 members.contains("张三") &&
-                members.contains("李四") &&
-                members.contains("王五")
+                        members.contains("李四") &&
+                        members.contains("王五")
         )) {
             throw new RuntimeException("放进LEXICON的数据不能原封不动地拿回");
         }
@@ -205,9 +204,9 @@ public class TestLEXICON {
         String c = fuzzyLexicon.getFirst("c", true);
         if (!(
                 Objects.equals(a, "100") &&
-                Objects.equals(b, "3.14") &&
-                Objects.equals(c, "A String")
-                )) {
+                        Objects.equals(b, "3.14") &&
+                        Objects.equals(c, "A String")
+        )) {
             throw new RuntimeException("LEXICON无法进行模糊查询");
         }
 
