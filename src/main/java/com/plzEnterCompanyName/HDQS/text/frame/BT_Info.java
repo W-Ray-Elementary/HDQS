@@ -6,6 +6,7 @@ import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -126,58 +127,97 @@ public class BT_Info extends BlockTypesetter {
     protected int setType(Message message, final int posLimit) {
         String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
         String spacing = Frame.RULER.repeatW(" ", HORIZONTAL_SPACING);
-        List<String> infosStr = new ArrayList<>(message.infos.size());
+        final int totalWidth;
+        final int totalHeight;
+        final int secondLimit;
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
-            throw new RuntimeException("Info UP and DOWN is still developing!");
+            totalWidth = posLimit - INDENTATION;
+            totalHeight = TOTAL_HEIGHT;
+            secondLimit = TOTAL_HEIGHT;
         }
         else {
-            cache = new String[posLimit];
-            int lineSpaceAvail = TOTAL_WIDTH - Frame.RULER.measureWidth(indentationStr);
-            int[] places = tryToPlace(lineSpaceAvail);
-            String endBlankStr = String.valueOf(' ').repeat(places[2]);
-            String blankBlock = indentationStr + String.valueOf(' ').repeat(places[1]) + endBlankStr;
-            for (Info info : message.infos)
-                infosStr.add(setType0(info, places[1]));
-            Arrays.fill(cache, blankBlock);
-            if (infosStr.isEmpty()) {
-                return TOTAL_WIDTH;
+            totalWidth = TOTAL_WIDTH - INDENTATION;
+            totalHeight = posLimit;
+            secondLimit = TOTAL_WIDTH;
+        }
+        String blankLineWI /* WI: with indentation */
+                = Frame.RULER.repeatW(" ", totalWidth + INDENTATION);
+        int singleWidth = singleWidth(totalWidth);
+        String endOfLineSpace = Frame.RULER.repeatW(" ", endOfLineSpace(totalWidth));
+        List<String> lines = new ArrayList<>();
+        { // 防止对 infosStr 进行意外的引用
+            List<String> infosStr = new ArrayList<>(message.infos.size());
+            for (Info info : message.infos) {
+                infosStr.add(setType0(info, singleWidth));
             }
-            BlankRowStatus currentBlankRow;
-            if (BLANK_ROW == BlankRowStatus.AUTO) {
-                if (posLimit >= (infosStr.size() * 2 - 1))
-                    currentBlankRow = BlankRowStatus.TRUE;
-                else
-                    currentBlankRow = BlankRowStatus.FALSE;
-            } else
-                currentBlankRow = BLANK_ROW;
-            int lineCount = 0;
-            int infosStrIndex = 0;
-            if (infosStr.size() > posLimit) {
-                Arrays.fill(cache, String.valueOf('#').repeat(TOTAL_WIDTH));
-                return TOTAL_WIDTH;
-            }
-            cache[lineCount++] = indentationStr + infosStr.get(infosStrIndex++) + endBlankStr;
-            while (infosStrIndex < infosStr.size()) {
-                if (currentBlankRow == BlankRowStatus.TRUE) {
-                    lineCount++;
+            Iterator<String> it = infosStr.iterator();
+            while (it.hasNext()) {
+                StringBuilder sb = new StringBuilder(indentationStr);
+                int availWidth = totalWidth;
+                if (it.hasNext()) {
+                    sb.append(it.next());
+                    availWidth -= singleWidth;
                 }
-                cache[lineCount++] = indentationStr + infosStr.get(infosStrIndex++) + endBlankStr;
+                while (it.hasNext()) {
+                    if (availWidth >= HORIZONTAL_SPACING + MAX_SINGLE_INFO_WIDTH) {
+                        sb.append(spacing);
+                        availWidth -= HORIZONTAL_SPACING;
+                        sb.append(it.next());
+                        availWidth -= singleWidth;
+                        continue;
+                    }
+                    break;
+                }
+                sb.append(endOfLineSpace);
+                lines.add(sb.toString());
             }
-            return TOTAL_WIDTH;
         }
+        cache = new String[totalHeight];
+        Arrays.fill(cache, blankLineWI);
+        if (lines.isEmpty()) {
+            return secondLimit;
+        }
+        BlankRowStatus currentBlankRow;
+        if (BLANK_ROW == BlankRowStatus.AUTO) {
+            if (totalHeight >= (lines.size() * 2 - 1))
+                currentBlankRow = BlankRowStatus.TRUE;
+            else
+                currentBlankRow = BlankRowStatus.FALSE;
+        } else
+            currentBlankRow = BLANK_ROW;
+        int lineCount = 0;
+        int cacheCount = 0;
+        if (lines.size() > totalHeight) {
+            Arrays.fill(cache, String.valueOf('#').repeat(totalWidth + INDENTATION));
+        } else {
+            cache[cacheCount++] = lines.get(lineCount++);
+            while (lineCount < lines.size()) {
+                if (currentBlankRow == BlankRowStatus.TRUE) {
+                    cacheCount++;
+                }
+                cache[cacheCount++] = lines.get(lineCount++);
+            }
+        }
+        return secondLimit;
     }
-    /**
-     * 便捷地计算一下，对于当前的可用显示宽度，屏幕上可以放得下几栏info
-     * @param availableWidth 允许使用的显示宽度
-     * @return 返回值是一个int数组，数组下标为0的数据代表分几栏，下标为1的数据代表每栏长度
-     *         下标为2的为尾间隔。
-     */
-    private int[] tryToPlace(int availableWidth) {
-        if(availableWidth < MIN_SINGLE_INFO_WIDTH) {
-            throw new RuntimeException(Layout.spaceInsufficientMsg);
+
+    private int singleWidth(int totalWidth) {
+        return (totalWidth < MAX_SINGLE_INFO_WIDTH + HORIZONTAL_SPACING + MAX_SINGLE_INFO_WIDTH) ?
+                Math.min(totalWidth, MAX_SINGLE_INFO_WIDTH) :
+                MAX_SINGLE_INFO_WIDTH;
+    }
+
+    /*
+    * 能run不出BUG就行，我知道这里的代码可以简化。
+    * */
+    private int endOfLineSpace(final int totalWidth) {
+        if (totalWidth < MAX_SINGLE_INFO_WIDTH) {
+            return 0;
+        } else if (totalWidth < MAX_SINGLE_INFO_WIDTH + HORIZONTAL_SPACING + MAX_SINGLE_INFO_WIDTH) {
+            return totalWidth - MAX_SINGLE_INFO_WIDTH;
+        } else {
+            return (totalWidth - MAX_SINGLE_INFO_WIDTH) % (MAX_SINGLE_INFO_WIDTH + HORIZONTAL_SPACING);
         }
-        if(availableWidth >= MAX_SINGLE_INFO_WIDTH) return new int[]{(int) (double) (availableWidth / MAX_SINGLE_INFO_WIDTH),MAX_SINGLE_INFO_WIDTH,availableWidth % MAX_SINGLE_INFO_WIDTH};
-        return new int[]{1,availableWidth,0};
     }
 
     private String setType0(Info info, int availableWidth) {
