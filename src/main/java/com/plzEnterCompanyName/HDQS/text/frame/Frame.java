@@ -132,7 +132,7 @@ public class Frame implements Out, PageOutputAble, WarnAble, RequireBoot {
             Frame
             {
                 width = 120
-                height = 39
+                height = 29
                 BlockTypesetter
                 {
                     name = SeparateLine
