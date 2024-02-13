@@ -12,6 +12,6 @@ Compilation for Windows.
 \
   If you have any other ideas, Please see [Build.bat](script/Build.bat) ahead.
 # Run
-Again, you need make sure that Java17 is installed first.
+Again, you need make sure that the Java17 has been installed yet.
 * Download latest release [here](https://github.com/W-Ray-Elementary/HDQS/releases);
 * Just start `HDQS.exe`.
