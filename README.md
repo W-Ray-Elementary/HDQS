@@ -11,6 +11,6 @@ Windows端的编译方法如下
 * 双击`Build.bat`。
 如果你有不同的想法，请先参考[Build.bat](script/Build.bat)。
 # 运行
-再次确认你以安装Java17
+再次确认你已安装Java17
 * [在此](https://github.com/W-Ray-Elementary/HDQS/releases)下载最新的版本；
 * 仅需启动`HDQS.exe`即可。
