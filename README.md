@@ -8,9 +8,11 @@
 Windows端的编译方法如下
 * 下载releases中的源码；
 * 进入`script`目录；
-* 双击`Build.bat`。
+* 双击`Build.bat`。\
+\
 如果你有不同的想法，请先参考[Build.bat](script/Build.bat)。
 # 运行
-再次确认你已安装Java17
+再次确认你已安装Java17。\
+Windows 系统中的运行：
 * [在此](https://github.com/W-Ray-Elementary/HDQS/releases)下载最新的版本；
 * 仅需启动`HDQS.exe`即可。
