@@ -1,8 +1,8 @@
-##[简体中文](https://github.com/W-Ray-Elementary/HDQS/blob/master/README.md) | [English](https://github.com/W-Ray-Elementary/HDQS/blob/master/README_en-us.md)
+## [简体中文](https://github.com/W-Ray-Elementary/HDQS/blob/master/README.md) | [English](https://github.com/W-Ray-Elementary/HDQS/blob/master/README_en-us.md)
 # NOTE
 This repository will not accept any commits until Jul 2025.
 # HDQS
-A text game framework that providing some basic features. Such as IO, text manage and mod support.\
+A text game framework that providing some basic features. Such as IO, text manage and mod support.
 # compile
 You need make sure that Java17 is installed, Attention, it's not Java1.7. \
 Compilation for Windows.
@@ -14,4 +14,4 @@ Compilation for Windows.
 # Run
 Again, you need make sure that Java17 is installed first.
 * Download latest release [here](https://github.com/W-Ray-Elementary/HDQS/releases);
-* Just start 'HDQS.exe'.
+* Just start `HDQS.exe`.
