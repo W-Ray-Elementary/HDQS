@@ -1,9 +1,12 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 /**
+ * <p>
  * 可调节输出的BlockTypesetter
- *
- * <p>实现了此接口的BlockTypesetter，通常被放在Layout里的最后一个。
+ * </p>
+ * <p>
+ * 实现了此接口的BlockTypesetter，通常被放在Layout里的最后一个。
+ * </p>
  */
 public interface AdjustableBT {
 

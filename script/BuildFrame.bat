@@ -2,47 +2,17 @@ cd ..
 rmdir /S /Q "out\batchBuild"
 Xcopy "lib" "out\batchBuild\HDQS\lib\" /s/e/y
 
-:: UnicodeReader.jar
+:: google-UnicodeReader-2.2.1-alpha.jar
 javac -classpath "src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\google\UnicodeReader\java\io\base\UnicodeReader.java"
-Xcopy "META-INF\UnicodeReader" "out\batchBuild\temp\META-INF\" /s/e/y
+Xcopy "META-INF\google-UnicodeReader-2.2.1-alpha" "out\batchBuild\temp\META-INF\" /s/e/y
 md "out\batchBuild\HDQS\lib"
-jar -cvfm out\batchBuild\HDQS\lib\UnicodeReader.jar out\batchBuild\temp\META-INF\MANIFEST.MF -C out\batchBuild\temp .
-rmdir /S /Q "out\batchBuild\temp"
-
-:: HDQS-FileIO.jar
-javac -classpath "out\batchBuild\HDQS\lib\UnicodeReader.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\PATH.java"
-javac -classpath "out\batchBuild\HDQS\lib\UnicodeReader.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\FileAndString.java"
-javac -classpath "out\batchBuild\HDQS\lib\UnicodeReader.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\RequireBoot.java"
-Xcopy "META-INF\HDQS-FileIO" "out\batchBuild\temp\META-INF\" /s/e/y
-jar -cvfm out\batchBuild\HDQS\lib\HDQS-FileIO.jar out\batchBuild\temp\META-INF\MANIFEST.MF -C out\batchBuild\temp .
-rmdir /S /Q "out\batchBuild\temp"
-
-:: Lexicon.jar
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\util\lexicon\Lexicon.java"
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\util\lexicon\Lexicons.java"
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\ConfigureFile.java"
-Xcopy "META-INF\Lexicon" "out\batchBuild\temp\META-INF\" /s/e/y
-jar -cvfm out\batchBuild\HDQS\lib\Lexicon.jar out\batchBuild\temp\META-INF\MANIFEST.MF -C out\batchBuild\temp .
-rmdir /S /Q "out\batchBuild\temp"
-
-:: SmartIO.jar
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\Message.java"
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\MessageManager.java"
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\Out.java"
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\PageOutputAble.java"
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\io\smartIO2\WarnAble.java"
-Xcopy "META-INF\SmartIO" "out\batchBuild\temp\META-INF\" /s/e/y
-jar -cvfm out\batchBuild\HDQS\lib\SmartIO.jar out\batchBuild\temp\META-INF\MANIFEST.MF -C out\batchBuild\temp .
-rmdir /S /Q "out\batchBuild\temp"
-
-:: Frame.jar
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\SmartIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\text\frame\Frame.java"
-Xcopy "META-INF\Frame" "out\batchBuild\temp\META-INF\" /s/e/y
-jar -cvfm out\batchBuild\HDQS\lib\Frame.jar out\batchBuild\temp\META-INF\MANIFEST.MF -C out\batchBuild\temp .
+jar -cvfm out\batchBuild\HDQS\lib\google-UnicodeReader-2.2.1-alpha.jar out\batchBuild\temp\META-INF\MANIFEST.MF -C out\batchBuild\temp .
 rmdir /S /Q "out\batchBuild\temp"
 
 :: HDQS.jar
-javac -classpath "out\batchBuild\HDQS\lib\HDQS-FileIO.jar;out\batchBuild\HDQS\lib\Lexicon.jar;out\batchBuild\HDQS\lib\SmartIO.jar;out\batchBuild\HDQS\lib\Frame.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\Launcher.java"
+javac -classpath "out\batchBuild\HDQS\lib\google-UnicodeReader-2.2.1-alpha.jar;src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\Launcher.java"
+javac -classpath "src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\util\args\HelloWorld.java"
+javac -classpath "src\main\java" -d "out\batchBuild\temp" -encoding UTF-8 "src\main\java\com\plzEnterCompanyName\HDQS\util\args\FrameDemo.java"
 Xcopy "META-INF\HDQS" "out\batchBuild\temp\META-INF\" /s/e/y
 md "out\batchBuild\HDQS\bin"
 md "out\batchBuild\HDQS\settings"

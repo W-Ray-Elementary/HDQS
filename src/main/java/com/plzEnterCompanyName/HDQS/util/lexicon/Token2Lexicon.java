@@ -136,10 +136,10 @@ public class Token2Lexicon {
         return returnVal;
     }
 
-    private Token peek() {
-        if (isAtEnd()) return source.get(source.size() - 1);
-        return source.get(current);
-    }
+    // private Token peek() {
+    //     if (isAtEnd()) return source.get(source.size() - 1);
+    //     return source.get(current);
+    // }
 
     private Token advance() {
         return source.get(current++);
@@ -148,10 +148,10 @@ public class Token2Lexicon {
     private boolean isAtEnd() {
         return current >= source.size();
     }
+
     /*
      * length: 0 代表整行。
      * */
-
     private String errMsg(Token t, String msg, int pos, int length) {
         StringBuilder sb = new StringBuilder();
         sb.append("Error: ");

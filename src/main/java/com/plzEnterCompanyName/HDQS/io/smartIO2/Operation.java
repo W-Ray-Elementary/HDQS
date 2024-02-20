@@ -1,7 +1,5 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
-import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
-import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 
 import static com.plzEnterCompanyName.HDQS.util.FormatCheck.ZERO_LENGTH;

@@ -10,40 +10,53 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * <p>
  * <i>此类编码水平较高，乃BlockTypesetter中的典范</i>
- *
- * <p>本java类注释中，Info指代{@link com.plzEnterCompanyName.HDQS.io.smartIO2.Info Info}
+ * </p>
+ * <p>
+ * 本java类注释中，Info指代{@link com.plzEnterCompanyName.HDQS.io.smartIO2.Info Info}
  * 而BT_Info指代{@link com.plzEnterCompanyName.HDQS.text.frame.BT_Info BT_Info}
+ * </p>
  */
 public class BT_Info extends BlockTypesetter {
 
     /**
+     * <p>
      * <i>当且仅当position为LEFT, RIGHT时，TOTAL_WIDTH有效</i>
-     *
-     * <p>最大可用屏幕宽度，绝大多数时候，BT_Info不会使用如此多的空间。
-     *
-     * <p>该数值较小时。BT_Info会试图缩短单个Info的显示宽度,而当该数值较大时，
+     * </p>
+     * <p>
+     * 最大可用屏幕宽度，绝大多数时候，BT_Info不会使用如此多的空间。
+     * </p>
+     * <p>
+     * 该数值较小时。BT_Info会试图缩短单个Info的显示宽度,而当该数值较大时，
      * BT_Info会尝试在一行的空间中放下多个Info。
-     *
-     * <p>特别地，就像绝大多数BlockTypesetter的子类一样，该数值实在时太小太
+     * </p>
+     * <p>
+     * 特别地，就像绝大多数BlockTypesetter的子类一样，该数值实在时太小太
      * 小时，输出'##########'以期望玩家增加该值大小。
+     * </p>
      */
     protected final int TOTAL_WIDTH;
 
     /**
+     * <p>
      * <i>当且仅当position为UP, DOWN时，TOTAL_HEIGHT有效</i>
-     *
-     * <p>最大可用屏幕行数。
-     *
-     * <p>例如，设一BT_Info，其一行可显示3个Info并且Info也选
+     * </p>
+     * <p>
+     * 最大可用屏幕行数。
+     * </p>
+     * <p>
+     * 例如，设一BT_Info，其一行可显示3个Info并且Info也选
      * 择了一行放三个Info，TOTAL_HEIGHT为5，进行排版时，来了10个Info。按照一行
      * 放三个的原则，这些Info占了4列，据此BT_Info完成了排版并将占掉了4行这个情况
      * 如实上报给 Layer -> Layout -> Frame 。排版完成
-     *
-     * <p>又例如，所有条件与上一组相同，但是来了16个Info，这时候BT_Info发现空间
+     * <p/>
+     * <p>
+     * 又例如，所有条件与上一组相同，但是来了16个Info，这时候BT_Info发现空间
      * 不够用了，它又没有权利打断 Frame 的排版请求，于是默不作声地把那五行全部填
      * 充上了'#######'。随后告诉 Layer -> Layout -> Frame 自己用了5行。排版
      * 完成。BT_Info这样做，是希望玩家增加该值大小
+     * </p>
      */
     protected final int TOTAL_HEIGHT;
 
@@ -59,20 +72,26 @@ public class BT_Info extends BlockTypesetter {
     protected final char INDENTATION_CHAR;
 
     /**
+     * <p>
      * <i>当一行有2倍MAX_SINGLE_INFO_WIDTH及以上的空间时，此值无效</i>
-     *
-     * <p>若可用宽度小于2倍MAX_SINGLE_INFO_WIDTH，BT_Info便只能在一行里放下
+     * </p>
+     * <p>
+     * 若可用宽度小于2倍MAX_SINGLE_INFO_WIDTH，BT_Info便只能在一行里放下
      * 一个Info了，更进一步的，若是可用宽度小于MAX_SINGLE_INFO_WIDTH，BT_Info
      * 会试图缩短单个Info的显示宽度。我吃摩尔，若是可用宽度小于
      * MIN_SINGLE_INFO_WIDTH，BT_Info输出'##########'以期望玩家进行调整。
+     * </p>
      */
     protected final int MIN_SINGLE_INFO_WIDTH;
 
     /**
+     * <p>
      * <i>当一行空间不足MAX_SINGLE_INFO_WIDTH时，此值无效</i>
-     *
-     * <p>若可用宽度大于2倍MAX_SINGLE_INFO_WIDTH，BT_Info就会放下尽可能多的
+     * </p>
+     * <p>
+     * 若可用宽度大于2倍MAX_SINGLE_INFO_WIDTH，BT_Info就会放下尽可能多的
      * Info，并且每个Info都是此值大小。
+     * </p>
      */
     protected final int MAX_SINGLE_INFO_WIDTH;
 
@@ -83,10 +102,13 @@ public class BT_Info extends BlockTypesetter {
     protected final int HORIZONTAL_SPACING;
 
     /**
+     * <p>
      * 有时，Microsoft Windows cmd 的行距会显得过于拥挤，就要看看加不加空行
-     *
-     * <p>TRUE, FALSE都挺好理解的，就是AUTO。AUTO代表着，空间够的时候空行，
+     * </p>
+     * <p>
+     * TRUE, FALSE都挺好理解的，就是AUTO。AUTO代表着，空间够的时候空行，
      * 不够的时候不空行，实在不够就输出'##########'以期望玩家进行调整。
+     * </p>
      */
     protected final BlankRowStatus BLANK_ROW;
 

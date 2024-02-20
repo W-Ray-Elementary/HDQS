@@ -17,9 +17,4 @@ public class KVEntry {
     public String getValue() {
         return String.valueOf(value);
     }
-
-    /* 一个空KV是不成立的 */
-    private KVEntry() {
-        throw new UnsupportedOperationException();
-    }
 }

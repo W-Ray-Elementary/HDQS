@@ -5,8 +5,6 @@ import util.lexicon.TestLexicons;
 
 public class TestAll {
     public static void main(String[] args) {
-        RequireBoot rb = new AwtRuler();
-        rb.boot();
         io.smartIO2.TestMessageManager.main(null);
         io.smartIO2.TestSmartIO.main(null);
         io.Test.main(null);

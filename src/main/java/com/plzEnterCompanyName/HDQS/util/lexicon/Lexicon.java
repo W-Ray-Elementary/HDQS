@@ -7,17 +7,19 @@ import com.plzEnterCompanyName.HDQS.util.StringEscapeUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * 用于以cfg格式读取、写入配置文件
- *
+ * <p>
+ * 用于以Lexicon格式读取、写入配置文件
+ * </p>
  * <p>
  * 事实上，{@code JSON}拥有与{@code com.plzEnterCompanyName.HDQS.util.LEXICON}相似的功能，且更为完善，
  * {@code JSON}的鲁棒性也强了不知道多少倍，{@code LEXICON}只是一位Java初学者对自己
  * 能力的一次尝试。
- *
+ * </p>
  * <p>
  * {@code LEXICON}实现了以下功能：
  * <blockquote><pre>{@code
@@ -30,7 +32,7 @@ import java.util.Objects;
  * {@code java.io.Serial}的功能，所以{@code LEXICON}不支持{@code java.io.Serial}，
  * {@code LEXICON}同时实现了类似{@code java.io.Properties}的功能，以便于在开发中不经
  * 过编译就修改嵌套型配置文件
- *
+ * </p>
  * <p>
  * {@code LEXICON}中的数据通过键值对(key-value)的方式存储，类似于
  * {@link java.util.Map}。其中，key的数据类型只能为{@code String}，
@@ -39,15 +41,15 @@ import java.util.Objects;
  * value不允许<i>存在一个{@code LEXICON}x，使得x与任意一个{@code LEXICON}
  * 进行 == 逻辑运算时，返回值为{@code true}</i>，这是为了避免进行{@code LEXICON}转
  * {@code String}操作时出现{@code StackOverFlowError}。
- *
+ * </p>
  * <p>
  * key的值不允许是零长度字符串。
- *
+ * </p>
  * <p>
  * key允许重复，除非其他因素的限制（例如内存），{@code LEXICON}允许无数个
  * 重复的key。key不允许零长度字符串。添加键值对时，key的值可
  * 以是null，此时key的值是 String : "null"。
- *
+ * </p>
  * <p>
  * {@code LEXICON}支持与{@code String}的转换，当前者转换为后者时，格式就像下面这个
  * 示例：
@@ -84,7 +86,7 @@ import java.util.Objects;
  *         }
  *     }
  * }</pre></blockquote>
- *
+ * </p>
  * <p>
  * 当String转换为Lexicon时，Lexicon具有处理注释的能力，但只能处理单行注释。并且
  * 只支持双斜线的形式。
@@ -94,23 +96,16 @@ import java.util.Objects;
  *     Truth = Beauty // 位于双斜线"//"后的字符会被删除
  * }
  * </pre>
- *
- * <p>
- * Lexicon将换行符视为单独的Token类型，标志着一个KV的结束，这在一定程度上简化了代
- * 码，毕竟Lexicon设计的初衷就是存储不同的数值，并且支持嵌套。后来在Frame的开发过
- * 程中，出现了KV中包含换行符的情况，所以我们适时引入了转义机制。然而，虽然\\n可以被
- * 正确转换为换行符并且换行符也可以正确转换为\\n，但是一切非ASCII字符都会被转换为
- * \\u****的形式。
- *
+ * </p>
  * <p>
  * {@code LEXICON}中的数据通过键值对(key-value)的方式存储，类似于
  * {@link java.util.Map}。但这不代表{@code LEXICON}实现了{@code Map}。相反，
  * {@code Map}中的绝大多数方法都无法在{@code LEXICON}中找到对应。同时，
  * {@code LEXICON}中的“键值对”实际上放在一个List集合中（这何尝不是一种......）。
  * 这可能会在未来造成问题，需要修改
- *
+ * </p>
  */
-public class Lexicon {
+public class Lexicon implements Iterable<Content> {
 
     /**
      * {@code LEXICON}之间可能存在父子关系，而{@code LEXICON}的数据又是以键值对的
@@ -306,6 +301,11 @@ public class Lexicon {
             }
         }
         contents.removeAll(removal);
+    }
+
+    @Override
+    public Iterator<Content> iterator() {
+        return contents.iterator();
     }
 
     @Override

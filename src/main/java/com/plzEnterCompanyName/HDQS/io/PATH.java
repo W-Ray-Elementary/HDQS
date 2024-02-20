@@ -11,9 +11,16 @@ import java.io.File;
  */
 public class PATH {
 
+    /* 不应有PATH对象被创建 */
+    private PATH() {}
+
     /**
+     * <p>
      * 类加载时，此变量就被确定
-     * <p>注意：{@code ABSOLUTE_ROOT_PATH}<i>的末尾自动带有\\，勿重复添加！</i>
+     * </p>
+     * <p>
+     * 注意：{@code ABSOLUTE_ROOT_PATH}<i>的末尾自动带有\\，勿重复添加！</i>
+     * </p>
      */
     public static final String ABSOLUTE_ROOT_PATH;
 
@@ -39,7 +46,4 @@ public class PATH {
     public static File getFile(String relativePath) {
         return new File(ABSOLUTE_ROOT_PATH + '\\' + relativePath);
     }
-
-    /* 不应有PATH对象被创建 */
-    private PATH() {}
 }
