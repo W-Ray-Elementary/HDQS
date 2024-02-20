@@ -1,8 +1,9 @@
 package io;
 
 import com.plzEnterCompanyName.HDQS.io.PATH;
-import com.plzEnterCompanyName.HDQS.io.ReadJar;
-import com.plzEnterCompanyName.HDQS.util.NewInstance;
+import com.plzEnterCompanyName.HDQS.ref.NewInstance;
+import com.plzEnterCompanyName.HDQS.ref.ReadJar;
+
 import pkg.Temp;
 
 import java.util.List;

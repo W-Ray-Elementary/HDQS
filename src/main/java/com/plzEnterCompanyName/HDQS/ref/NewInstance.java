@@ -1,4 +1,4 @@
-package com.plzEnterCompanyName.HDQS.util;
+package com.plzEnterCompanyName.HDQS.ref;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -34,7 +34,7 @@ public class Layout {
         this.heightRemain = this.height;
         // \begin{} 这里的代码与Lexicons中重复，但是能run就别改
         List<Object> layersCfgObjs;
-        layersCfgObjs = new ArrayList<>(List.of(((Lexicon)config.getAll("Layout")[0]).getAll("Layer")));
+        layersCfgObjs = new ArrayList<>(List.of(((Lexicon) config.getAll("Layout")[0]).getAll("Layer")));
         List<Lexicon> layersCfgs = new ArrayList<>();
         for (Object layersCfgObj : layersCfgObjs) {
             if (layersCfgObj instanceof Lexicon)
@@ -49,7 +49,8 @@ public class Layout {
 
     protected String setType(Message msg) {
         int[][] table = new int[height][width];
-        for (int[] ints : table) Arrays.fill(ints, -1);
+        for (int[] ints : table)
+            Arrays.fill(ints, -1);
         int x_1 = 0;
         int y_1 = 0;
         int x_2 = width;
@@ -85,11 +86,12 @@ public class Layout {
             if (x_2 - x_1 <= 1 || y_2 - y_1 <= 1)
                 throw new RuntimeException(Layout.spaceInsufficientMsg);
         }
-        BlockTypesetter lastTypesetter = layers.get(layers.size()-1).typesetter;
+        BlockTypesetter lastTypesetter = layers.get(layers.size() - 1).typesetter;
         AdjustableBT adjustableBT;
         if (lastTypesetter instanceof AdjustableBT)
-            adjustableBT = (AdjustableBT)lastTypesetter;
-        else throw new RuntimeException(lastTypesetter.getClass().getName() + " cannot be the last element of layers");
+            adjustableBT = (AdjustableBT) lastTypesetter;
+        else
+            throw new RuntimeException(lastTypesetter.getClass().getName() + " cannot be the last element of layers");
         switch (lastTypesetter.position) {
             case UP, DOWN -> {
                 adjustableBT.tellAvailSpace(heightRemain);
@@ -102,7 +104,7 @@ public class Layout {
                 lastTypesetter.setType(msg, heightRemain);
             }
         }
-        fillTable(table, x_1, y_1, x_2, y_2, layers.size()-1);
+        fillTable(table, x_1, y_1, x_2, y_2, layers.size() - 1);
         reset();
         return write(table);
     }
@@ -113,8 +115,7 @@ public class Layout {
             int y_1,
             int x_2,
             int y_2,
-            int ink)
-    {
+            int ink) {
         for (int y = y_1; y < y_2; y++)
             for (int x = x_1; x < x_2; x++)
                 table[y][x] = ink;
@@ -137,73 +138,5 @@ public class Layout {
                     sb.append(layers.get(m).typesetter.getCache());
                 }
         return sb.toString();
-    }
-    static class Layer {
-
-        protected final String type;
-        protected final String position;
-        protected final BlockTypesetter typesetter;
-        public Layer(Lexicon layerConfig, List<Lexicon> bTConfigs) {
-            this.type = layerConfig.getFirst("type");
-            this.position = layerConfig.getFirst("position");
-            List<Object> contentsObjs = new ArrayList<>(List.of(layerConfig.getAll("", true)));
-            List<Lexicon> ls = new ArrayList<>();
-            for (Object contentObj : contentsObjs) {
-                if (contentObj instanceof Lexicon l) {
-                    ls.add(l);
-                }
-            }
-            SupportedBT_Position posHandle = convertEnum();
-            switch (type) {
-                case "SeparateLine" -> typesetter = new BT_SeparateLine(
-                        posHandle,
-                        priorityForBT(ls, bTConfigs, "SeparateLine"));
-                case "Tittle"        -> typesetter = new BT_Tittle(
-                        posHandle,
-                        priorityForBT(ls, bTConfigs, "Tittle"));
-                case "Info"          -> typesetter = new BT_Info(
-                        posHandle,
-                        priorityForBT(ls, bTConfigs, "Info"));
-                case "Operation"     -> typesetter = new BT_Operation(
-                        posHandle,
-                        priorityForBT(ls, bTConfigs, "Operation"));
-                case "Warning"       -> typesetter = new BT_Warning(
-                        posHandle,
-                        priorityForBT(ls, bTConfigs, "Warning"));
-                case "Text"       -> typesetter = new BT_Text(
-                        posHandle,
-                        priorityForBT(ls, bTConfigs, "Text"));
-                default ->
-                    throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
-            }
-        }
-
-        private static Lexicon priorityForBT(
-                List<Lexicon> first,
-                List<Lexicon> second,
-                String name)
-        {
-            Lexicon firstContent = Lexicons.orderName(first, "BlockTypesetter", name);
-            return firstContent == null ?
-                    Lexicons.strictOrderName(second, "BlockTypesetter", name) : firstContent;
-        }
-
-        private SupportedBT_Position convertEnum() {
-            SupportedBT_Position posHandle;
-            switch (position) {
-                case "RIGHT" -> posHandle = SupportedBT_Position.RIGHT;
-                case "UP"    -> posHandle = SupportedBT_Position.UP;
-                case "LEFT"  -> posHandle = SupportedBT_Position.LEFT;
-                case "DOWN"  -> posHandle = SupportedBT_Position.DOWN;
-                default ->
-                    throw new UnsupportedOperationException("Unsupported BC_Position: " + position);
-            }
-            return posHandle;
-        }
-
-        @Override
-        public String toString() {
-            return typesetter.toString();
-        }
     }
 }

@@ -9,9 +9,9 @@ import java.awt.image.BufferedImage;
 public class AwtRuler implements Ruler, RequireBoot {
 
     @Override
-    public void boot() {
+    public void boot(LinePrinter lp) {
+        lp.printb(getClass().getName());
         bootMetrics = getMetrics();
-        RequireBoot.out.println(getClass().getName());
     }
 
     private static FontMetrics getMetrics() {
