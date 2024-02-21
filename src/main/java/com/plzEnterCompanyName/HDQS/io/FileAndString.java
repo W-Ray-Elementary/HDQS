@@ -8,6 +8,7 @@ import java.util.Objects;
 
 /**
  * 用于内存与磁盘间String的交流，
+ * 
  * @version 0.1a
  */
 public class FileAndString {
@@ -20,6 +21,7 @@ public class FileAndString {
      * <p>
      * 如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
      * </p>
+     * 
      * @param file 建议从{@link com.plzEnterCompanyName.HDQS.io.PATH}获取
      * @return 在义务范围内为你提供的内容
      */
@@ -55,8 +57,9 @@ public class FileAndString {
      * <p>
      * 如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
      * </p>
+     * 
      * @param file 建议从{@link com.plzEnterCompanyName.HDQS.io.PATH}获取
-     * @param str 会写到文件中的内容
+     * @param str  会写到文件中的内容
      */
     public static void write(File file, String str) {
         write(file, str, true);
@@ -77,8 +80,9 @@ public class FileAndString {
      * <p>
      * 如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
      * </p>
+     * 
      * @param file 建议从{@link com.plzEnterCompanyName.HDQS.io.PATH}获取
-     * @param str 会写到文件中的内容
+     * @param str  会写到文件中的内容
      */
     public static void write(File file, String str, boolean autoCreateFile) {
         if (!file.getParentFile().exists() && autoCreateFile) {

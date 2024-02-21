@@ -45,6 +45,7 @@ public abstract class BlockTypesetter {
 
     /**
      * 构造一个BlockTypesetter对象，使用position作为起始参数
+     * 
      * @param position 请{@link SupportedBT_Position 参见}
      */
     protected BlockTypesetter(SupportedBT_Position position) {
@@ -65,8 +66,8 @@ public abstract class BlockTypesetter {
      *                 表高度。
      *
      * @return 沿用前文的比喻， 一个相同面积（内容）的矩形，要是用高度决
-     * 定宽度，posLimit就代表高度。而使用高度决定宽度的矩形，就会把决定
-     * 好的宽度返回，供Layout排版。
+     *         定宽度，posLimit就代表高度。而使用高度决定宽度的矩形，就会把决定
+     *         好的宽度返回，供Layout排版。
      */
     protected abstract int setType(Message message, final int posLimit);
 
@@ -77,7 +78,7 @@ public abstract class BlockTypesetter {
      * BT的子类们完成排版，并且输出内容到{@code String[] cache}当中。
      *
      * @return 二次遍历时，Layout适时取出每个{@code String[] cache}中的字符并按
-     * 照配置文件的要求把它排列好。
+     *         照配置文件的要求把它排列好。
      */
     protected abstract String getCache();
 

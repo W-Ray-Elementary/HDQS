@@ -21,7 +21,7 @@ public class Content {
 
     public int lineCount() {
         if (isLEXICON) {
-            return ((Lexicon)value).lineCount();
+            return ((Lexicon) value).lineCount();
         } else {
             return 1;
         }

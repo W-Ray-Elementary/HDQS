@@ -22,12 +22,16 @@ import java.util.Objects;
  * </p>
  * <p>
  * {@code LEXICON}实现了以下功能：
- * <blockquote><pre>{@code
+ * <blockquote>
+ * 
+ * <pre>{@code
  *      - String 键值对的增删改查
  *      - String 键值对的值可以是 LEXICON
  *      - LEXICON 与 String 间的互转
  *      - 转为 String 后，结果应是便于人类阅读与修改的
- * }</pre></blockquote>
+ * }</pre>
+ * 
+ * </blockquote>
  * 其中{@code - LEXICON 与 String 间的互转}可以借助{@link FileAndString}实现类似
  * {@code java.io.Serial}的功能，所以{@code LEXICON}不支持{@code java.io.Serial}，
  * {@code LEXICON}同时实现了类似{@code java.io.Properties}的功能，以便于在开发中不经
@@ -53,22 +57,28 @@ import java.util.Objects;
  * <p>
  * {@code LEXICON}支持与{@code String}的转换，当前者转换为后者时，格式就像下面这个
  * 示例：
- * <blockquote><pre>{@code
- *      LEXICON root = new LEXICON("ROOT");
- *      root.add("市场", "0");
- *      root.add("市场容量", "16.6667");
- *      root.add("生产力指标", "3.24");
- *      LEXICON company = new LEXICON("COMPANY");
- *      company.add("员工", "张三");
- *      company.add("员工", "李四");
- *      company.add("员工", "王五");
- *      company.add("设备", "1 普通设备套装");
- *      company.add(new LEXICON("BLANK"));
- *      root.add(company);
- *      System.out.println(root);
- * }</pre></blockquote>
+ * <blockquote>
+ * 
+ * <pre>{@code
+ * LEXICON root = new LEXICON("ROOT");
+ * root.add("市场", "0");
+ * root.add("市场容量", "16.6667");
+ * root.add("生产力指标", "3.24");
+ * LEXICON company = new LEXICON("COMPANY");
+ * company.add("员工", "张三");
+ * company.add("员工", "李四");
+ * company.add("员工", "王五");
+ * company.add("设备", "1 普通设备套装");
+ * company.add(new LEXICON("BLANK"));
+ * root.add(company);
+ * System.out.println(root);
+ * }</pre>
+ * 
+ * </blockquote>
  * 其返回值为
- * <blockquote><pre>{@code
+ * <blockquote>
+ * 
+ * <pre>{@code
  *     ROOT
  *     {
  *         市场 = 0
@@ -85,11 +95,14 @@ import java.util.Objects;
  *             }
  *         }
  *     }
- * }</pre></blockquote>
+ * }</pre>
+ * 
+ * </blockquote>
  * </p>
  * <p>
  * 当String转换为Lexicon时，Lexicon具有处理注释的能力，但只能处理单行注释。并且
  * 只支持双斜线的形式。
+ * 
  * <pre>
  * example
  * {
@@ -121,6 +134,7 @@ public class Lexicon implements Iterable<Content> {
 
     /**
      * 构造一个没有元素在内的 Lexicon 对象
+     * 
      * @param name 直接作为 Lexicon 对象的 name 属性的值，传入{@code null}时会重新
      *             赋值为"null"
      */
@@ -134,6 +148,7 @@ public class Lexicon implements Iterable<Content> {
 
     /**
      * 完成文本与对象的转换，类似于反序列化
+     * 
      * @param txtF 纯文本文件，文件编码必须与{@link SETTINGS}中{@code ENCODE}相同
      * @return 根据{@code txtF}创建的对象
      */
@@ -147,6 +162,7 @@ public class Lexicon implements Iterable<Content> {
 
     /**
      * 完成字符串与对象的转换，类似于反序列化
+     * 
      * @return 根据{@code s}创建的对象
      * @param s 方法调用者必须确保此值有效并且符合格式
      */
@@ -178,10 +194,10 @@ public class Lexicon implements Iterable<Content> {
     }
 
     /*
-    * 判断下面这个条件：
-    *     LEXICON中的 value存不存在在一个 LEXICON x，使得x与任意一个 LEXICON
-    *     进行 == 逻辑运算时，返回值为 true
-    * */
+     * 判断下面这个条件：
+     * LEXICON中的 value存不存在在一个 LEXICON x，使得x与任意一个 LEXICON
+     * 进行 == 逻辑运算时，返回值为 true
+     */
     private static boolean contains(List<Lexicon> lexicons, Lexicon lexicon) {
         Objects.requireNonNull(lexicons);
         Object[] ls = lexicons.toArray();
@@ -204,6 +220,7 @@ public class Lexicon implements Iterable<Content> {
     /**
      * 获取这一Lexicon中全部匹配key的数据，一般用于读取子Lexicon和线性数据
      * 默认不启用模糊查询
+     * 
      * @return 全部匹配的key的对应的value将会被返回，若无匹配的key，返回零
      *         长度数组
      */
@@ -213,6 +230,7 @@ public class Lexicon implements Iterable<Content> {
 
     /**
      * 获取这一Lexicon中全部匹配key的数据，一般用于读取属性
+     * 
      * @param fuzzy 是否启用模糊查询
      * @return 全部匹配的key的对应的value将会被返回，若无匹配的key，返回零
      *         长度数组，返回的类型可能是Lexicon与String
@@ -221,16 +239,18 @@ public class Lexicon implements Iterable<Content> {
         if (key == null)
             key = "null";
         ArrayList<Object> values = new ArrayList<>();
-        if (fuzzy) for (Content content : contents) {
-            if (content.key.contains(key)) {
-                values.add(content.value);
+        if (fuzzy)
+            for (Content content : contents) {
+                if (content.key.contains(key)) {
+                    values.add(content.value);
+                }
             }
-        }
-        else for (Content content : contents) {
-            if (Objects.equals(key, content.key)) {
-                values.add(content.value);
+        else
+            for (Content content : contents) {
+                if (Objects.equals(key, content.key)) {
+                    values.add(content.value);
+                }
             }
-        }
         return values.toArray();
     }
 
@@ -249,6 +269,7 @@ public class Lexicon implements Iterable<Content> {
     /**
      * 获取这一Lexicon中匹配key的数据，一般用于读取属性
      * 默认不启用模糊查询
+     * 
      * @return 匹配的key的对应的value将会被返回，若无匹配的key，抛出异常
      */
     public String getFirst(String key) {
@@ -257,42 +278,45 @@ public class Lexicon implements Iterable<Content> {
 
     /**
      * 获取这一Lexicon中匹配key的数据，一般用于读取属性
+     * 
      * @param fuzzy 是否启用模糊查询
      */
     public String getFirst(String key, boolean fuzzy) {
         if (key == null)
             key = "null";
-        if (fuzzy) for (Content content : contents) {
-            if (content.key.contains(key)) {
-                return content.value.toString();
+        if (fuzzy)
+            for (Content content : contents) {
+                if (content.key.contains(key)) {
+                    return content.value.toString();
+                }
             }
-        }
-        else for (Content content : contents) {
-            if (Objects.equals(key, content.key)) {
-                return content.value.toString();
+        else
+            for (Content content : contents) {
+                if (Objects.equals(key, content.key)) {
+                    return content.value.toString();
+                }
             }
-        }
         //
         throw new ContentNotFoundException(key + " 在此 LEXICON 中无对应 value!");
     }
 
     /*
-    * 列出所有的Lexicon对象便于contains方法完成它的任务
-    * */
+     * 列出所有的Lexicon对象便于contains方法完成它的任务
+     */
     private List<Lexicon> listOutLexicons() {
         List<Lexicon> listingOutLexicons = new ArrayList<>();
         for (Content content : contents) {
             if (content.isLEXICON) {
-                listingOutLexicons.add((Lexicon)content.value);
-                listingOutLexicons.addAll(((Lexicon)content.value).listOutLexicons());
+                listingOutLexicons.add((Lexicon) content.value);
+                listingOutLexicons.addAll(((Lexicon) content.value).listOutLexicons());
             }
         }
         return listingOutLexicons;
     }
 
     /*
-    * 按 key 移除元素
-    * */
+     * 按 key 移除元素
+     */
     public void remove(String key) {
         List<Content> removal = new ArrayList<>();
         for (Content content : contents) {
@@ -320,8 +344,8 @@ public class Lexicon implements Iterable<Content> {
     }
 
     /*
-    * 按格式转换Lexicon对象为字符串
-    * */
+     * 按格式转换Lexicon对象为字符串
+     */
     private String[] getStrings() {
         String[] contentStrings = new String[lineCount()];
         int currentLineCount = 0;
@@ -331,7 +355,7 @@ public class Lexicon implements Iterable<Content> {
         currentLineCount++;
         for (Content content : contents) {
             if (content.isLEXICON) {
-                String[] lexiconStrings = ((Lexicon)content.value).getStrings();
+                String[] lexiconStrings = ((Lexicon) content.value).getStrings();
                 for (String lexiconString : lexiconStrings) {
                     contentStrings[currentLineCount] = "    " + lexiconString;
                     currentLineCount++;
@@ -339,8 +363,7 @@ public class Lexicon implements Iterable<Content> {
             } else {
                 String escaped = content.value.toString();
                 String unescaped = StringEscapeUtils.escapeLexicon(escaped);
-                contentStrings[currentLineCount] =
-                        "    " + content.key + " = " + unescaped;
+                contentStrings[currentLineCount] = "    " + content.key + " = " + unescaped;
                 currentLineCount++;
             }
         }
@@ -350,6 +373,7 @@ public class Lexicon implements Iterable<Content> {
 
     /**
      * 数出此Lexicon转换为字符串后会占几行
+     * 
      * @return 所占行数
      */
     public int lineCount() {

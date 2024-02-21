@@ -5,11 +5,23 @@ import com.plzEnterCompanyName.HDQS.text.AwtRuler;
 import com.plzEnterCompanyName.HDQS.text.Ruler;
 import com.plzEnterCompanyName.HDQS.text.Typography;
 import com.plzEnterCompanyName.HDQS.text.zh_CN_Typography;
+import com.plzEnterCompanyName.HDQS.util.Configuration;
+
 import java.io.PrintStream;
 
+/**
+ * <p>
+ * 适用于Microsoft Windows cmd的文字排版处理工具。
+ * </p>
+ */
 public class Frame implements Out, PageOutputAble, WarnAble {
 
     private PrintStream printStream;
+
+    /**
+     * 
+     * @param printStream
+     */
     public void setPrintStream(PrintStream printStream) {
         this.printStream = printStream;
     }
@@ -20,6 +32,11 @@ public class Frame implements Out, PageOutputAble, WarnAble {
 
     public Frame(Layout layout) {
         this.layout = layout;
+        printStream = System.out;
+    }
+
+    public Frame(Configuration cfg) {
+        this.layout = new Layout(cfg);
         printStream = System.out;
     }
 

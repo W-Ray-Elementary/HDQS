@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.plzEnterCompanyName.HDQS.util.Configuration;
-import com.plzEnterCompanyName.HDQS.util.ConfigureNotFoundException;
+import com.plzEnterCompanyName.HDQS.util.ConfigurationNotFoundException;
 
 public class LexiconConfiguration implements Configuration {
 
@@ -17,9 +17,20 @@ public class LexiconConfiguration implements Configuration {
     }
 
     @Override
+    public String getName() {
+        return lexicon.name;
+    }
+
+    @Override
     public int getInt(String key) {
         String str = lexicon.getFirst(key);
         return Integer.parseInt(str);
+    }
+
+    @Override
+    public boolean getBoolean(String key) {
+        String str = lexicon.getFirst(key);
+        return Boolean.parseBoolean(str);
     }
 
     @Override
@@ -46,12 +57,12 @@ public class LexiconConfiguration implements Configuration {
         while (it.hasNext()) {
             Content content = it.next();
             if (content.isLEXICON && Objects.equals(content.key, key)) {
-                Lexicon sub = ((Lexicon)content.value);
+                Lexicon sub = ((Lexicon) content.value);
                 getted.add(new LexiconConfiguration(sub));
             }
         }
         if (getted.isEmpty()) {
-            throw new ConfigureNotFoundException();
+            throw new ConfigurationNotFoundException();
         }
         return getted;
     }

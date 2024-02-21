@@ -1,11 +1,11 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 public class BT_Warning extends BlockTypesetter {
 
-    protected BT_Warning(SupportedBT_Position position, Lexicon config) {
+    protected BT_Warning(SupportedBT_Position position, Configuration config) {
         super(position);
     }
 
@@ -20,5 +20,6 @@ public class BT_Warning extends BlockTypesetter {
     }
 
     @Override
-    protected void nextPage() {  }
+    protected void nextPage() {
+    }
 }

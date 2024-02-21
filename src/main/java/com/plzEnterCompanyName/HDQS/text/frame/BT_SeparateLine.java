@@ -1,7 +1,7 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 import java.util.Arrays;
 
@@ -11,18 +11,16 @@ public class BT_SeparateLine extends BlockTypesetter {
 
     protected final char VERTICAL_STYLE;
 
-    public BT_SeparateLine(SupportedBT_Position position, Lexicon config) {
+    protected BT_SeparateLine(SupportedBT_Position position, Configuration config) {
         super(position);
-        String horizontalStyleStr = config.getFirst("horizontalStyle");
-        String verticalStyleStr   = config.getFirst("verticalStyle"  );
-        HORIZONTAL_STYLE = (char) Integer.parseInt(horizontalStyleStr);
-        VERTICAL_STYLE   = (char) Integer.parseInt(verticalStyleStr  );
+        HORIZONTAL_STYLE = (char) config.getInt("horizontalStyle");
+        VERTICAL_STYLE = (char) config.getInt("verticalStyle");
     }
 
     @Override
     protected int setType(Message message, final int posLimit) {
         switch (position) {
-            case UP  , DOWN  -> cache = new String[]{
+            case UP, DOWN -> cache = new String[] {
                     Frame.RULER.repeatW(String.valueOf(HORIZONTAL_STYLE), posLimit)
             };
             case LEFT, RIGHT -> {
@@ -35,9 +33,10 @@ public class BT_SeparateLine extends BlockTypesetter {
 
     @Override
     protected String getCache() {
-        return  cache[0];
+        return cache[0];
     }
 
     @Override
-    protected void nextPage() {  }
+    protected void nextPage() {
+    }
 }

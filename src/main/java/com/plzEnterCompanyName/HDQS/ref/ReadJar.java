@@ -29,6 +29,7 @@ public class ReadJar {
 
     /**
      * 构造一个ReadJar对象，并在此方法内完成读取class文件并实例化的任务
+     * 
      * @param target 在此处的jar包开始搜索
      */
     public ReadJar(File target) {
@@ -38,8 +39,8 @@ public class ReadJar {
     }
 
     /*
-    * 读取class文件并实例化
-    * */
+     * 读取class文件并实例化
+     */
     private void initialize() {
         URL url1;
         try {
@@ -50,7 +51,7 @@ public class ReadJar {
         JarFile jarFile = null;
         URLClassLoader jarClassLoader = null;
         try {
-            jarClassLoader = new URLClassLoader(new URL[]{ url1 },
+            jarClassLoader = new URLClassLoader(new URL[] { url1 },
                     Thread.currentThread().getContextClassLoader());
             jarFile = new JarFile(target);
             Enumeration<JarEntry> entries = jarFile.entries();
@@ -78,8 +79,8 @@ public class ReadJar {
     }
 
     /*
-    * 把JarFile所有的JarEntry遍历，是class文件的就返回类名
-    * */
+     * 把JarFile所有的JarEntry遍历，是class文件的就返回类名
+     */
     private List<String> getClassNames(Enumeration<JarEntry> entries) {
         List<String> classNames = new ArrayList<>();
         while (entries.hasMoreElements()) {
@@ -94,8 +95,8 @@ public class ReadJar {
     }
 
     /*
-    * 把单个class文件转为对应的class实例，需要ClassLoader
-    * */
+     * 把单个class文件转为对应的class实例，需要ClassLoader
+     */
     private void loadClass(String x, ClassLoader classLoader) {
         try {
             allClass.add(classLoader.loadClass(x));

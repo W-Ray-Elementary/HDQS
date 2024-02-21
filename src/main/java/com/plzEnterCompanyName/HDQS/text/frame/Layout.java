@@ -1,9 +1,7 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicons;
-
+import com.plzEnterCompanyName.HDQS.util.Configuration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +15,7 @@ public class Layout {
     private final int height;
     protected int heightRemain;
     private final List<Layer> layers;
-    protected List<Lexicon> BT_GlobalConfigs;
+    protected List<Configuration> BT_GlobalConfigs;
 
     /**
      * 有些时候，要么是开发者塞了太多，要么是玩家把窗口调得太小，总之，屏
@@ -26,23 +24,14 @@ public class Layout {
     protected static final String spaceInsufficientMsg = "Screen space is insufficient, " +
             "please try to adjust settings";
 
-    public Layout(Lexicon config) {
-        this.width = Integer.parseInt(config.getFirst("width"));
-        this.height = Integer.parseInt(config.getFirst("height"));
-        this.BT_GlobalConfigs = Lexicons.listOut(config, "BlockTypesetter");
+    public Layout(Configuration config) {
+        this.width = config.getInt("width");
+        this.height = config.getInt("height");
+        this.BT_GlobalConfigs = config.subSets("BlockTypesetter");
         this.widthRemain = this.width;
         this.heightRemain = this.height;
-        // \begin{} 这里的代码与Lexicons中重复，但是能run就别改
-        List<Object> layersCfgObjs;
-        layersCfgObjs = new ArrayList<>(List.of(((Lexicon) config.getAll("Layout")[0]).getAll("Layer")));
-        List<Lexicon> layersCfgs = new ArrayList<>();
-        for (Object layersCfgObj : layersCfgObjs) {
-            if (layersCfgObj instanceof Lexicon)
-                layersCfgs.add((Lexicon) layersCfgObj);
-        }
-        // \end{} 这里的代码与Lexicons中重复，但是能run就别改
         this.layers = new ArrayList<>();
-        for (Lexicon layersCfg : layersCfgs) {
+        for (Configuration layersCfg : config.subSets("Layer")) {
             layers.add(new Layer(layersCfg, BT_GlobalConfigs));
         }
     }

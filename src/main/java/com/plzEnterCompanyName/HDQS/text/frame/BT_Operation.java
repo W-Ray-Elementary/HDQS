@@ -2,13 +2,13 @@ package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Operation;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BT_Operation extends BlockTypesetter {
-    
+
     /**
      * 要缩进几个字符，该数值会将INDENTATION_CHAR代表的字符重复INDENTATION次后
      * 加在开头的地方。
@@ -27,16 +27,13 @@ public class BT_Operation extends BlockTypesetter {
 
     private int cacheIndex;
 
-    protected BT_Operation(SupportedBT_Position position, Lexicon config) {
+    protected BT_Operation(SupportedBT_Position position, Configuration config) {
         super(position);
         if (position == SupportedBT_Position.LEFT || position == SupportedBT_Position.RIGHT)
             throw new UnsupportedOperationException("BT_Operation can not execute vertical layout.");
-        String indentationStr       = config.getFirst("indentation"      );
-        String indentationCharStr   = config.getFirst("indentationChar"  );
-        String horizontalSpacingStr = config.getFirst("horizontalSpacing");
-        INDENTATION        =        Integer.parseInt(indentationStr      );
-        INDENTATION_CHAR   = (char) Integer.parseInt(indentationCharStr  );
-        HORIZONTAL_SPACING =        Integer.parseInt(horizontalSpacingStr);
+        INDENTATION = config.getInt("indentation");
+        INDENTATION_CHAR = (char) config.getInt("indentationChar");
+        HORIZONTAL_SPACING = config.getInt("horizontalSpacing");
     }
 
     @Override
@@ -51,7 +48,8 @@ public class BT_Operation extends BlockTypesetter {
         boolean isLineBegin = true;
         int lineSpaceAvail = posLimit;
         if (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) {
-            if (operationStrings.isEmpty()) return 0;
+            if (operationStrings.isEmpty())
+                return 0;
             for (String str : operationStrings) {
                 if (isLineBegin) {
                     lines.add(new StringBuilder());

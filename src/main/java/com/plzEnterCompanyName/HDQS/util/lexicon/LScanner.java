@@ -49,7 +49,8 @@ public class LScanner {
             case '/':
                 if (match('/')) {
                     // A comment goes until the end of the line.
-                    while (peek() != '\n' && !isAtEnd()) advance();
+                    while (peek() != '\n' && !isAtEnd())
+                        advance();
                 }
                 break;
             default:
@@ -60,15 +61,20 @@ public class LScanner {
 
     private void whitespace() {
         while ((peek() == ' ' || peek() == '\r' || peek() == '\t') && !isAtEnd()) {
-            if (peek() == '{') break;
-            if (peek() == '}') break;
-            if (peek() == '=') break;
-            if (peek() == '\n') break;
+            if (peek() == '{')
+                break;
+            if (peek() == '}')
+                break;
+            if (peek() == '=')
+                break;
+            if (peek() == '\n')
+                break;
             if (peek() == '/') {
                 advance();
                 if (match('/')) {
                     // A comment goes until the end of the line.
-                    while (peek() != '\n' && !isAtEnd()) advance();
+                    while (peek() != '\n' && !isAtEnd())
+                        advance();
                 }
                 break;
             }
@@ -99,15 +105,20 @@ public class LScanner {
 
     private void string() {
         while (peek() != ' ' && peek() != '\r' && peek() != '\t' && !isAtEnd()) {
-            if (peek() == '{') break;
-            if (peek() == '}') break;
-            if (peek() == '=') break;
-            if (peek() == '\n') break;
+            if (peek() == '{')
+                break;
+            if (peek() == '}')
+                break;
+            if (peek() == '=')
+                break;
+            if (peek() == '\n')
+                break;
             if (peek() == '/') {
                 advance();
                 if (match('/')) {
                     // A comment goes until the end of the line.
-                    while (peek() != '\n' && !isAtEnd()) advance();
+                    while (peek() != '\n' && !isAtEnd())
+                        advance();
                 }
                 break;
             }
@@ -137,15 +148,18 @@ public class LScanner {
     }
 
     private boolean match(char expected) {
-        if (isAtEnd()) return false;
-        if (source.charAt(current) != expected) return false;
+        if (isAtEnd())
+            return false;
+        if (source.charAt(current) != expected)
+            return false;
 
         current++;
         return true;
     }
 
     private char peek() {
-        if (isAtEnd()) return '\0';
+        if (isAtEnd())
+            return '\0';
         return source.charAt(current);
     }
 
