@@ -3,9 +3,9 @@ package text.frame;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.MessageManager;
 import com.plzEnterCompanyName.HDQS.text.frame.Frame;
-import com.plzEnterCompanyName.HDQS.text.frame.Layout;
 import com.plzEnterCompanyName.HDQS.util.args.FrameDemo;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.LexiconConfiguration;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -53,7 +53,7 @@ public class TestFrame {
         messageForTest = mm.toMessage();
     }
     private static void TEST_Frame() {
-        Frame f = new Frame(new Layout(Lexicon.valueOf(FrameDemo.DEFAULT_CONFIG).get(0)));
+        Frame f = new Frame(new LexiconConfiguration(Lexicon.valueOf(FrameDemo.DEFAULT_CONFIG).get(0)));
         f.setPrintStream(new PrintStream(OutputStream.nullOutputStream()));
         f.out(messageForTest);
     }

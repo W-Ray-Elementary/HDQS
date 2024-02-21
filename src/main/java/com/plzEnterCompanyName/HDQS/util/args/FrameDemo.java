@@ -11,67 +11,66 @@ import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
 import com.plzEnterCompanyName.HDQS.io.PATH;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.MessageManager;
 import com.plzEnterCompanyName.HDQS.text.frame.Frame;
-import com.plzEnterCompanyName.HDQS.text.frame.Layout;
 import com.plzEnterCompanyName.HDQS.util.lexicon.KVEntry;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.lexicon.LexiconConfiguration;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicons;
 
 public class FrameDemo implements Argument {
 
-    
-    public static final String DEFAULT_CONFIG =
-        """
-        Frame
-        {
-            width = 120
-            height = 29
-            BlockTypesetter
+    public static final String DEFAULT_CONFIG = """
+            Layout
             {
-                name = SeparateLine
-                horizontalStyle = 45
-                verticalStyle = 124
-            }
-            BlockTypesetter
-            {
-                name = Tittle
-                indentation = 1
-                indentationChar = 32 // decimal : 32 = binary 00010000 = the ascii code
-                                        // of blank space
-                isDrawingGameName = true
-                gameName = [未定义 undefined]
-            }
-            BlockTypesetter
-            {
-                name = Info
-                totalWidth = 41 // The max screen space that is available. Most of the
-                                // time, Info will not take up so much screen space.
-                totalHeight = 7 // If the position of Info that defined by Layout is UP
-                                // or DOWN, this setting value "totalHeight" will be
-                                // took into consideration. Otherwise Info will
-                                // consider "totalWidth"
-                indentation = 1
-                indentationChar = 32 // decimal : 32 = binary 00010000 = the ascii code
-                                        // of blank space
-                singleInfoWidthMin = 29
-                singleInfoWidthMax = 36 // This value may seem strange, but it has been
-                                        // seriously, solemnly, gravely, severity, strictly,
-                                        // earnestly, gravitas and carefully considered
-                horizontalSpacing = 4
-                blankRow = AUTO
-            }
-            BlockTypesetter
-            {
-                name = Operation
-                indentation = 1
-                indentationChar = 32
-                horizontalSpacing = 3
-            }
-            BlockTypesetter
-            {
-                name = Warning
-            }
-            BlockTypesetter
-            {
+                width = 120
+                height = 29
+
+                BlockTypesetter
+                {
+                    name = SeparateLine
+                    horizontalStyle = 45
+                    verticalStyle = 124
+                }
+                BlockTypesetter
+                {
+                    name = Tittle
+                    indentation = 1
+                    indentationChar = 32 // decimal : 32 = binary 00010000 = the ascii code
+                                            // of blank space
+                    isDrawingGameName = true
+                    gameName = [未定义 undefined]
+                }
+                BlockTypesetter
+                {
+                    name = Info
+                    totalWidth = 41 // The max screen space that is available. Most of the
+                                    // time, Info will not take up so much screen space.
+                    totalHeight = 7 // If the position of Info that defined by Layout is UP
+                                    // or DOWN, this setting value "totalHeight" will be
+                                    // took into consideration. Otherwise Info will
+                                    // consider "totalWidth"
+                    indentation = 1
+                    indentationChar = 32 // decimal : 32 = binary 00010000 = the ascii code
+                                            // of blank space
+                    singleInfoWidthMin = 29
+                    singleInfoWidthMax = 36 // This value may seem strange, but it has been
+                                            // seriously, solemnly, gravely, severity, strictly,
+                                            // earnestly, gravitas and carefully considered
+                    horizontalSpacing = 4
+                    blankRow = AUTO
+                }
+                BlockTypesetter
+                {
+                    name = Operation
+                    indentation = 1
+                    indentationChar = 32
+                    horizontalSpacing = 3
+                }
+                BlockTypesetter
+                {
+                    name = Warning
+                }
+                BlockTypesetter
+                {
                 name = Text
                 totalWidth = 41
                 totalHeight = 10
@@ -79,9 +78,7 @@ public class FrameDemo implements Argument {
                 indentationRight = 1
                 indentationChar = 32
                 widowOrphanControl = 1
-            }
-            Layout
-            {
+                }
                 Layer
                 {
                     type = SeparateLine
@@ -143,8 +140,7 @@ public class FrameDemo implements Argument {
                     position = UP
                 }
             }
-        }""";
-
+            """;
 
     @Override
     public String getParam() {
@@ -170,8 +166,8 @@ public class FrameDemo implements Argument {
             Scanner sc = new Scanner(System.in);
             for (Lexicon messageLexicon : messageLs) {
                 MessageManager mm = read(messageLexicon);
-                ConfigureFile cfg = new ConfigureFile(PATH.getFile("settings\\frame.cfg"), DEFAULT_CONFIG);
-                Frame f = new Frame(new Layout(cfg.read()));
+                ConfigureFile cfgFile = new ConfigureFile(PATH.getFile("settings\\frame.cfg"), DEFAULT_CONFIG);
+                Frame f = new Frame(new LexiconConfiguration(cfgFile.read()));
                 f.out(mm.toMessage());
                 sc.nextLine();
             }
@@ -207,14 +203,13 @@ public class FrameDemo implements Argument {
 
     private static ConfigureFile getDemoRes() {
         final String DEMO_RES_FILEPATH = "data\\HDQS\\Frame\\resources\\demo.cfg";
-        final String DEMO_RES_VALUE =
-                """
+        final String DEMO_RES_VALUE = """
                 Messages
                 {
                     Message
                     {
                         title = MYRPG-VersionAlpha0.1
-                        
+
                         info = 等级    1
                         info = 经验    100/0
                         info = 属性点  0
@@ -227,7 +222,7 @@ public class FrameDemo implements Argument {
                         info = 武器    训练战士用的木剑      伤害:3
                         info = 盔甲    新手木甲      盔甲值:3.0
                         info = 输入6以查看详细信息....
-                        
+
                         text = 你遭遇了怪物,进入战斗状态!!
                         text = ==========================
                         text = 现在是战斗的第1回合!
@@ -237,7 +232,7 @@ public class FrameDemo implements Argument {
                         text = -------------------------------
                         text =
                         text = 请选择你现在要做什么
-                        
+
                         operation = 1.【战斗】
                         operation = 2.【怪物信息】
                         operation = 3.【释放技能】
@@ -247,11 +242,11 @@ public class FrameDemo implements Argument {
                     }
                     Message
                     {
-                        text =*    视频提供了功能强大的方法帮助您证明您的观点。当您单击联机视频时，可以在想要添加的视频的嵌入代码中进行粘贴。您也可以键入一个关键字以联机搜索最适合您的文档的视频。
-                        text =*    为使您的文档具有专业外观，Word 提供了页眉、页脚、封面和文本框设计，这些设计可互为补充。例如，您可以添加匹配的封面、页眉和提要栏。单击“插入”，然后从不同库中选择所需元素。
-                        text =*    主题和样式也有助于文档保持协调。当您单击设计并选择新的主题时，图片、图表或 SmartArt 图形将会更改以匹配新的主题。当应用样式时，您的标题会进行更改以匹配新的主题。
-                        text =*    使用在需要位置出现的新按钮在 Word 中保存时间。若要更改图片适应文档的方式，请单击该图片，图片旁边将会显示布局选项按钮。当处理表格时，单击要添加行或列的位置，然后单击加号。
-                        text =*    在新的阅读视图中阅读更加容易。可以折叠文档某些部分并关注所需文本。如果在达到结尾处之前需要停止读取，Word 会记住您的停止位置 - 即使在另一个设备上。
+                        text =*   视频提供了功能强大的方法帮助您证明您的观点。当您单击联机视频时，可以在想要添加的视频的嵌入代码中进行粘贴。您也可以键入一个关键字以联机搜索最适合您的文档的视频。
+                        text =*   为使您的文档具有专业外观，Word 提供了页眉、页脚、封面和文本框设计，这些设计可互为补充。例如，您可以添加匹配的封面、页眉和提要栏。单击“插入”，然后从不同库中选择所需元素。
+                        text =*   主题和样式也有助于文档保持协调。当您单击设计并选择新的主题时，图片、图表或 SmartArt 图形将会更改以匹配新的主题。当应用样式时，您的标题会进行更改以匹配新的主题。
+                        text =*   使用在需要位置出现的新按钮在 Word 中保存时间。若要更改图片适应文档的方式，请单击该图片，图片旁边将会显示布局选项按钮。当处理表格时，单击要添加行或列的位置，然后单击加号。
+                        text =*   在新的阅读视图中阅读更加容易。可以折叠文档某些部分并关注所需文本。如果在达到结尾处之前需要停止读取，Word 会记住您的停止位置 - 即使在另一个设备上。
                         text =*Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.
                     }
                 }""";

@@ -40,7 +40,8 @@ public class Token2Lexicon {
                     Token lexiconBegin = advance();
                     switch (lexiconBegin.type) {
                         case EQUAL:
-                            System.err.println(errMsg(lexiconBegin, "Key-Value should be surrounded by a lexicon", 0, 0));
+                            System.err
+                                    .println(errMsg(lexiconBegin, "Key-Value should be surrounded by a lexicon", 0, 0));
                             skipLine();
                             break;
                         case LEFT_BRACE:
@@ -49,10 +50,11 @@ public class Token2Lexicon {
                         case WHITESPACE, NEWLINE, EOF:
                             break;
                         case STRING:
-                            System.err.println(errMsg(lexiconBegin, "cannot resolve symbol " + lexiconBegin.value(), 0, lexiconBegin.value().length()));
+                            System.err.println(errMsg(lexiconBegin, "cannot resolve symbol " + lexiconBegin.value(), 0,
+                                    lexiconBegin.value().length()));
                             break;
                         case RIGHT_BRACE:
-                            System.err.println(errMsg(lexiconBegin, "cannot resolve symbol '}'" , 0, 1));
+                            System.err.println(errMsg(lexiconBegin, "cannot resolve symbol '}'", 0, 1));
                             break;
                     }
                 }
@@ -72,7 +74,8 @@ public class Token2Lexicon {
     private void skipLine() {
         int cLine = source.get(current - 1).line;
         for (; !isAtEnd(); advance()) {
-            if (cLine != source.get(current).line) break;
+            if (cLine != source.get(current).line)
+                break;
         }
     }
 
@@ -103,10 +106,12 @@ public class Token2Lexicon {
                             case WHITESPACE, NEWLINE:
                                 break;
                             case RIGHT_BRACE:
-                                System.err.println(errMsg(subHead, "RIGHT_BRACE, cannot find an '=' or '{'", 0, subHead.value().length()));
+                                System.err.println(errMsg(subHead, "RIGHT_BRACE, cannot find an '=' or '{'", 0,
+                                        subHead.value().length()));
                                 return returnVal;
                             case STRING:
-                                System.err.println(errMsg(criterion, "multiple String as a name", 0, criterion.value().length()));
+                                System.err.println(
+                                        errMsg(criterion, "multiple String as a name", 0, criterion.value().length()));
                                 break;
                             case LEFT_BRACE:
                                 returnVal.add(readLexicon(subHead));
@@ -132,13 +137,13 @@ public class Token2Lexicon {
                     return returnVal;
             }
         }
-        System.err.println(errMsg(source.get(current-1), "expect '}'", source.get(current-1).value().length(), 1));
+        System.err.println(errMsg(source.get(current - 1), "expect '}'", source.get(current - 1).value().length(), 1));
         return returnVal;
     }
 
     // private Token peek() {
-    //     if (isAtEnd()) return source.get(source.size() - 1);
-    //     return source.get(current);
+    // if (isAtEnd()) return source.get(source.size() - 1);
+    // return source.get(current);
     // }
 
     private Token advance() {
@@ -151,7 +156,7 @@ public class Token2Lexicon {
 
     /*
      * length: 0 代表整行。
-     * */
+     */
     private String errMsg(Token t, String msg, int pos, int length) {
         StringBuilder sb = new StringBuilder();
         sb.append("Error: ");

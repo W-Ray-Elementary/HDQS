@@ -22,7 +22,9 @@ import java.util.Objects;
  * </p>
  * <p>
  * 为了提高程序的可拓展性，{@code Launcher}拥有独特的启动模式。具体流程如下：
- * <blockquote><pre>
+ * <blockquote>
+ * 
+ * <pre>
  *     扫描bin\HDQS.jar，遍历其中的.class文件
  *     实现了RequireBoot的类被加载为类对象，放入REQUIRE_BOOT集合。
  *     实现了Argument的类被加载为类对象，放入OPTIONS集合。
@@ -32,7 +34,9 @@ import java.util.Objects;
  *     ......
  *     运行cleanUp()
  *     退出游戏
- * </pre></blockquote>
+ * </pre>
+ * 
+ * </blockquote>
  * </p>
  */
 public class Launcher {
@@ -62,7 +66,7 @@ public class Launcher {
     /*
      * 当该值为null时，正常进入游戏。
      * 当该值不为null时，进入该值提供的入口，不进入游戏
-     * */
+     */
     private static Start launch = null;
 
     /**
@@ -79,7 +83,8 @@ public class Launcher {
     }
 
     /* No Launcher instance for you */
-    private Launcher() {}
+    private Launcher() {
+    }
 
     public static void main(String[] args) {
         boot();
@@ -96,6 +101,7 @@ public class Launcher {
      * 启动，启动的流程以放在类注释中，不再赘述。
      */
     private static void boot() {
+        long startTime = System.currentTimeMillis();
         // 通过class对象实例化并运行
         for (Class<?> clazz : REQUIRE_BOOT) {
             Object obj;
@@ -103,25 +109,26 @@ public class Launcher {
                 // 获取Constructor，进而新建实例。
                 Constructor<?> constructor = clazz.getConstructor();
                 obj = constructor.newInstance();
-            } catch (NoSuchMethodException | InvocationTargetException |
-                     InstantiationException | IllegalAccessException e) {
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException
+                    | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
             Objects.requireNonNull(obj);
             if (obj instanceof RequireBoot) {
                 // 调用boot()方法，完成启动。
-                RequireBoot rb = ((RequireBoot)obj);
+                RequireBoot rb = ((RequireBoot) obj);
                 // 有时，启动会消耗一点时间，这里可以展示进度。
                 rb.boot(LINE_PRINTER);
             }
         }
+        long cost = System.currentTimeMillis() - startTime;
         DEFAULT_PRINT.println();
-        DEFAULT_PRINT.println("Boot ended.");
+        DEFAULT_PRINT.println("Boot ended. Cost " + cost + " ms");
     }
 
-    /* 
+    /*
      * 处理可能的args..
-     * */
+     */
     private static void processArgs(String[] args) {
         if (args.length == 0) {
             return;
@@ -135,13 +142,13 @@ public class Launcher {
             try {
                 Constructor<?> constructor = clazz.getConstructor();
                 obj = constructor.newInstance();
-            } catch (NoSuchMethodException | InvocationTargetException |
-                     InstantiationException | IllegalAccessException e) {
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException
+                    | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
             Objects.requireNonNull(obj);
             if (obj instanceof Argument) {
-                Argument argProcessor = ((Argument)obj);
+                Argument argProcessor = ((Argument) obj);
                 argsPeocessors.put(argProcessor.getParam(), argProcessor);
             }
         }

@@ -7,9 +7,11 @@ import java.util.Random;
  */
 public class RandomAssistant {
     private final Random random;
+
     public RandomAssistant(long seed) {
         random = new Random(seed);
     }
+
     public RandomAssistant() {
         random = new Random();
     }
@@ -24,6 +26,7 @@ public class RandomAssistant {
     /**
      * 百分之几的概率发生，不检查上下限。
      * 小于零视为0，大于100视为100
+     * 
      * @param percent 百分数
      */
     public boolean percent(int percent) {

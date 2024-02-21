@@ -1,7 +1,7 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,21 +18,16 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
     private int cacheIndex;
     private boolean areYouTheLastOne;
     private static final boolean I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE = false;
-    protected BT_Text(SupportedBT_Position position, Lexicon config) {
+
+    protected BT_Text(SupportedBT_Position position, Configuration config) {
         super(position);
         areYouTheLastOne = I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE;
-        String totalWidthStr         = config.getFirst("totalWidth"        );
-        String totalHeightStr        = config.getFirst("totalHeight"       );
-        String indentationLeftStr    = config.getFirst("indentationLeft"   );
-        String indentationRightStr   = config.getFirst("indentationRight"  );
-        String indentationCharStr    = config.getFirst("indentationChar"   );
-        String widowOrphanControlStr = config.getFirst("widowOrphanControl");
-        TOTAL_WIDTH          =        Integer.parseInt(totalWidthStr      );
-        TOTAL_HEIGHT         =        Integer.parseInt(totalHeightStr     );
-        INDENTATION_LEFT     =        Integer.parseInt(indentationLeftStr );
-        INDENTATION_RIGHT    =        Integer.parseInt(indentationRightStr);
-        INDENTATION_CHAR     = (char) Integer.parseInt(indentationCharStr );
-        WIDOW_ORPHAN_CONTROL =        Integer.parseInt(widowOrphanControlStr);
+        TOTAL_WIDTH = config.getInt("totalWidth");
+        TOTAL_HEIGHT = config.getInt("totalHeight");
+        INDENTATION_LEFT = config.getInt("indentationLeft");
+        INDENTATION_RIGHT = config.getInt("indentationRight");
+        INDENTATION_CHAR = (char) config.getInt("indentationChar");
+        WIDOW_ORPHAN_CONTROL = config.getInt("widowOrphanControl");
     }
 
     @Override
@@ -87,8 +82,8 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
         cache = new String[preCache.size()];
         for (int i = 0; i < preCache.size(); i++)
             cache[i] = preCache.get(i);
-        return (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) ?
-                blockHeight : blockWidth;
+        return (position == SupportedBT_Position.UP || position == SupportedBT_Position.DOWN) ? blockHeight
+                : blockWidth;
     }
 
     @Override

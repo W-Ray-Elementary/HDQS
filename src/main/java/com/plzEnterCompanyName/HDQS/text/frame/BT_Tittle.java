@@ -1,7 +1,7 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 /**
  * 用于标题绘制的BlockTypesetter，只占一行。
@@ -9,17 +9,14 @@ import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
  */
 public class BT_Tittle extends BlockTypesetter {
     protected String[] cache;
-    protected BT_Tittle(SupportedBT_Position position, Lexicon config) {
+
+    protected BT_Tittle(SupportedBT_Position position, Configuration config) {
         super(position);
-        cache = new String[]{""};
-        String indentationStr        = config.getFirst("indentation"      );
-        String indentationCharStr    = config.getFirst("indentationChar"  );
-        String isDrawingWatermarkStr = config.getFirst("isDrawingGameName");
-        String gameNameStr           = config.getFirst("gameName");
-        INDENTATION          = Integer.parseInt(indentationStr           );
-        INDENTATION_CHAR     = (char) Integer.parseInt(indentationCharStr);
-        IS_DRAWING_GAME_NAME = Boolean.parseBoolean(isDrawingWatermarkStr);
-        GAME_NAME            = gameNameStr;
+        cache = new String[] { "" };
+        INDENTATION = config.getInt("indentation");
+        INDENTATION_CHAR = (char) config.getInt("indentationChar");
+        IS_DRAWING_GAME_NAME = config.getBoolean("isDrawingGameName");
+        GAME_NAME = config.get("gameName");
     }
 
     /**
@@ -59,8 +56,7 @@ public class BT_Tittle extends BlockTypesetter {
                 return 1;
             }
             int spacing = posLimit - usedWidth;
-            cache[0] =
-                    retraction +
+            cache[0] = retraction +
                     title +
                     String.valueOf(' ').repeat(spacing) +
                     gameName;
@@ -76,5 +72,6 @@ public class BT_Tittle extends BlockTypesetter {
     }
 
     @Override
-    protected void nextPage() {  }
+    protected void nextPage() {
+    }
 }

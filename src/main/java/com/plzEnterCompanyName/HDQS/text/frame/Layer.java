@@ -3,8 +3,9 @@ package com.plzEnterCompanyName.HDQS.text.frame;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicons;
+import com.plzEnterCompanyName.HDQS.util.Configuration;
+import com.plzEnterCompanyName.HDQS.util.ConfigurationNotFoundException;
+import com.plzEnterCompanyName.HDQS.util.Configurations;
 
 public class Layer {
 
@@ -12,47 +13,45 @@ public class Layer {
     protected final String position;
     protected final BlockTypesetter typesetter;
 
-    public Layer(Lexicon layerConfig, List<Lexicon> bTConfigs) {
-        this.type = layerConfig.getFirst("type");
-        this.position = layerConfig.getFirst("position");
-        List<Object> contentsObjs = new ArrayList<>(List.of(layerConfig.getAll("", true)));
-        List<Lexicon> ls = new ArrayList<>();
-        for (Object contentObj : contentsObjs) {
-            if (contentObj instanceof Lexicon l) {
-                ls.add(l);
-            }
+    public Layer(Configuration layerConfig, List<Configuration> btConfigs) {
+        this.type = layerConfig.get("type");
+        this.position = layerConfig.get("position");
+        List<Configuration> cs = new ArrayList<>();
+        try {
+            cs = layerConfig.subSets("BlockTypesetter");
+        } catch (ConfigurationNotFoundException e) {
         }
         SupportedBT_Position posHandle = convertEnum();
         switch (type) {
             case "SeparateLine" -> typesetter = new BT_SeparateLine(
                     posHandle,
-                    priorityForBT(ls, bTConfigs, "SeparateLine"));
+                    priorityForBT(cs, btConfigs, "SeparateLine"));
             case "Tittle" -> typesetter = new BT_Tittle(
                     posHandle,
-                    priorityForBT(ls, bTConfigs, "Tittle"));
+                    priorityForBT(cs, btConfigs, "Tittle"));
             case "Info" -> typesetter = new BT_Info(
                     posHandle,
-                    priorityForBT(ls, bTConfigs, "Info"));
+                    priorityForBT(cs, btConfigs, "Info"));
             case "Operation" -> typesetter = new BT_Operation(
                     posHandle,
-                    priorityForBT(ls, bTConfigs, "Operation"));
+                    priorityForBT(cs, btConfigs, "Operation"));
             case "Warning" -> typesetter = new BT_Warning(
                     posHandle,
-                    priorityForBT(ls, bTConfigs, "Warning"));
+                    priorityForBT(cs, btConfigs, "Warning"));
             case "Text" -> typesetter = new BT_Text(
                     posHandle,
-                    priorityForBT(ls, bTConfigs, "Text"));
+                    priorityForBT(cs, btConfigs, "Text"));
             default ->
                 throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
         }
     }
 
-    private static Lexicon priorityForBT(
-            List<Lexicon> first,
-            List<Lexicon> second,
+    private static Configuration priorityForBT(
+            List<Configuration> first,
+            List<Configuration> second,
             String name) {
-        Lexicon firstContent = Lexicons.orderName(first, "BlockTypesetter", name);
-        return firstContent == null ? Lexicons.strictOrderName(second, "BlockTypesetter", name) : firstContent;
+        Configuration firstContent = Configurations.orderName(first, "BlockTypesetter", name);
+        return firstContent == null ? Configurations.strictOrderName(second, "BlockTypesetter", name) : firstContent;
     }
 
     private SupportedBT_Position convertEnum() {

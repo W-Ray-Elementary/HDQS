@@ -2,7 +2,7 @@ package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Info;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
+import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -116,31 +116,25 @@ public class BT_Info extends BlockTypesetter {
 
     /**
      * 创建BT_Info对象以用于排版
+     * 
      * @param position position是一个特殊的枚举，具体影响我希望由用户自行测试，
      *                 通过实践得到答案。
      * @param config   该BT_Info的配置文件
      */
-    protected BT_Info(SupportedBT_Position position, Lexicon config) {
+    protected BT_Info(SupportedBT_Position position, Configuration config) {
         super(position);
-        String totalWidthStr         = config.getFirst("totalWidth"        );
-        String totalHeightStr        = config.getFirst("totalHeight"       );
-        String indentationStr        = config.getFirst("indentation"       );
-        String indentationCharStr    = config.getFirst("indentationChar"   );
-        String singleInfoWidthMinStr = config.getFirst("singleInfoWidthMin");
-        String singleInfoWidthMaxStr = config.getFirst("singleInfoWidthMax");
-        String horizontalSpacingStr  = config.getFirst("horizontalSpacing" );
-        String blankRowStr           = config.getFirst("blankRow"          );
-        TOTAL_WIDTH           =        Integer.parseInt(totalWidthStr        );
-        TOTAL_HEIGHT          =        Integer.parseInt(totalHeightStr       );
-        INDENTATION           =        Integer.parseInt(indentationStr       );
-        INDENTATION_CHAR      = (char) Integer.parseInt(indentationCharStr   );
-        MIN_SINGLE_INFO_WIDTH =        Integer.parseInt(singleInfoWidthMinStr);
-        MAX_SINGLE_INFO_WIDTH =        Integer.parseInt(singleInfoWidthMaxStr);
-        HORIZONTAL_SPACING    =        Integer.parseInt(horizontalSpacingStr );
+        TOTAL_WIDTH = config.getInt("totalWidth");
+        TOTAL_HEIGHT = config.getInt("totalHeight");
+        INDENTATION = config.getInt("indentation");
+        INDENTATION_CHAR = (char) config.getInt("indentationChar");
+        MIN_SINGLE_INFO_WIDTH = config.getInt("singleInfoWidthMin");
+        MAX_SINGLE_INFO_WIDTH = config.getInt("singleInfoWidthMax");
+        HORIZONTAL_SPACING = config.getInt("horizontalSpacing");
+        String blankRowStr = config.get("blankRow");
         switch (blankRowStr) {
-            case "TRUE"  -> BLANK_ROW = BlankRowStatus.TRUE ;
+            case "TRUE" -> BLANK_ROW = BlankRowStatus.TRUE;
             case "FALSE" -> BLANK_ROW = BlankRowStatus.FALSE;
-            case "AUTO"  -> BLANK_ROW = BlankRowStatus.AUTO ;
+            case "AUTO" -> BLANK_ROW = BlankRowStatus.AUTO;
             default -> throw new RuntimeException("Unsupported blank row action : " + blankRowStr);
         }
     }
@@ -156,8 +150,7 @@ public class BT_Info extends BlockTypesetter {
             totalWidth = posLimit - INDENTATION;
             totalHeight = TOTAL_HEIGHT;
             secondLimit = TOTAL_HEIGHT;
-        }
-        else {
+        } else {
             totalWidth = TOTAL_WIDTH - INDENTATION;
             totalHeight = posLimit;
             secondLimit = TOTAL_WIDTH;
@@ -224,14 +217,14 @@ public class BT_Info extends BlockTypesetter {
     }
 
     private int singleWidth(int totalWidth) {
-        return (totalWidth < MAX_SINGLE_INFO_WIDTH + HORIZONTAL_SPACING + MAX_SINGLE_INFO_WIDTH) ?
-                Math.min(totalWidth, MAX_SINGLE_INFO_WIDTH) :
-                MAX_SINGLE_INFO_WIDTH;
+        return (totalWidth < MAX_SINGLE_INFO_WIDTH + HORIZONTAL_SPACING + MAX_SINGLE_INFO_WIDTH)
+                ? Math.min(totalWidth, MAX_SINGLE_INFO_WIDTH)
+                : MAX_SINGLE_INFO_WIDTH;
     }
 
     /*
-    * 能run不出BUG就行，我知道这里的代码可以简化。
-    * */
+     * 能run不出BUG就行，我知道这里的代码可以简化。
+     */
     private int endOfLineSpace(final int totalWidth) {
         if (totalWidth < MAX_SINGLE_INFO_WIDTH) {
             return 0;
@@ -243,7 +236,8 @@ public class BT_Info extends BlockTypesetter {
     }
 
     private String setType0(Info info, int availableWidth) {
-        if (info == null) return Frame.RULER.repeatW(null, availableWidth);
+        if (info == null)
+            return Frame.RULER.repeatW(null, availableWidth);
         String returnVal = "";
         String infoStr = info.getName();
         int neededWidth = Frame.RULER.measureWidth(infoStr);
