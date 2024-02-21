@@ -171,9 +171,7 @@ public class FrameDemo implements Argument {
                 f.out(mm.toMessage());
                 sc.nextLine();
             }
-            if (sc != null) {
-                sc.close();
-            }
+            sc.close();
         };
     }
 
