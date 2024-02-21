@@ -36,6 +36,14 @@ public class Layout {
         }
     }
 
+    public Layout(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.layers = new ArrayList<>();
+        this.widthRemain = this.width;
+        this.heightRemain = this.height;
+    }
+
     protected String setType(Message msg) {
         int[][] table = new int[height][width];
         for (int[] ints : table)
