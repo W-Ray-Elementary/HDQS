@@ -49,7 +49,7 @@ public class BT_Info extends BlockTypesetter {
      * 择了一行放三个Info，TOTAL_HEIGHT为5，进行排版时，来了10个Info。按照一行
      * 放三个的原则，这些Info占了4列，据此BT_Info完成了排版并将占掉了4行这个情况
      * 如实上报给 Layer -> Layout -> Frame 。排版完成
-     * <p/>
+     * </p>
      * <p>
      * 又例如，所有条件与上一组相同，但是来了16个Info，这时候BT_Info发现空间
      * 不够用了，它又没有权利打断 Frame 的排版请求，于是默不作声地把那五行全部填

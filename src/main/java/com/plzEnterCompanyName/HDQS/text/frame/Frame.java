@@ -39,6 +39,8 @@ import java.io.PrintStream;
  * “信息3.排版的模式”由你具体调用的输出方法决定，目前仅有
  * {@link Frame#out(Message msg)}方法可用，更多的排版模式仍在开发中。
  * </p>
+ *
+ * @see com.plzEnterCompanyName.HDQS.text.frame.FrameExample
  */
 public class Frame implements Out, PageOutputAble, WarnAble {
 

@@ -56,12 +56,21 @@ import java.util.List;
 public class Layout {
 
     /**
-     * 该布局可用的总空间。
+     * 该布局可用的总空间的宽度。
      */
     private final int width;
     protected int widthRemain;
+
+
+    /**
+     * 该布局可用的总空间的高度。
+     */
     private final int height;
     protected int heightRemain;
+
+    /**
+     *
+     */
     private final List<Layer> layers;
     protected List<Configuration> BT_GlobalConfigs;
     public static final Ruler RULER = new AwtRuler();
