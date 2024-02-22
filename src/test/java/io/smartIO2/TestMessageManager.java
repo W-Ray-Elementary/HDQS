@@ -20,9 +20,6 @@ public class TestMessageManager {
         mm.text("视频提供了一种强大的方式来帮助你证明自己的观点。单击“联机视频”时，可以粘贴要添加的视频的嵌入代码。你还可以键入一个关键字，以便在线搜索最适合你的文档的视频。");
         mm.text("为了使你的文档看起来更专业化，Word 提供了页眉、页脚、封面和文本框设计，它们相互补充。例如，可以添加匹配的封面页、页眉和边栏。 ");
         mm.text("图片题注：图片题注：为了使你的文档看起来更专业化，Word 提供了页眉、页脚、封面和文本框设计，它们相互补充。");
-        mm.info(new Info("小数字", "123", 5));
-        mm.info(new Info("大数字", "123456789", 5));
-        mm.addOperation(new Operation("继续", new BlankReceiver()));
         Message msg = mm.toMessage();
         if (!"今日新闻".equals(msg.title.get(0)))
             throw new RuntimeException();

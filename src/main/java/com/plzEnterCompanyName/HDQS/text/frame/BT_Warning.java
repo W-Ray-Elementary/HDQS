@@ -5,6 +5,10 @@ import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 public class BT_Warning extends BlockTypesetter {
 
+    public BT_Warning(SupportedBT_Position position) {
+        super(position);
+    }
+
     protected BT_Warning(SupportedBT_Position position, Configuration config) {
         super(position);
     }

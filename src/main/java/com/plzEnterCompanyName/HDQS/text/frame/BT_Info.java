@@ -1,6 +1,5 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
-import com.plzEnterCompanyName.HDQS.io.smartIO2.Info;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 
@@ -114,6 +113,20 @@ public class BT_Info extends BlockTypesetter {
 
     private int cacheIndex;
 
+    public BT_Info(SupportedBT_Position position, int totalWidth, int totalHeight, int indentation,
+            char indentationChar, int singleInfoWidthMin, int singleInfoWidthMax, int horizontalSpacing,
+            BlankRowStatus blankRow) {
+        super(position);
+        TOTAL_WIDTH = totalWidth;
+        TOTAL_HEIGHT = totalHeight;
+        INDENTATION = indentation;
+        INDENTATION_CHAR = indentationChar;
+        MIN_SINGLE_INFO_WIDTH = singleInfoWidthMin;
+        MAX_SINGLE_INFO_WIDTH = singleInfoWidthMax;
+        HORIZONTAL_SPACING = horizontalSpacing;
+        BLANK_ROW = blankRow;
+    }
+
     /**
      * 创建BT_Info对象以用于排版
      * 
@@ -142,7 +155,7 @@ public class BT_Info extends BlockTypesetter {
     @Override
     protected int setType(Message message, final int posLimit) {
         String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
-        String spacing = Frame.RULER.repeatW(" ", HORIZONTAL_SPACING);
+        String spacing = Layout.RULER.repeatW(" ", HORIZONTAL_SPACING);
         final int totalWidth;
         final int totalHeight;
         final int secondLimit;
@@ -156,13 +169,13 @@ public class BT_Info extends BlockTypesetter {
             secondLimit = TOTAL_WIDTH;
         }
         String blankLineWI /* WI: with indentation */
-                = Frame.RULER.repeatW(" ", totalWidth + INDENTATION);
+                = Layout.RULER.repeatW(" ", totalWidth + INDENTATION);
         int singleWidth = singleWidth(totalWidth);
-        String endOfLineSpace = Frame.RULER.repeatW(" ", endOfLineSpace(totalWidth));
+        String endOfLineSpace = Layout.RULER.repeatW(" ", endOfLineSpace(totalWidth));
         List<String> lines = new ArrayList<>();
         { // 防止对 infosStr 进行意外的引用
-            List<String> infosStr = new ArrayList<>(message.infos.size());
-            for (Info info : message.infos) {
+            List<String> infosStr = new ArrayList<>();
+            for (String info : message.infos) {
                 infosStr.add(setType0(info, singleWidth));
             }
             Iterator<String> it = infosStr.iterator();
@@ -235,16 +248,15 @@ public class BT_Info extends BlockTypesetter {
         }
     }
 
-    private String setType0(Info info, int availableWidth) {
+    private String setType0(String info, int availableWidth) {
         if (info == null)
-            return Frame.RULER.repeatW(null, availableWidth);
+            return Layout.RULER.repeatW(null, availableWidth);
         String returnVal = "";
-        String infoStr = info.getName();
-        int neededWidth = Frame.RULER.measureWidth(infoStr);
+        int neededWidth = Layout.RULER.measureWidth(info);
         if (neededWidth > availableWidth)
             return String.valueOf('#').repeat(availableWidth);
         int endBlanks = availableWidth - neededWidth;
-        returnVal += infoStr + String.valueOf(' ').repeat(endBlanks);
+        returnVal += info + String.valueOf(' ').repeat(endBlanks);
         return returnVal;
     }
 

@@ -7,12 +7,12 @@ import java.util.List;
 public class Message {
     public List<String> title;
     public List<String> texts;
-    public List<Info> infos;
-    public List<Operation> operations;
+    public List<String> infos;
+    public List<String> operations;
     public Lexicon advancedInfo;
 
-    protected Message(List<String> title, List<String> texts, List<Info> infos,
-                   List<Operation> operations, Lexicon advancedInfo)
+    protected Message(List<String> title, List<String> texts, List<String> infos,
+                   List<String> operations, Lexicon advancedInfo)
     {
         this.title = title;
         this.texts = texts;

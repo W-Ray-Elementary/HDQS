@@ -1,7 +1,6 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.Operation;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 import java.util.ArrayList;
@@ -27,6 +26,13 @@ public class BT_Operation extends BlockTypesetter {
 
     private int cacheIndex;
 
+    public BT_Operation(SupportedBT_Position position, int indentation, char indentationChar, int horizontalSpacing) {
+        super(position);
+        INDENTATION = indentation;
+        INDENTATION_CHAR = indentationChar;
+        HORIZONTAL_SPACING = horizontalSpacing;
+    }
+
     protected BT_Operation(SupportedBT_Position position, Configuration config) {
         super(position);
         if (position == SupportedBT_Position.LEFT || position == SupportedBT_Position.RIGHT)
@@ -39,9 +45,7 @@ public class BT_Operation extends BlockTypesetter {
     @Override
     protected int setType(Message message, final int posLimit) {
         List<StringBuilder> lines = new ArrayList<>();
-        List<String> operationStrings = new ArrayList<>(message.operations.size());
-        for (Operation operation : message.operations)
-            operationStrings.add(operation.getName());
+        List<String> operationStrings = message.operations;
         String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
         String spacing = String.valueOf(' ').repeat(HORIZONTAL_SPACING);
         int lineCount = 0;
@@ -55,12 +59,12 @@ public class BT_Operation extends BlockTypesetter {
                     lines.add(new StringBuilder());
                     lines.get(lineCount).append(indentationStr);
                     lines.get(lineCount).append(str);
-                    lineSpaceAvail -= Frame.RULER.measureWidth(indentationStr);
-                    lineSpaceAvail -= Frame.RULER.measureWidth(str);
+                    lineSpaceAvail -= Layout.RULER.measureWidth(indentationStr);
+                    lineSpaceAvail -= Layout.RULER.measureWidth(str);
                     isLineBegin = false;
                     continue;
                 }
-                int neededSpace = Frame.RULER.measureWidth(spacing) + Frame.RULER.measureWidth(str);
+                int neededSpace = Layout.RULER.measureWidth(spacing) + Layout.RULER.measureWidth(str);
                 if (neededSpace > lineSpaceAvail) {
                     lines.get(lineCount).append(String.valueOf(' ').repeat(lineSpaceAvail));
                     lineCount++;
@@ -68,8 +72,8 @@ public class BT_Operation extends BlockTypesetter {
                     lines.add(new StringBuilder());
                     lines.get(lineCount).append(indentationStr);
                     lines.get(lineCount).append(str);
-                    lineSpaceAvail -= Frame.RULER.measureWidth(indentationStr);
-                    lineSpaceAvail -= Frame.RULER.measureWidth(str);
+                    lineSpaceAvail -= Layout.RULER.measureWidth(indentationStr);
+                    lineSpaceAvail -= Layout.RULER.measureWidth(str);
                     continue;
                 }
                 lineSpaceAvail -= neededSpace;

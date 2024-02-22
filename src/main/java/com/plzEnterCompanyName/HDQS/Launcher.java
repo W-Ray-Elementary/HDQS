@@ -10,11 +10,7 @@ import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * <p>
@@ -90,7 +86,7 @@ public class Launcher {
         boot();
         processArgs(args);
         if (launch == null) {
-            // 进入游戏
+            System.out.println(new Random().nextInt());
         } else {
             launch.main();
         }
@@ -114,9 +110,8 @@ public class Launcher {
                 throw new RuntimeException(e);
             }
             Objects.requireNonNull(obj);
-            if (obj instanceof RequireBoot) {
+            if (obj instanceof RequireBoot rb) {
                 // 调用boot()方法，完成启动。
-                RequireBoot rb = ((RequireBoot) obj);
                 // 有时，启动会消耗一点时间，这里可以展示进度。
                 rb.boot(LINE_PRINTER);
             }
@@ -134,9 +129,9 @@ public class Launcher {
             return;
         }
         // 通过OPTIONS集合创建实例，放入Map集合中以便调用
-        // Map<String, Argument> argsPeocessors
+        // Map<String, Argument> argsProcessors
         // Key代表遇到对应的arg，Value代表要进行的操作
-        Map<String, Argument> argsPeocessors = new HashMap<>();
+        Map<String, Argument> argsProcessors = new HashMap<>();
         for (Class<?> clazz : OPTIONS) {
             Object obj;
             try {
@@ -147,9 +142,8 @@ public class Launcher {
                 throw new RuntimeException(e);
             }
             Objects.requireNonNull(obj);
-            if (obj instanceof Argument) {
-                Argument argProcessor = ((Argument) obj);
-                argsPeocessors.put(argProcessor.getParam(), argProcessor);
+            if (obj instanceof Argument argProcessor) {
+                argsProcessors.put(argProcessor.getParam(), argProcessor);
             }
         }
         // 把String[] args转换为便于程序读取与遍历的结构
@@ -166,16 +160,16 @@ public class Launcher {
                     }
                     options.add(args[j]);
                 }
-                String[] optinsArray = new String[options.size()];
+                String[] optionsArray = new String[options.size()];
                 for (int j = 0; j < options.size(); j++) {
-                    optinsArray[j] = options.get(j);
+                    optionsArray[j] = options.get(j);
                 }
-                optionsMap.put(hToken, optinsArray);
+                optionsMap.put(hToken, optionsArray);
             }
         }
         // 运行，处理
         for (Map.Entry<String, String[]> option : optionsMap.entrySet()) {
-            Argument argProcessor = argsPeocessors.get(option.getKey());
+            Argument argProcessor = argsProcessors.get(option.getKey());
             if (argProcessor != null) {
                 Start processorStart = argProcessor.process(option.getValue());
                 if (processorStart != null) {
