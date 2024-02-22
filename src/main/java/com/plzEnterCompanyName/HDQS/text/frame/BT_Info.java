@@ -113,6 +113,19 @@ public class BT_Info extends BlockTypesetter {
 
     private int cacheIndex;
 
+    /**
+     * 最实在的方法，一个一个传入配置并创建{@code BlockTypesetter}
+     *
+     * @param position 上下左右
+     * @param totalWidth 总宽度
+     * @param totalHeight 总高度
+     * @param indentation 缩进多少
+     * @param indentationChar 用什么字符缩进
+     * @param singleInfoWidthMin 单个Info的最小宽度
+     * @param singleInfoWidthMax 单个Info的最大宽度
+     * @param horizontalSpacing 两个Info左右之间的水平间隔
+     * @param blankRow 空行模式，推荐AUTO
+     */
     public BT_Info(SupportedBT_Position position, int totalWidth, int totalHeight, int indentation,
             char indentationChar, int singleInfoWidthMin, int singleInfoWidthMax, int horizontalSpacing,
             BlankRowStatus blankRow) {
@@ -129,6 +142,22 @@ public class BT_Info extends BlockTypesetter {
 
     /**
      * 创建BT_Info对象以用于排版
+     *
+     * <p><blockquote><pre>
+     * config的格式要求：
+     * BlockTypesetter
+     * {
+     *     name = Info
+     *     totalWidth = ...
+     *     totalHeight = ...
+     *     indentation = ...
+     *     indentationChar = ...
+     *     singleInfoWidthMin = ...
+     *     singleInfoWidthMax = ...
+     *     horizontalSpacing = ...
+     *     blankRow = ...
+     * }
+     * </pre></blockquote>
      * 
      * @param position position是一个特殊的枚举，具体影响我希望由用户自行测试，
      *                 通过实践得到答案。
