@@ -83,6 +83,11 @@ public abstract class BlockTypesetter {
     protected abstract String getCache();
 
     /**
+     * 重置状态，以便下一次排版，一般的实现方法是把cacheIndex重新设置为0。
+     */
+    protected abstract void reset();
+
+    /**
      * 对于不同的BlockTypesetter来说，有的实现了{@link AdjustableBT}接口，有的没实现。
      * 而Frame又支持翻页，翻页时，不是所有的BT_XXX都要翻页，因此，不需要翻页的就把
      * cacheIndex重新设置为0，才好重新输出一样的内容。

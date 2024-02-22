@@ -83,5 +83,10 @@ public class BT_Tittle extends BlockTypesetter {
 
     @Override
     protected void nextPage() {
+        reset();
+    }
+
+    @Override
+    protected void reset() {
     }
 }

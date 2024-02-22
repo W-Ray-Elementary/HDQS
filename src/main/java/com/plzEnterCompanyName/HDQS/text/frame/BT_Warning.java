@@ -25,5 +25,10 @@ public class BT_Warning extends BlockTypesetter {
 
     @Override
     protected void nextPage() {
+        reset();
+    }
+
+    @Override
+    protected void reset() {
     }
 }

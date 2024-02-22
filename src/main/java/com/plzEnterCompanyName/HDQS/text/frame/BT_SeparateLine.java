@@ -44,5 +44,10 @@ public class BT_SeparateLine extends BlockTypesetter {
 
     @Override
     protected void nextPage() {
+        reset();
+    }
+
+    @Override
+    protected void reset() {
     }
 }
