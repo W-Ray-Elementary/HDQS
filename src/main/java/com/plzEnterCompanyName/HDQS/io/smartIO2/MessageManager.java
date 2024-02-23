@@ -76,6 +76,7 @@ public class MessageManager {
 
     private void ensureTextIndex(List<String> texts, int index) {
         if (index < texts.size()) return;
+        // 不小于不就是>=吗，算了不改了。
         while (!(index < texts.size()))
             texts.add(DEFAULT_BLANK_TEXT);
     }
