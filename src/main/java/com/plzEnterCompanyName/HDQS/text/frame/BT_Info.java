@@ -116,19 +116,17 @@ public class BT_Info extends BlockTypesetter {
     /**
      * 最实在的方法，一个一个传入配置并创建{@code BlockTypesetter}
      *
-     * @param position 上下左右
-     * @param totalWidth 总宽度
-     * @param totalHeight 总高度
-     * @param indentation 缩进多少
-     * @param indentationChar 用什么字符缩进
+     * @param position           上下左右
+     * @param totalWidth         总宽度
+     * @param totalHeight        总高度
+     * @param indentation        缩进多少
+     * @param indentationChar    用什么字符缩进
      * @param singleInfoWidthMin 单个Info的最小宽度
      * @param singleInfoWidthMax 单个Info的最大宽度
-     * @param horizontalSpacing 两个Info左右之间的水平间隔
-     * @param blankRow 空行模式，推荐AUTO
+     * @param horizontalSpacing  两个Info左右之间的水平间隔
+     * @param blankRow           空行模式，推荐AUTO
      */
-    public BT_Info(SupportedBT_Position position, int totalWidth, int totalHeight, int indentation,
-            char indentationChar, int singleInfoWidthMin, int singleInfoWidthMax, int horizontalSpacing,
-            BlankRowStatus blankRow) {
+    public BT_Info(SupportedBT_Position position, int totalWidth, int totalHeight, int indentation, char indentationChar, int singleInfoWidthMin, int singleInfoWidthMax, int horizontalSpacing, BlankRowStatus blankRow) {
         super(position);
         TOTAL_WIDTH = totalWidth;
         TOTAL_HEIGHT = totalHeight;
@@ -158,7 +156,7 @@ public class BT_Info extends BlockTypesetter {
      *     blankRow = ...
      * }
      * </pre></blockquote>
-     * 
+     *
      * @param position position是一个特殊的枚举，具体影响我希望由用户自行测试，
      *                 通过实践得到答案。
      * @param config   该BT_Info的配置文件
@@ -197,8 +195,7 @@ public class BT_Info extends BlockTypesetter {
             totalHeight = posLimit;
             secondLimit = TOTAL_WIDTH;
         }
-        String blankLineWI /* WI: with indentation */
-                = Layout.RULER.repeatW(" ", totalWidth + INDENTATION);
+        String blankLineWI /* WI: with indentation */ = Layout.RULER.repeatW(" ", totalWidth + INDENTATION);
         int singleWidth = singleWidth(totalWidth);
         String endOfLineSpace = Layout.RULER.repeatW(" ", endOfLineSpace(totalWidth));
         List<String> lines = new ArrayList<>();
@@ -236,12 +233,9 @@ public class BT_Info extends BlockTypesetter {
         }
         BlankRowStatus currentBlankRow;
         if (BLANK_ROW == BlankRowStatus.AUTO) {
-            if (totalHeight >= (lines.size() * 2 - 1))
-                currentBlankRow = BlankRowStatus.TRUE;
-            else
-                currentBlankRow = BlankRowStatus.FALSE;
-        } else
-            currentBlankRow = BLANK_ROW;
+            if (totalHeight >= (lines.size() * 2 - 1)) currentBlankRow = BlankRowStatus.TRUE;
+            else currentBlankRow = BlankRowStatus.FALSE;
+        } else currentBlankRow = BLANK_ROW;
         int lineCount = 0;
         int cacheCount = 0;
         if (lines.size() > totalHeight) {
@@ -259,9 +253,7 @@ public class BT_Info extends BlockTypesetter {
     }
 
     private int singleWidth(int totalWidth) {
-        return (totalWidth < MAX_SINGLE_INFO_WIDTH + HORIZONTAL_SPACING + MAX_SINGLE_INFO_WIDTH)
-                ? Math.min(totalWidth, MAX_SINGLE_INFO_WIDTH)
-                : MAX_SINGLE_INFO_WIDTH;
+        return (totalWidth < MAX_SINGLE_INFO_WIDTH + HORIZONTAL_SPACING + MAX_SINGLE_INFO_WIDTH) ? Math.min(totalWidth, MAX_SINGLE_INFO_WIDTH) : MAX_SINGLE_INFO_WIDTH;
     }
 
     /*
@@ -278,12 +270,10 @@ public class BT_Info extends BlockTypesetter {
     }
 
     private String setType0(String info, int availableWidth) {
-        if (info == null)
-            return Layout.RULER.repeatW(null, availableWidth);
+        if (info == null) return Layout.RULER.repeatW(null, availableWidth);
         String returnVal = "";
         int neededWidth = Layout.RULER.measureWidth(info);
-        if (neededWidth > availableWidth)
-            return String.valueOf('#').repeat(availableWidth);
+        if (neededWidth > availableWidth) return String.valueOf('#').repeat(availableWidth);
         int endBlanks = availableWidth - neededWidth;
         returnVal += info + String.valueOf(' ').repeat(endBlanks);
         return returnVal;
