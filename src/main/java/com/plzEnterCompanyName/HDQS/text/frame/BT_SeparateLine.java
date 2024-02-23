@@ -11,6 +11,12 @@ public class BT_SeparateLine extends BlockTypesetter {
 
     protected final char VERTICAL_STYLE;
 
+    public BT_SeparateLine(SupportedBT_Position position, char horizontalStyle, char verticalStyle) {
+        super(position);
+        HORIZONTAL_STYLE = horizontalStyle;
+        VERTICAL_STYLE = verticalStyle;
+    }
+
     protected BT_SeparateLine(SupportedBT_Position position, Configuration config) {
         super(position);
         HORIZONTAL_STYLE = (char) config.getInt("horizontalStyle");
@@ -21,7 +27,7 @@ public class BT_SeparateLine extends BlockTypesetter {
     protected int setType(Message message, final int posLimit) {
         switch (position) {
             case UP, DOWN -> cache = new String[] {
-                    Frame.RULER.repeatW(String.valueOf(HORIZONTAL_STYLE), posLimit)
+                Layout.RULER.repeatW(String.valueOf(HORIZONTAL_STYLE), posLimit)
             };
             case LEFT, RIGHT -> {
                 cache = new String[posLimit];
@@ -38,5 +44,10 @@ public class BT_SeparateLine extends BlockTypesetter {
 
     @Override
     protected void nextPage() {
+        reset();
+    }
+
+    @Override
+    protected void reset() {
     }
 }

@@ -10,11 +10,7 @@ import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * <p>
@@ -90,7 +86,7 @@ public class Launcher {
         boot();
         processArgs(args);
         if (launch == null) {
-            // 进入游戏
+            System.out.println(new Random().nextInt());
         } else {
             launch.main();
         }

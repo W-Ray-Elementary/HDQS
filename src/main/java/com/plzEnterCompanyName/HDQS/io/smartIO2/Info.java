@@ -15,7 +15,6 @@ public class Info {
     private final String name;
     private String value;
     private final boolean isInteger;
-    private int width;
     private static final int MIN_WIDTH = 3;
 
     public Info(String name, int i, int width) {
@@ -34,7 +33,6 @@ public class Info {
         this.name = name;
         this.value = value;
         this.isInteger = true;
-        this.width = width;
     }
 
     public String getName() {
@@ -60,7 +58,6 @@ public class Info {
      */
     public void setWidth(int width) {
         FormatCheck.intLimit(width, MIN_WIDTH, Integer.MAX_VALUE);
-        this.width = width;
     }
 
     /**

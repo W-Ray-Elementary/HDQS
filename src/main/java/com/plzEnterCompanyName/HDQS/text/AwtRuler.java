@@ -6,6 +6,9 @@ import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * For Windows ONLY!!!
+ */
 public class AwtRuler implements Ruler, RequireBoot {
 
     @Override

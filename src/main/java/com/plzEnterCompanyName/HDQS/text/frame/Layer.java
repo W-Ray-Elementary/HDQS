@@ -13,6 +13,12 @@ public class Layer {
     protected final String position;
     protected final BlockTypesetter typesetter;
 
+    public Layer(BlockTypesetter bt) {
+        this.type = bt.getClass().getName();
+        this.position = bt.position.name();
+        this.typesetter = bt;
+    }
+
     public Layer(Configuration layerConfig, List<Configuration> btConfigs) {
         this.type = layerConfig.get("type");
         this.position = layerConfig.get("position");

@@ -10,6 +10,16 @@ import com.plzEnterCompanyName.HDQS.util.Configuration;
 public class BT_Tittle extends BlockTypesetter {
     protected String[] cache;
 
+    public BT_Tittle(SupportedBT_Position position, int indentation, char indentationChar,
+            boolean isDrawingGameName, String gameName) {
+        super(position);
+        cache = new String[] { "" };
+        INDENTATION = indentation;
+        INDENTATION_CHAR = indentationChar;
+        IS_DRAWING_GAME_NAME = isDrawingGameName;
+        GAME_NAME = gameName;
+    }
+
     protected BT_Tittle(SupportedBT_Position position, Configuration config) {
         super(position);
         cache = new String[] { "" };
@@ -50,7 +60,7 @@ public class BT_Tittle extends BlockTypesetter {
             if (IS_DRAWING_GAME_NAME) {
                 gameName = GAME_NAME;
             }
-            int usedWidth = Frame.RULER.measureWidth(retraction + title + gameName);
+            int usedWidth = Layout.RULER.measureWidth(retraction + title + gameName);
             if (usedWidth >= posLimit) {
                 cache[0] = String.valueOf('#').repeat(posLimit);
                 return 1;
@@ -73,5 +83,10 @@ public class BT_Tittle extends BlockTypesetter {
 
     @Override
     protected void nextPage() {
+        reset();
+    }
+
+    @Override
+    protected void reset() {
     }
 }

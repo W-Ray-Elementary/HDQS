@@ -1,6 +1,5 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
-import com.plzEnterCompanyName.HDQS.io.smartIO2.Info;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 
@@ -50,7 +49,7 @@ public class BT_Info extends BlockTypesetter {
      * 择了一行放三个Info，TOTAL_HEIGHT为5，进行排版时，来了10个Info。按照一行
      * 放三个的原则，这些Info占了4列，据此BT_Info完成了排版并将占掉了4行这个情况
      * 如实上报给 Layer -> Layout -> Frame 。排版完成
-     * <p/>
+     * </p>
      * <p>
      * 又例如，所有条件与上一组相同，但是来了16个Info，这时候BT_Info发现空间
      * 不够用了，它又没有权利打断 Frame 的排版请求，于是默不作声地把那五行全部填
@@ -115,8 +114,49 @@ public class BT_Info extends BlockTypesetter {
     private int cacheIndex;
 
     /**
+     * 最实在的方法，一个一个传入配置并创建{@code BlockTypesetter}
+     *
+     * @param position           上下左右
+     * @param totalWidth         总宽度
+     * @param totalHeight        总高度
+     * @param indentation        缩进多少
+     * @param indentationChar    用什么字符缩进
+     * @param singleInfoWidthMin 单个Info的最小宽度
+     * @param singleInfoWidthMax 单个Info的最大宽度
+     * @param horizontalSpacing  两个Info左右之间的水平间隔
+     * @param blankRow           空行模式，推荐AUTO
+     */
+    public BT_Info(SupportedBT_Position position, int totalWidth, int totalHeight, int indentation, char indentationChar, int singleInfoWidthMin, int singleInfoWidthMax, int horizontalSpacing, BlankRowStatus blankRow) {
+        super(position);
+        TOTAL_WIDTH = totalWidth;
+        TOTAL_HEIGHT = totalHeight;
+        INDENTATION = indentation;
+        INDENTATION_CHAR = indentationChar;
+        MIN_SINGLE_INFO_WIDTH = singleInfoWidthMin;
+        MAX_SINGLE_INFO_WIDTH = singleInfoWidthMax;
+        HORIZONTAL_SPACING = horizontalSpacing;
+        BLANK_ROW = blankRow;
+    }
+
+    /**
      * 创建BT_Info对象以用于排版
-     * 
+     *
+     * <p><blockquote><pre>
+     * config的格式要求：
+     * BlockTypesetter
+     * {
+     *     name = Info
+     *     totalWidth = ...
+     *     totalHeight = ...
+     *     indentation = ...
+     *     indentationChar = ...
+     *     singleInfoWidthMin = ...
+     *     singleInfoWidthMax = ...
+     *     horizontalSpacing = ...
+     *     blankRow = ...
+     * }
+     * </pre></blockquote>
+     *
      * @param position position是一个特殊的枚举，具体影响我希望由用户自行测试，
      *                 通过实践得到答案。
      * @param config   该BT_Info的配置文件
@@ -142,7 +182,7 @@ public class BT_Info extends BlockTypesetter {
     @Override
     protected int setType(Message message, final int posLimit) {
         String indentationStr = String.valueOf(INDENTATION_CHAR).repeat(INDENTATION);
-        String spacing = Frame.RULER.repeatW(" ", HORIZONTAL_SPACING);
+        String spacing = Layout.RULER.repeatW(" ", HORIZONTAL_SPACING);
         final int totalWidth;
         final int totalHeight;
         final int secondLimit;
@@ -155,14 +195,13 @@ public class BT_Info extends BlockTypesetter {
             totalHeight = posLimit;
             secondLimit = TOTAL_WIDTH;
         }
-        String blankLineWI /* WI: with indentation */
-                = Frame.RULER.repeatW(" ", totalWidth + INDENTATION);
+        String blankLineWI /* WI: with indentation */ = Layout.RULER.repeatW(" ", totalWidth + INDENTATION);
         int singleWidth = singleWidth(totalWidth);
-        String endOfLineSpace = Frame.RULER.repeatW(" ", endOfLineSpace(totalWidth));
+        String endOfLineSpace = Layout.RULER.repeatW(" ", endOfLineSpace(totalWidth));
         List<String> lines = new ArrayList<>();
         { // 防止对 infosStr 进行意外的引用
-            List<String> infosStr = new ArrayList<>(message.infos.size());
-            for (Info info : message.infos) {
+            List<String> infosStr = new ArrayList<>();
+            for (String info : message.infos) {
                 infosStr.add(setType0(info, singleWidth));
             }
             Iterator<String> it = infosStr.iterator();
@@ -194,12 +233,9 @@ public class BT_Info extends BlockTypesetter {
         }
         BlankRowStatus currentBlankRow;
         if (BLANK_ROW == BlankRowStatus.AUTO) {
-            if (totalHeight >= (lines.size() * 2 - 1))
-                currentBlankRow = BlankRowStatus.TRUE;
-            else
-                currentBlankRow = BlankRowStatus.FALSE;
-        } else
-            currentBlankRow = BLANK_ROW;
+            if (totalHeight >= (lines.size() * 2 - 1)) currentBlankRow = BlankRowStatus.TRUE;
+            else currentBlankRow = BlankRowStatus.FALSE;
+        } else currentBlankRow = BLANK_ROW;
         int lineCount = 0;
         int cacheCount = 0;
         if (lines.size() > totalHeight) {
@@ -217,9 +253,7 @@ public class BT_Info extends BlockTypesetter {
     }
 
     private int singleWidth(int totalWidth) {
-        return (totalWidth < MAX_SINGLE_INFO_WIDTH + HORIZONTAL_SPACING + MAX_SINGLE_INFO_WIDTH)
-                ? Math.min(totalWidth, MAX_SINGLE_INFO_WIDTH)
-                : MAX_SINGLE_INFO_WIDTH;
+        return (totalWidth < MAX_SINGLE_INFO_WIDTH + HORIZONTAL_SPACING + MAX_SINGLE_INFO_WIDTH) ? Math.min(totalWidth, MAX_SINGLE_INFO_WIDTH) : MAX_SINGLE_INFO_WIDTH;
     }
 
     /*
@@ -235,16 +269,13 @@ public class BT_Info extends BlockTypesetter {
         }
     }
 
-    private String setType0(Info info, int availableWidth) {
-        if (info == null)
-            return Frame.RULER.repeatW(null, availableWidth);
+    private String setType0(String info, int availableWidth) {
+        if (info == null) return Layout.RULER.repeatW(null, availableWidth);
         String returnVal = "";
-        String infoStr = info.getName();
-        int neededWidth = Frame.RULER.measureWidth(infoStr);
-        if (neededWidth > availableWidth)
-            return String.valueOf('#').repeat(availableWidth);
+        int neededWidth = Layout.RULER.measureWidth(info);
+        if (neededWidth > availableWidth) return String.valueOf('#').repeat(availableWidth);
         int endBlanks = availableWidth - neededWidth;
-        returnVal += infoStr + String.valueOf(' ').repeat(endBlanks);
+        returnVal += info + String.valueOf(' ').repeat(endBlanks);
         return returnVal;
     }
 
@@ -255,6 +286,11 @@ public class BT_Info extends BlockTypesetter {
 
     @Override
     protected void nextPage() {
+        reset();
+    }
+
+    @Override
+    protected void reset() {
         cacheIndex = 0;
     }
 }

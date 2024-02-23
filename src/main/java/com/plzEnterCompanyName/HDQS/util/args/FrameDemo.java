@@ -3,7 +3,6 @@ package com.plzEnterCompanyName.HDQS.util.args;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
 import java.util.Iterator;
 
 import com.plzEnterCompanyName.HDQS.Start;
@@ -71,13 +70,13 @@ public class FrameDemo implements Argument {
                 }
                 BlockTypesetter
                 {
-                name = Text
-                totalWidth = 41
-                totalHeight = 10
-                indentationLeft = 1
-                indentationRight = 1
-                indentationChar = 32
-                widowOrphanControl = 1
+                    name = Text
+                    totalWidth = 41
+                    totalHeight = 10
+                    indentationLeft = 1
+                    indentationRight = 1
+                    indentationChar = 32
+                    widowOrphanControl = 1
                 }
                 Layer
                 {
@@ -171,9 +170,7 @@ public class FrameDemo implements Argument {
                 f.out(mm.toMessage());
                 sc.nextLine();
             }
-            if (sc != null) {
-                sc.close();
-            }
+            sc.close();
         };
     }
 

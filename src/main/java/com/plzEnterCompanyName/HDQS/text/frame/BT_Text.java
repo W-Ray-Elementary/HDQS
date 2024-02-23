@@ -19,6 +19,18 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
     private boolean areYouTheLastOne;
     private static final boolean I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE = false;
 
+    public BT_Text(SupportedBT_Position position, int totalWidth, int totalHeight, int indentationLeft,
+            int indentationRight, char indentationChar, int widowOrphanControl) {
+        super(position);
+        areYouTheLastOne = I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE;
+        TOTAL_WIDTH = totalWidth;
+        TOTAL_HEIGHT = totalHeight;
+        INDENTATION_LEFT = indentationLeft;
+        INDENTATION_RIGHT = indentationRight;
+        INDENTATION_CHAR = indentationChar;
+        WIDOW_ORPHAN_CONTROL = widowOrphanControl;
+    }
+
     protected BT_Text(SupportedBT_Position position, Configuration config) {
         super(position);
         areYouTheLastOne = I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE;
@@ -42,12 +54,12 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
             blockWidth = areYouTheLastOne ? availSpace : TOTAL_WIDTH;
         }
         List<List<String>> paragraphs = new ArrayList<>();
-        String indentationLeftStr = Frame.RULER.repeatW(INDENTATION_CHAR, INDENTATION_LEFT);
-        String indentationRightStr = Frame.RULER.repeatW(INDENTATION_CHAR, INDENTATION_RIGHT);
+        String indentationLeftStr = Layout.RULER.repeatW(INDENTATION_CHAR, INDENTATION_LEFT);
+        String indentationRightStr = Layout.RULER.repeatW(INDENTATION_CHAR, INDENTATION_RIGHT);
         int widthAvail = blockWidth - INDENTATION_LEFT - INDENTATION_RIGHT;
-        String blankLineStr = Frame.RULER.repeatW(' ', widthAvail);
+        String blankLineStr = Layout.RULER.repeatW(' ', widthAvail);
         for (String s : message.texts) {
-            paragraphs.add(Frame.TYPO.lineBreak(s, widthAvail));
+            paragraphs.add(Layout.TYPO.lineBreak(s, widthAvail));
         }
         int linesAvail = blockHeight;
         List<String> preCache = new ArrayList<>();
@@ -103,6 +115,11 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
 
     @Override
     protected void nextPage() {
+        reset();
+    }
+
+    @Override
+    protected void reset() {
         cacheIndex = 0;
     }
 }
