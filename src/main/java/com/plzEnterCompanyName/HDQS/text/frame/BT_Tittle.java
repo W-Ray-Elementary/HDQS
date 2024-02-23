@@ -11,9 +11,9 @@ public class BT_Tittle extends BlockTypesetter {
     protected String[] cache;
 
     public BT_Tittle(SupportedBT_Position position, int indentation, char indentationChar,
-            boolean isDrawingGameName, String gameName) {
+                     boolean isDrawingGameName, String gameName) {
         super(position);
-        cache = new String[] { "" };
+        cache = new String[]{""};
         INDENTATION = indentation;
         INDENTATION_CHAR = indentationChar;
         IS_DRAWING_GAME_NAME = isDrawingGameName;
@@ -22,7 +22,7 @@ public class BT_Tittle extends BlockTypesetter {
 
     protected BT_Tittle(SupportedBT_Position position, Configuration config) {
         super(position);
-        cache = new String[] { "" };
+        cache = new String[]{""};
         INDENTATION = config.getInt("indentation");
         INDENTATION_CHAR = (char) config.getInt("indentationChar");
         IS_DRAWING_GAME_NAME = config.getBoolean("isDrawingGameName");
@@ -48,7 +48,6 @@ public class BT_Tittle extends BlockTypesetter {
     protected final String GAME_NAME;
 
     /**
-     *
      * @return 通常情况下，标题只占1行，故返回1
      */
     @Override

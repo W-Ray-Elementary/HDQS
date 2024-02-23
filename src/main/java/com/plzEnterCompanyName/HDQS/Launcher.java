@@ -13,13 +13,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
- * <p>
  * 游戏的启动类，管理启动流程，进行文件检查，没有GUI。
- * </p>
- * <p>
- * 为了提高程序的可拓展性，{@code Launcher}拥有独特的启动模式。具体流程如下：
- * <blockquote>
- * 
+ *
+ * <p>为了提高程序的可拓展性，{@code Launcher}拥有独特的启动模式。具体流程如下：
  * <pre>
  *     扫描bin\HDQS.jar，遍历其中的.class文件
  *     实现了RequireBoot的类被加载为类对象，放入REQUIRE_BOOT集合。
@@ -31,9 +27,6 @@ import java.util.*;
  *     运行cleanUp()
  *     退出游戏
  * </pre>
- * 
- * </blockquote>
- * </p>
  */
 public class Launcher {
 
@@ -41,6 +34,7 @@ public class Launcher {
     private static final LinePrinter LINE_PRINTER = new Windows10LinePrinter(DEFAULT_PRINT);
     private static final List<Class<?>> REQUIRE_BOOT;
     private static final List<Class<?>> OPTIONS;
+
     static {
         REQUIRE_BOOT = new ArrayList<>();
         OPTIONS = new ArrayList<>();
@@ -67,7 +61,7 @@ public class Launcher {
 
     /**
      * 用于改变程序的运作模式。详情请见{@link Start}
-     * 
+     *
      * @param argStart 提供入口的Start实例
      */
     public static void setLaunch(Start argStart) {
@@ -106,7 +100,7 @@ public class Launcher {
                 Constructor<?> constructor = clazz.getConstructor();
                 obj = constructor.newInstance();
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException
-                    | IllegalAccessException e) {
+                     | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
             Objects.requireNonNull(obj);
@@ -138,7 +132,7 @@ public class Launcher {
                 Constructor<?> constructor = clazz.getConstructor();
                 obj = constructor.newInstance();
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException
-                    | IllegalAccessException e) {
+                     | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
             Objects.requireNonNull(obj);

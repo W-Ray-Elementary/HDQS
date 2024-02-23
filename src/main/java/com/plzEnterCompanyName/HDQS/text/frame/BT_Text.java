@@ -20,7 +20,7 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
     private static final boolean I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE = false;
 
     public BT_Text(SupportedBT_Position position, int totalWidth, int totalHeight, int indentationLeft,
-            int indentationRight, char indentationChar, int widowOrphanControl) {
+                   int indentationRight, char indentationChar, int widowOrphanControl) {
         super(position);
         areYouTheLastOne = I_BELIEVED_THAT_I_AM_NOT_THE_LAST_ONE;
         TOTAL_WIDTH = totalWidth;

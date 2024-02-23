@@ -7,15 +7,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * <p>
  * 原版Lexicon的功能太少了，用着不方便！
- * </p>
- * <p>
- * 有些东西是不要测试的， <br>
+ *
+ * <p>有些东西是不要测试的， <br>
  * 尤其是在java里， <br>
  * gc会为我们保驾护航的， <br>
  * 对吧？
- * </p>
  */
 public class Lexicons {
     /* No Lexicons instance for you */

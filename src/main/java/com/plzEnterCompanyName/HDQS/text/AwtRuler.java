@@ -38,7 +38,7 @@ public class AwtRuler implements Ruler, RequireBoot {
 
     /**
      * 获取一个字符的显示宽度
-     * 
+     *
      * @return 宽度以int计，1代表单个西文字符2代表单个中文字符
      */
     @Override
@@ -60,7 +60,7 @@ public class AwtRuler implements Ruler, RequireBoot {
 
     /**
      * 获取该字符串的显示宽度，使用了{@link Ruler#measureWidth(char c)}
-     * 
+     *
      * @param s 要测量宽度的字符串
      * @return 宽度以int计，输出该字符串每个字符宽度的总和，1代表单个西文字符2代表单个中文字符
      * @throws IllegalArgumentException 当字符串是{@code null}时抛出此异常，当字符串包含
@@ -82,10 +82,11 @@ public class AwtRuler implements Ruler, RequireBoot {
 
     /**
      * 不断重复字符串，直到达到指定的宽度，若遇到无法整除的中文，会自动添加空格
-     * <p>
-     * 例如，该方法{@code repeatW("ab", 3)}会返回{@code "aba"}，
-     * 而{@code repeatW("ab稀滴", 11)}会返回{@code "ab稀滴ab稀 "}.在尾部添加空格以满足宽度要求。
-     * 
+     *
+     * <p>例如，该方法{@code repeatW("ab", 3)}会返回{@code "aba"}，
+     * 而{@code repeatW("ab稀滴", 11)}会返回{@code "ab稀滴ab稀 "}.在尾
+     * 部添加空格以满足宽度要求。
+     *
      * @param s     被重复的字符串
      * @param width 要达到的宽度
      * @return 处理好的字符串

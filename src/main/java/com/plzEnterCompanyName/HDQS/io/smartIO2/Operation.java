@@ -2,9 +2,7 @@ package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 
-import static com.plzEnterCompanyName.HDQS.util.FormatCheck.ZERO_LENGTH;
-import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NEW_LINE;
-import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NULL;
+import static com.plzEnterCompanyName.HDQS.util.FormatCheck.*;
 
 public class Operation {
     private final String name;
@@ -34,7 +32,7 @@ public class Operation {
     public String getTip() {
         if (!isVisible())
             throw new UnsupportedOperationException();
-        return ((VisibleReceiver)receiver).getTip();
+        return ((VisibleReceiver) receiver).getTip();
     }
 
     public String getLookedValue() {

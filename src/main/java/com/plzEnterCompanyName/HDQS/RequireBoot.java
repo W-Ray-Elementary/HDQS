@@ -10,7 +10,6 @@ import com.plzEnterCompanyName.HDQS.text.LinePrinter;
 public interface RequireBoot {
 
     /**
-     * 
      * @param lp 放在进度条上显示的文字，用于给予玩家提示
      */
     void boot(LinePrinter lp);

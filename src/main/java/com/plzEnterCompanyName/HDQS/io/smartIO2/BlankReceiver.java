@@ -1,6 +1,6 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
-public class BlankReceiver implements Receiver, VisibleReceiver{
+public class BlankReceiver implements Receiver, VisibleReceiver {
     @Override
     public boolean look(String s) {
         return true;

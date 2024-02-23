@@ -1,27 +1,24 @@
 package com.plzEnterCompanyName.HDQS.io;
 
-import com.plzEnterCompanyName.HDQS.SETTINGS;
 import com.google.UnicodeReader.java.io.base.UnicodeReader;
+import com.plzEnterCompanyName.HDQS.SETTINGS;
 
 import java.io.*;
 import java.util.Objects;
 
 /**
  * 用于内存与磁盘间String的交流，
- * 
+ *
  * @version 0.1a
  */
 public class FileAndString {
 
     /**
-     * <p>
      * 读取时请带上你的文件对象，没有的话去{@link com.plzEnterCompanyName.HDQS.io.PATH}领。要什么手续自己去那里问
      * 由于手续不全、文件有误导致的异常本类概不负责
-     * </P>
-     * <p>
-     * 如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
-     * </p>
-     * 
+     *
+     * <p>如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
+     *
      * @param file 建议从{@link com.plzEnterCompanyName.HDQS.io.PATH}获取
      * @return 在义务范围内为你提供的内容
      */
@@ -50,14 +47,11 @@ public class FileAndString {
     }
 
     /**
-     * <P>
      * 写入时请带上你的文件对象和写入内容
      * 注意，本类只负责写入，对文件内容没有知情权，不对文件内容负责！
-     * </p>
-     * <p>
-     * 如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
-     * </p>
-     * 
+     *
+     * <p>如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
+     *
      * @param file 建议从{@link com.plzEnterCompanyName.HDQS.io.PATH}获取
      * @param str  会写到文件中的内容
      */
@@ -73,14 +67,11 @@ public class FileAndString {
     }
 
     /**
-     * <P>
      * 写入时请带上你的文件对象和写入内容
      * 注意，本类只负责写入，对文件内容没有知情权，不对文件内容负责！
-     * </p>
-     * <p>
-     * 如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
-     * </p>
-     * 
+     *
+     * <p>如果因为<i>磁盘</i>的失误导致异常，责任归<i>磁盘</i>所有！
+     *
      * @param file 建议从{@link com.plzEnterCompanyName.HDQS.io.PATH}获取
      * @param str  会写到文件中的内容
      */
