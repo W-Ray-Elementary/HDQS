@@ -2,9 +2,8 @@ package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
 
-import static com.plzEnterCompanyName.HDQS.util.FormatCheck.ZERO_LENGTH;
-import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NEW_LINE;
-import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NULL;
+import static com.plzEnterCompanyName.HDQS.util.FormatCheck.*;
+
 /**
  * 如果使用本类显示数值，那么最好应该传入整数。
  * 注意，此类仅用于处理显示，不参与计算
@@ -54,6 +53,7 @@ public class Info {
      *      0.0e+0</pre>
      * 可见，一般的最短宽度是6，但是科学计数法的指数会浮动，故减去3，设为3，
      * 3代表有效数字最小是2位，再加上一位的小数点。
+     *
      * @param width 必须大于等于3
      */
     public void setWidth(int width) {

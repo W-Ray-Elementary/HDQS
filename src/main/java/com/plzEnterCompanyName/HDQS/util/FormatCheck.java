@@ -32,7 +32,7 @@ public class FormatCheck {
 
     /**
      * 检查字符串是否可以被转换为BigInteger
-     * 
+     *
      * @param radix 进制
      */
     public static void integerString(String val, int radix) {
@@ -40,7 +40,8 @@ public class FormatCheck {
         char[] check = new char[radix];
         System.arraycopy(radixParams, 0, check, 0, radix);
         char[] toBeChecked = val.toCharArray();
-        syntax: for (char tbc : toBeChecked) {
+        syntax:
+        for (char tbc : toBeChecked) {
             for (char c : check) {
                 if (tbc == c)
                     continue syntax;

@@ -16,12 +16,9 @@ public class PATH {
     }
 
     /**
-     * <p>
      * 类加载时，此变量就被确定
-     * </p>
-     * <p>
-     * 注意：{@code ABSOLUTE_ROOT_PATH}<i>的末尾自动带有\\，勿重复添加！</i>
-     * </p>
+     *
+     * <p>注意：{@code ABSOLUTE_ROOT_PATH}<i>的末尾自动带有\\，勿重复添加！</i>
      */
     public static final String ABSOLUTE_ROOT_PATH;
 
@@ -42,10 +39,10 @@ public class PATH {
     /**
      * 除特别说明外，项目中出现的需要io流的位置都应当采用此方法获取File文件。
      * 否则可能出现随运行环境变化而相对路径变化导致文件读写出现异常。
-     * 
+     *
      * @param relativePath 游戏目录中的相对位置。
      * @return 该文件对象如果未创建，此方法不会帮你创建，因为它只负责<i>找清你的定位</i>
-     *         <i>形成自己的体系</i>需要靠你自己。
+     * <i>形成自己的体系</i>需要靠你自己。
      */
     public static File getFile(String relativePath) {
         return new File(ABSOLUTE_ROOT_PATH + '\\' + relativePath);

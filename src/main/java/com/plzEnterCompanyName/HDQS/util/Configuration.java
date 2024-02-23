@@ -2,9 +2,6 @@ package com.plzEnterCompanyName.HDQS.util;
 
 import java.util.List;
 
-/**
- * 
- */
 public interface Configuration {
     String getName();
 

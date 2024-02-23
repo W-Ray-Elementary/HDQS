@@ -12,24 +12,19 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>
  * 用于按照布局排版字符串
- * </p>
- * <p>
- * 类比像素是显卡输出图像的最小单元，{@code Layout}进行排版的最小单元是一个西文
- * 字符所占有的空间。通常情况下，英文字母、数字、ASCII中的标点符号等的宽度为1，而
- * 中文字符与中文标点的宽度为2。该值可以使用{@link Ruler}对象测量。
- * </p>
- * <p>
- * 若干个“一个西文字符所占有的空间”组成了一个二维平面，这个二维平面在Layout中表现
- * 为一个二维{@code int}数组。此类的工作从定义这个二维数组的长和宽开始。在
- * Windows10, Windows11中，cmd的窗口大小为120x30，而Windows7是80x25。此外，还
- * 需要留下一行用于用户输入，故最常用的大小为120x29或80x25。定义好这个二维数组的
- * 长和宽之后，就可以将{@link BlockTypesetter}按序逐个放入其中，得到一个标记着
- * 不同{@code BlockTypesetter}所在位置的二维数组。
- * <blockquote>
  *
- * <pre> 效果如下："""
+ * <p>类比像素是显卡输出图像的最小单元，{@code Layout}进行排版的最小单元是一个
+ * 西文字符所占有的空间。通常情况下，英文字母、数字、ASCII中的标点符号等的宽度为
+ * 1，而中文字符与中文标点的宽度为2。该值可以使用{@link Ruler}对象测量。
+ *
+ * <p>若干个“一个西文字符所占有的空间”组成了一个二维平面，这个二维平面在Layout中
+ * 表现为一个二维{@code int}数组。此类的工作从定义这个二维数组的长和宽开始。在
+ * Windows10, Windows11中，cmd的窗口大小为120x30，而Windows7是80x25。此
+ * 外，还需要留下一行用于用户输入，故最常用的大小为120x29或80x25。定义好这个二维
+ * 数组的长和宽之后，就可以将{@link BlockTypesetter}按序逐个放入其中，得到一个
+ * 标记着不同{@code BlockTypesetter}所在位置的二维数组。
+ * <blockquote><pre> 效果如下："""
  * 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  * 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 2
  * 3 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 2
@@ -46,13 +41,10 @@ import java.util.List;
  * 3 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 7 6 6 6 6 6 6 6 6 2
  * 3 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 7 6 6 6 6 6 6 6 6 2
  * 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
- * """</pre>
- *
- * </blockquote>
+ * """</pre></blockquote>
  * 随后从左到右从上到下遍历这个二维数组，把它们所代表的字符串从对应的
  * {@code BlockTypesetter}中取出，形成一个长长的字符串。此时，这个字符串就完全按
  * 照先前的配置排列，只需直接输出，终端里就会看到排好的文字。
- * </p>
  */
 public class Layout {
 
@@ -105,8 +97,7 @@ public class Layout {
      * {@code BlockTypesetter}，这太麻烦了，所以此方法可以从
      * {@code Configuration}对象快速创建配置好的布局。
      *
-     * <p>
-     * <blockquote><pre>
+     * <p><blockquote><pre>
      * 这里是格式要求：
      * Layout
      * {
@@ -147,7 +138,7 @@ public class Layout {
     /**
      * 创建一个只配置了宽高的{@code Layout}对象，需要逐个添加Layer.
      *
-     * @param width 宽度，单位是一个西文字符。
+     * @param width  宽度，单位是一个西文字符。
      * @param height 高度，单位是一行。
      */
     public Layout(int width, int height) {
@@ -240,11 +231,11 @@ public class Layout {
      * 利用坐标对二维数组进行填充。
      *
      * @param table 要填的表。
-     * @param x_1 第一个点的横坐标。
-     * @param y_1 第一个点的横坐标。
-     * @param x_2 第一个点的横坐标。
-     * @param y_2 第一个点的横坐标。
-     * @param ink 坐标内的数值全部改为此值。
+     * @param x_1   第一个点的横坐标。
+     * @param y_1   第一个点的横坐标。
+     * @param x_2   第一个点的横坐标。
+     * @param y_2   第一个点的横坐标。
+     * @param ink   坐标内的数值全部改为此值。
      */
     private static void fillTable(
             int[][] table,

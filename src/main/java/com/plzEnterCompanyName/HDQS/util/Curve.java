@@ -6,15 +6,11 @@ import java.util.*;
 /**
  * 二维插值曲线，按照关键点插值对应数值。
  *
- * <p>
- * 关键点的数据类型为double
- * </p>
- * <p>
- * 关键点不能没有，当关键点只有一个时，按常量输出，关键点数量大于或等于二时，进行线性插值。
- * </p>
- * <p>
- * 构造Curve //忘记要说什么了
- * </p>
+ * <p>关键点的数据类型为double
+ *
+ * <p>关键点不能没有，当关键点只有一个时，按常量输出，关键点数量大于或等于二时，进行线性插值。
+ *
+ * <p>构造Curve //忘记要说什么了
  */
 public class Curve {
 
@@ -25,7 +21,7 @@ public class Curve {
 
     /**
      * 由给定值构造Curve对象。
-     * 
+     *
      * @param args 一系列关键点，允许乱序与重复，构造时会处理它们。
      */
     public Curve(String[] args) {
@@ -34,7 +30,7 @@ public class Curve {
 
     /**
      * 处理 ClassCastException
-     * 
+     *
      * @param src 必须确保是字符串
      */
     public Curve(Object[] src) {
@@ -43,7 +39,7 @@ public class Curve {
 
     /**
      * 重置所有关键点
-     * 
+     *
      * @param args 一系列关键点，允许乱序与重复，此方法会处理它们。
      */
     public void setKeys(String[] args) {
@@ -93,7 +89,7 @@ public class Curve {
 
     /**
      * 寻找关键点进行插值，默认不检查范围
-     * 
+     *
      * @param input 输入值
      * @return 输出值
      */
@@ -103,7 +99,7 @@ public class Curve {
 
     /**
      * 寻找关键点进行插值
-     * 
+     *
      * @param input       输入值
      * @param checkBounds 是否检查范围
      * @return 输出值

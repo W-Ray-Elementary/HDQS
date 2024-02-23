@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 从某一目录中查找特定的文件
  * 现有以下功能
- * 
+ *
  * <pre>
  * -按后缀查找
  * </pre>
@@ -19,7 +19,7 @@ public class FileSearch {
 
     /**
      * 查找特定后缀名的文件
-     * 
+     *
      * @param dir    需要查找的目录
      * @param suffix 需要查找的后缀
      * @return 所有满足条件的文件对象

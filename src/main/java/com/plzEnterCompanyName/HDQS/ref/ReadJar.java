@@ -29,7 +29,7 @@ public class ReadJar {
 
     /**
      * 构造一个ReadJar对象，并在此方法内完成读取class文件并实例化的任务
-     * 
+     *
      * @param target 在此处的jar包开始搜索
      */
     public ReadJar(File target) {
@@ -51,7 +51,7 @@ public class ReadJar {
         JarFile jarFile = null;
         URLClassLoader jarClassLoader = null;
         try {
-            jarClassLoader = new URLClassLoader(new URL[] { url1 },
+            jarClassLoader = new URLClassLoader(new URL[]{url1},
                     Thread.currentThread().getContextClassLoader());
             jarFile = new JarFile(target);
             Enumeration<JarEntry> entries = jarFile.entries();

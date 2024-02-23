@@ -1,11 +1,11 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 import com.plzEnterCompanyName.HDQS.util.ConfigurationNotFoundException;
 import com.plzEnterCompanyName.HDQS.util.Configurations;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Layer {
 
@@ -25,7 +25,7 @@ public class Layer {
         List<Configuration> cs = new ArrayList<>();
         try {
             cs = layerConfig.subSets("BlockTypesetter");
-        } catch (ConfigurationNotFoundException e) {
+        } catch (ConfigurationNotFoundException ignored) {
         }
         SupportedBT_Position posHandle = convertEnum();
         switch (type) {
@@ -47,8 +47,7 @@ public class Layer {
             case "Text" -> typesetter = new BT_Text(
                     posHandle,
                     priorityForBT(cs, btConfigs, "Text"));
-            default ->
-                throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
+            default -> throw new UnsupportedOperationException("Unsupported BlockComposition type: " + type);
         }
     }
 
@@ -67,8 +66,7 @@ public class Layer {
             case "UP" -> posHandle = SupportedBT_Position.UP;
             case "LEFT" -> posHandle = SupportedBT_Position.LEFT;
             case "DOWN" -> posHandle = SupportedBT_Position.DOWN;
-            default ->
-                throw new UnsupportedOperationException("Unsupported BC_Position: " + position);
+            default -> throw new UnsupportedOperationException("Unsupported BC_Position: " + position);
         }
         return posHandle;
     }
