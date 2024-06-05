@@ -35,6 +35,7 @@ public class BT_Warning extends BlockTypesetter {
         String indentationStr = Layout.RULER.repeatW(INDENTATION_CHAR, INDENTATION);
         int widthAvail = posLimit - INDENTATION;
         int neededWidth = Layout.RULER.measureWidth(warnStr);
+        cache = new String[]{""};
         if (neededWidth > widthAvail) {
             cache[0] = String.valueOf('#').repeat(widthAvail);
             return 1;

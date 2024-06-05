@@ -170,7 +170,11 @@ public class FrameDemo implements Argument {
                 ConfigureFile cfgFile = new ConfigureFile(PATH.getFile("settings\\frame.cfg"), DEFAULT_CONFIG);
                 Frame f = new Frame(new LexiconConfiguration(cfgFile.read()));
                 f.out(mm.toMessage());
-                sc.nextLine();
+                while (true) {
+                    if (sc.nextLine().isEmpty()) {
+                        f.warn("请正确输入数值！");
+                    } else break;
+                }
             }
             sc.close();
         };
