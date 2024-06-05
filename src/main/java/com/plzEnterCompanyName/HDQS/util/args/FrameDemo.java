@@ -1,10 +1,5 @@
 package com.plzEnterCompanyName.HDQS.util.args;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Iterator;
-
 import com.plzEnterCompanyName.HDQS.Start;
 import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
 import com.plzEnterCompanyName.HDQS.io.PATH;
@@ -14,6 +9,11 @@ import com.plzEnterCompanyName.HDQS.util.lexicon.KVEntry;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 import com.plzEnterCompanyName.HDQS.util.lexicon.LexiconConfiguration;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicons;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class FrameDemo implements Argument {
 
@@ -67,6 +67,8 @@ public class FrameDemo implements Argument {
                 BlockTypesetter
                 {
                     name = Warning
+                    indentation = 1
+                    indentationChar = 32
                 }
                 BlockTypesetter
                 {

@@ -98,4 +98,8 @@ public class MessageManager {
     public void operation(String s) {
         this.operations.add(s);
     }
+
+    public void updateAdvInfo(Lexicon l) {
+        advancedInfo.add(l);
+    }
 }

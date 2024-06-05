@@ -1,12 +1,12 @@
 package com.plzEnterCompanyName.HDQS.util.lexicon;
 
+import com.plzEnterCompanyName.HDQS.util.Configuration;
+import com.plzEnterCompanyName.HDQS.util.ConfigurationNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-
-import com.plzEnterCompanyName.HDQS.util.Configuration;
-import com.plzEnterCompanyName.HDQS.util.ConfigurationNotFoundException;
 
 public class LexiconConfiguration implements Configuration {
 
@@ -36,6 +36,15 @@ public class LexiconConfiguration implements Configuration {
     @Override
     public String get(String key) {
         return lexicon.getFirst(key);
+    }
+
+    @Override
+    public String get(String key, String defaultVal) {
+        try {
+            return lexicon.getFirst(key);
+        } catch (ContentNotFoundException e) {
+            return defaultVal;
+        }
     }
 
     @Override

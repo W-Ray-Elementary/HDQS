@@ -90,6 +90,6 @@ public class Frame implements Out, PageOutputAble, WarnAble {
 
     @Override
     public void warn(String WarnStr) {
-        // coming soon.
+
     }
 }
