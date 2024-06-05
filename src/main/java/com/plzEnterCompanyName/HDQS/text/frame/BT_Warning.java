@@ -2,11 +2,6 @@ package com.plzEnterCompanyName.HDQS.text.frame;
 
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
-import com.plzEnterCompanyName.HDQS.util.lexicon.LexiconConfiguration;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicons;
-
-import java.util.List;
 
 public class BT_Warning extends BlockTypesetter {
 
@@ -50,10 +45,7 @@ public class BT_Warning extends BlockTypesetter {
     }
 
     private String extractWarning(Message message) {
-        List<Lexicon> ls = Lexicons.listOut(message.advancedInfo, "Frame");
-        if (ls.isEmpty()) return null;
-        Configuration cfg = new LexiconConfiguration(ls.get(0));
-        return cfg.get("warnStr", null);
+        return message.advancedInfo.getProperty("FrameWarnStr");
     }
 
     @Override

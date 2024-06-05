@@ -32,15 +32,6 @@ public class MessageManager {
         this.advancedInfo = new Properties();
     }
 
-    public MessageManager(Message message) {
-        this.title = message.title;
-        this.texts = message.texts;
-        this.textIndex = message.texts.size();
-        this.infos = message.infos;
-        this.operations = message.operations;
-        this.advancedInfo = message.advancedInfo;
-    }
-
     public Message toMessage() {
         Message returnVal = new Message(
                 this.title,

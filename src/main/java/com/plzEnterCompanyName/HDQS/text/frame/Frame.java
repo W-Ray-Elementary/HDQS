@@ -89,7 +89,11 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     }
 
     @Override
-    public void warn(String WarnStr) {
-
+    public void warn(String warnStr) {
+        lastTime.advancedInfo.put("FrameWarnStr", warnStr);
+        String typed = layout.setType(lastTime);
+        /* 阅后即焚 */
+        lastTime.advancedInfo.remove("FrameWarnStr");
+        printStream.print(typed);
     }
 }
