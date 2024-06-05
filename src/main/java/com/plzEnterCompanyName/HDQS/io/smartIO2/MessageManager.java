@@ -1,7 +1,7 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
-import com.plzEnterCompanyName.HDQS.util.Configuration;
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class MessageManager {
     private int textIndex;
     private List<String> infos;
     private List<String> operations;
-    private Configuration advancedInfo;
+    private Lexicon advancedInfo;
 
     public MessageManager() {
         clean();
@@ -29,6 +29,16 @@ public class MessageManager {
         this.textIndex = 0;
         this.infos = new ArrayList<>();
         this.operations = new ArrayList<>();
+        this.advancedInfo = new Lexicon("AdvancedInfo");
+    }
+
+    public MessageManager(Message message) {
+        this.title = message.title;
+        this.texts = message.texts;
+        this.textIndex = message.texts.size();
+        this.infos = message.infos;
+        this.operations = message.operations;
+        this.advancedInfo = message.advancedInfo;
     }
 
     public Message toMessage() {

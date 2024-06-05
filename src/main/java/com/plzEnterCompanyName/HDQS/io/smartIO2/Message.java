@@ -1,6 +1,6 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
-import com.plzEnterCompanyName.HDQS.util.Configuration;
+import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 import java.util.List;
 
@@ -51,10 +51,10 @@ public class Message {
      * ...
      * </pre></blockquote>
      */
-    public Configuration advancedInfo;
+    public Lexicon advancedInfo;
 
     protected Message(List<String> title, List<String> texts, List<String> infos, List<String> operations,
-                      Configuration advancedInfo) {
+                      Lexicon advancedInfo) {
         this.title = title;
         this.texts = texts;
         this.infos = infos;
