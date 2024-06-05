@@ -1,10 +1,10 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
 import com.plzEnterCompanyName.HDQS.util.FormatCheck;
-import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NEW_LINE;
 import static com.plzEnterCompanyName.HDQS.util.FormatCheck.NULL;
@@ -16,7 +16,7 @@ public class MessageManager {
     private int textIndex;
     private List<String> infos;
     private List<String> operations;
-    private Lexicon advancedInfo;
+    private Properties advancedInfo;
 
     public MessageManager() {
         clean();
@@ -29,7 +29,7 @@ public class MessageManager {
         this.textIndex = 0;
         this.infos = new ArrayList<>();
         this.operations = new ArrayList<>();
-        this.advancedInfo = new Lexicon("AdvancedInfo");
+        this.advancedInfo = new Properties();
     }
 
     public MessageManager(Message message) {
@@ -99,7 +99,7 @@ public class MessageManager {
         this.operations.add(s);
     }
 
-    public void updateAdvInfo(Lexicon l) {
-        advancedInfo.add(l);
+    public void updateAdvInfo(String key, String value) {
+        advancedInfo.put(key, value);
     }
 }
