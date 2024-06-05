@@ -260,11 +260,6 @@ public class BT_Info extends BlockTypesetter {
     }
 
     @Override
-    protected void nextPage() {
-        reset();
-    }
-
-    @Override
     protected void reset() {
         cacheIndex = 0;
     }

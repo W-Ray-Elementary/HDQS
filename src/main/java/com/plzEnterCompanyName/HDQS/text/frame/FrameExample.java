@@ -39,6 +39,13 @@ public class FrameExample {
         Frame f = new Frame(layout);
         
         // 使用MessageManager创建Message
+        Message message = getMessage();
+
+        // Frame就可以输出这个message
+        f.out(message);
+    }
+
+    private static Message getMessage() {
         MessageManager mm = new MessageManager();
 
         mm.title("这是一帧Frame输出的内容");
@@ -58,9 +65,6 @@ public class FrameExample {
         mm.operation("更多功能");
 
         // MessageManager转Message
-        Message message = mm.toMessage();
-
-        // Frame就可以输出这个message
-        f.out(message);
+        return mm.toMessage();
     }
 }

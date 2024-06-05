@@ -114,11 +114,6 @@ public class BT_Text extends BlockTypesetter implements AdjustableBT {
     }
 
     @Override
-    protected void nextPage() {
-        reset();
-    }
-
-    @Override
     protected void reset() {
         cacheIndex = 0;
     }
