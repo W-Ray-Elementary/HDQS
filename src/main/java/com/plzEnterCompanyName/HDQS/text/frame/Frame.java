@@ -1,6 +1,9 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
-import com.plzEnterCompanyName.HDQS.io.smartIO2.*;
+import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
+import com.plzEnterCompanyName.HDQS.io.smartIO2.MessageManager;
+import com.plzEnterCompanyName.HDQS.io.smartIO2.Out;
+import com.plzEnterCompanyName.HDQS.io.smartIO2.WarnAble;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 import java.io.PrintStream;
@@ -33,7 +36,7 @@ import java.io.PrintStream;
  *
  * @see com.plzEnterCompanyName.HDQS.text.frame.FrameExample
  */
-public class Frame implements Out, PageOutputAble, WarnAble {
+public class Frame implements Out, WarnAble {
 
     /**
      * 进行输出时所使用的打印流。可以进行配置，以向不同的地方输出。
@@ -84,8 +87,9 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     }
 
     @Override
-    public void pageOutput() {
-        // coming soon.
+    public void repeatOut() {
+        String typed = layout.setType(lastTime);
+        printStream.print(typed);
     }
 
     @Override

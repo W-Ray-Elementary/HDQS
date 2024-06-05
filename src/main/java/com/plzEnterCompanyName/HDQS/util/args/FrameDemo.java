@@ -87,6 +87,11 @@ public class FrameDemo implements Argument {
                 }
                 Layer
                 {
+                    type = Warning
+                    position = DOWN
+                }
+                Layer
+                {
                     type = SeparateLine
                     position = DOWN
                 }
@@ -128,11 +133,6 @@ public class FrameDemo implements Argument {
                 Layer
                 {
                     type = SeparateLine
-                    position = DOWN
-                }
-                Layer
-                {
-                    type = Warning
                     position = DOWN
                 }
                 Layer
