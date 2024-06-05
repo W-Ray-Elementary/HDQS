@@ -85,7 +85,6 @@ public class Frame implements Out, PageOutputAble, WarnAble {
 
     @Override
     public void pageOutput() {
-        // coming soon.
     }
 
     @Override
