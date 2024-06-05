@@ -1,8 +1,7 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
-import com.plzEnterCompanyName.HDQS.util.Configuration;
-
 import java.util.List;
+import java.util.Properties;
 
 /**
  * 把需要输出的内容临时存储起来，此外，还提供了一个放置更多信息的属性。
@@ -36,25 +35,11 @@ public class Message {
 
     /**
      * 为了提高{@code Message}的拓展性，可以针对不同的程序模块添加值。
-     * <blockquote><pre>
-     * 格式如下：
-     * [模块1的名字]
-     * {
-     *     键值对
-     *     ...
-     * }
-     * [模块2的名字]
-     * {
-     *     键值对
-     *     ...
-     * }
-     * ...
-     * </pre></blockquote>
      */
-    public Configuration advancedInfo;
+    public Properties advancedInfo;
 
     protected Message(List<String> title, List<String> texts, List<String> infos, List<String> operations,
-                      Configuration advancedInfo) {
+                      Properties advancedInfo) {
         this.title = title;
         this.texts = texts;
         this.infos = infos;

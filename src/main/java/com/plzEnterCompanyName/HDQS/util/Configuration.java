@@ -11,6 +11,8 @@ public interface Configuration {
 
     String get(String key);
 
+    String get(String key, String defaultVal);
+
     List<String> getList(String key);
 
     List<Configuration> subSets(String key);

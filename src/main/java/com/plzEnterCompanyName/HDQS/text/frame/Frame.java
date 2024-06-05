@@ -1,9 +1,6 @@
 package com.plzEnterCompanyName.HDQS.text.frame;
 
-import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.Out;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.PageOutputAble;
-import com.plzEnterCompanyName.HDQS.io.smartIO2.WarnAble;
+import com.plzEnterCompanyName.HDQS.io.smartIO2.*;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 import java.io.PrintStream;
@@ -59,6 +56,11 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     private final Layout layout;
 
     /**
+     * 上一次输出的Message
+     */
+    private Message lastTime = new MessageManager().toMessage();
+
+    /**
      * 使用一个布局对象直接创建，布局对象应该在传入前配置完毕。
      */
     public Frame(Layout layout) {
@@ -76,7 +78,8 @@ public class Frame implements Out, PageOutputAble, WarnAble {
 
     @Override
     public void out(Message msg) {
-        String typed = layout.setType(msg);
+        lastTime = msg;
+        String typed = layout.setType(lastTime);
         printStream.print(typed);
     }
 
@@ -86,7 +89,11 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     }
 
     @Override
-    public void warn(String WarnStr) {
-        // coming soon.
+    public void warn(String warnStr) {
+        lastTime.advancedInfo.put("FrameWarnStr", warnStr);
+        String typed = layout.setType(lastTime);
+        /* 阅后即焚 */
+        lastTime.advancedInfo.remove("FrameWarnStr");
+        printStream.print(typed);
     }
 }

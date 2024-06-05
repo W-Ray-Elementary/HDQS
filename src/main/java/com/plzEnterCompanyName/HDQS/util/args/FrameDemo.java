@@ -1,10 +1,5 @@
 package com.plzEnterCompanyName.HDQS.util.args;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Iterator;
-
 import com.plzEnterCompanyName.HDQS.Start;
 import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
 import com.plzEnterCompanyName.HDQS.io.PATH;
@@ -14,6 +9,11 @@ import com.plzEnterCompanyName.HDQS.util.lexicon.KVEntry;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 import com.plzEnterCompanyName.HDQS.util.lexicon.LexiconConfiguration;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicons;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class FrameDemo implements Argument {
 
@@ -67,6 +67,8 @@ public class FrameDemo implements Argument {
                 BlockTypesetter
                 {
                     name = Warning
+                    indentation = 1
+                    indentationChar = 32
                 }
                 BlockTypesetter
                 {
@@ -168,7 +170,11 @@ public class FrameDemo implements Argument {
                 ConfigureFile cfgFile = new ConfigureFile(PATH.getFile("settings\\frame.cfg"), DEFAULT_CONFIG);
                 Frame f = new Frame(new LexiconConfiguration(cfgFile.read()));
                 f.out(mm.toMessage());
-                sc.nextLine();
+                while (true) {
+                    if (sc.nextLine().isEmpty()) {
+                        f.warn("请正确输入数值！");
+                    } else break;
+                }
             }
             sc.close();
         };

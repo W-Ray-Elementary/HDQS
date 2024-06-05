@@ -17,7 +17,7 @@ public class FrameExample {
         BlockTypesetter separateLine8  = new BT_SeparateLine(SupportedBT_Position.RIGHT, '-', '|');
         BlockTypesetter operation9     = new BT_Operation(SupportedBT_Position.DOWN, 1, ' ', 3);
         BlockTypesetter separateLine10 = new BT_SeparateLine(SupportedBT_Position.DOWN, '-', '|');
-        BlockTypesetter warning11      = new BT_Warning(SupportedBT_Position.DOWN);
+        BlockTypesetter warning11 = new BT_Warning(SupportedBT_Position.DOWN, 1, ' ');
         BlockTypesetter text12         = new BT_Text(SupportedBT_Position.UP, 41, 10, 1, 1, ' ', 1);
         
         // 配置Layout
