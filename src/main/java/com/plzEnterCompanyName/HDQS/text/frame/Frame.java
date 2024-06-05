@@ -84,6 +84,12 @@ public class Frame implements Out, PageOutputAble, WarnAble {
     }
 
     @Override
+    public void repeatOut() {
+        String typed = layout.setType(lastTime);
+        printStream.print(typed);
+    }
+
+    @Override
     public void pageOutput() {
     }
 
