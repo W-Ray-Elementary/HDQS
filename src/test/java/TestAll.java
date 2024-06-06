@@ -1,5 +1,3 @@
-import com.plzEnterCompanyName.HDQS.RequireBoot;
-import com.plzEnterCompanyName.HDQS.text.AwtRuler;
 import util.lexicon.TestLEXICON;
 import util.lexicon.TestLexicons;
 
