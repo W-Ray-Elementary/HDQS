@@ -20,7 +20,7 @@ public class FrameDemo implements Argument {
     public static final String DEFAULT_CONFIG = """
             Layout
             {
-                width = 120
+                width = 119
                 height = 29
 
                 BlockTypesetter

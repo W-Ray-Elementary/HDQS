@@ -268,12 +268,15 @@ public class Layout {
     private String write(int[][] marker) {
         StringBuilder sb = new StringBuilder();
         int m = -1;
-        for (int[] is : marker)
-            for (int anInt : is)
+        for (int[] is : marker) {
+            for (int anInt : is) {
                 if (m != anInt) {
                     m = anInt;
                     sb.append(layers.get(m).typesetter.getCache());
                 }
+            }
+            sb.append('\n');
+        }
         return sb.toString();
     }
 }
