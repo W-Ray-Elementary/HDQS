@@ -26,12 +26,12 @@ public class SmartIO {
      */
     private final List<Out> outList;
 
-    public void addOutInstance(Out o) {
-        outList.add(o);
-    }
-
     public void clearOut() {
         outList.clear();
+    }
+
+    public void addOutInstance(Out o) {
+        outList.add(o);
     }
 
     public SmartIO(In in, List<Out> outList) {
@@ -60,6 +60,7 @@ public class SmartIO {
                 return s;
             } else {
                 warn(checker.noPassMsg());
+                s = in.next();
             }
         }
     }
