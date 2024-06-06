@@ -1,6 +1,3 @@
-import util.lexicon.TestLEXICON;
-import util.lexicon.TestLexicons;
-
 public class TestAll {
     public static void main(String[] args) {
         io.smartIO2.TestMessageManager.main(null);
@@ -8,10 +5,11 @@ public class TestAll {
         io.Test.main(null);
         io.TestReadJar.main(null);
         text.frame.TestFrame.main(null);
+        text.frame.animation.TestMessageIterator.main(null);
         text.TestText.main(null);
         util.TestCurve.main(null);
         util.TestFormatCheck.main(null);
-        TestLEXICON.main(null);
-        TestLexicons.main(null);
+        util.lexicon.TestLEXICON.main(null);
+        util.lexicon.TestLexicons.main(null);
     }
 }

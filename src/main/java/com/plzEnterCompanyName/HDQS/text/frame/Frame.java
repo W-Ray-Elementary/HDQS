@@ -5,10 +5,13 @@ import com.plzEnterCompanyName.HDQS.io.smartIO2.MessageManager;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Out;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.WarnAble;
 import com.plzEnterCompanyName.HDQS.text.frame.animate.AnimateType;
+import com.plzEnterCompanyName.HDQS.text.frame.animate.MessageIterator;
+import com.plzEnterCompanyName.HDQS.text.frame.animate.Typewriter;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 /**
  * 适用于Microsoft Windows cmd的文字排版处理工具。
@@ -101,7 +104,13 @@ public class Frame implements Out, WarnAble {
             AnimateType handle = convertEnum(msg.advancedInfo.getProperty("FrameAnimateType"));
             switch (handle) {
                 case TYPEWRITER -> {
-
+                    MessageIterator mi = new MessageIterator(msg);
+                    Typewriter t = new Typewriter(mi, this);
+                    Scanner SC = new Scanner(controller);
+                    t.start();
+                    SC.nextLine();
+                    t.canNotRun();
+                    out(mi.getMsg());
                 }
             }
         }
@@ -129,11 +138,11 @@ public class Frame implements Out, WarnAble {
         printStream.print(typed);
     }
 
-    public void animate(Message msg, AnimateType type) {
+    public static void animate(Message msg, AnimateType type) {
         animate(System.in, msg, type);
     }
 
-    public void animate(InputStream controller, Message msg, AnimateType type) {
+    public static void animate(InputStream controller, Message msg, AnimateType type) {
         msg.advancedInfo.put("FrameAnimateType", type.name());
     }
 }
