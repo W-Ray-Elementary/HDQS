@@ -1,6 +1,15 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
+/**
+ * 在一次“读取-求值-输出”循环中，“输出”的目的是获取“输入”
+ */
 public interface Out {
+
+    /**
+     * 普通输出
+     *
+     * @param msg 其中信息应被优美地排版
+     */
     void out(Message msg);
 
     /**
