@@ -4,6 +4,7 @@ import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.MessageManager;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Out;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.WarnAble;
+import com.plzEnterCompanyName.HDQS.text.frame.animate.AnimateType;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 
 import java.io.InputStream;
@@ -92,9 +93,25 @@ public class Frame implements Out, WarnAble {
 
     @Override
     public void out(Message msg) {
-        lastTime = msg;
-        String typed = layout.setType(lastTime);
-        printStream.print(typed);
+        if (msg.advancedInfo.getProperty("FrameAnimateType") == null) {
+            lastTime = msg;
+            String typed = layout.setType(lastTime);
+            printStream.print(typed);
+        } else {
+            AnimateType handle = convertEnum(msg.advancedInfo.getProperty("FrameAnimateType"));
+            switch (handle) {
+                case TYPEWRITER -> {
+
+                }
+            }
+        }
+    }
+
+    private AnimateType convertEnum(String frameAnimateType) {
+        return switch (frameAnimateType) {
+            case "TYPEWRITER" -> AnimateType.TYPEWRITER;
+            default -> throw new RuntimeException("No such animate.");
+        };
     }
 
     @Override
