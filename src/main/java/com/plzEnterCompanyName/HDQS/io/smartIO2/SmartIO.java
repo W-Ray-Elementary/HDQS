@@ -17,6 +17,11 @@ public class SmartIO {
      */
     private In in;
 
+    /**
+     * 用于更改In，为日后实现AutoPlay预留
+     *
+     * @param in 更改后的In
+     */
     public void setIn(In in) {
         this.in = in;
     }
@@ -26,10 +31,18 @@ public class SmartIO {
      */
     private final List<Out> outList;
 
+    /**
+     * 清除所有Out对象
+     */
     public void clearOut() {
         outList.clear();
     }
 
+    /**
+     * 添加一种Out的途径
+     *
+     * @param o 要Out去的地方
+     */
     public void addOutInstance(Out o) {
         outList.add(o);
     }
@@ -39,18 +52,41 @@ public class SmartIO {
         this.outList = outList;
     }
 
+    /**
+     * 在输出后返回玩家的键盘输入。
+     *
+     * @return 玩家输什么，它就是什么。
+     */
     public String next(Message message) {
         return next(message, null);
     }
 
+
+    /**
+     * 在输出后返回玩家的键盘输入，如果不是Int，发警报。
+     *
+     * @return 符合要求才能返回。
+     */
     public int nextInt(Message message) {
         return Integer.parseInt(next(message, new IntChecker()));
     }
 
+    /**
+     * 使用自定义的Checker对输入值进行检查
+     *
+     * @param checker 自定义的Checker
+     * @return checker放行了才返回
+     */
     public int nextInt(Message message, Checker checker) {
         return Integer.parseInt(next(message, checker));
     }
 
+    /**
+     * 典型的检查流程，一直warning直到输入值满足要求为止
+     *
+     * @param checker 自定义的Checker
+     * @return checker放行了才返回
+     */
     public String next(Message message, Checker checker) {
         out(message);
         String s = in.next();

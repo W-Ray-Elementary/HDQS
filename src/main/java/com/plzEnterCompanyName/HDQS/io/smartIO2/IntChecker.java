@@ -1,5 +1,8 @@
 package com.plzEnterCompanyName.HDQS.io.smartIO2;
 
+/**
+ * 检查一个String是否能被转换为Integer
+ */
 public class IntChecker implements Checker {
     @Override
     public boolean pass(String s) {
