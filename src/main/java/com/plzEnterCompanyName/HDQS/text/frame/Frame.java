@@ -4,9 +4,14 @@ import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.MessageManager;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.Out;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.WarnAble;
+import com.plzEnterCompanyName.HDQS.text.frame.animate.AnimateType;
+import com.plzEnterCompanyName.HDQS.text.frame.animate.MessageIterator;
+import com.plzEnterCompanyName.HDQS.text.frame.animate.Typewriter;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 /**
  * 适用于Microsoft Windows cmd的文字排版处理工具。
@@ -44,6 +49,11 @@ public class Frame implements Out, WarnAble {
     private PrintStream printStream;
 
     /**
+     * Frame支持动画效果，就需要对动画进程进行控制。
+     */
+    private InputStream controller;
+
+    /**
      * 对输出时所使用的打印流进行配置
      *
      * @param printStream 调用该方法后，{@code Frame}将使用该打印流进行打印
@@ -68,7 +78,7 @@ public class Frame implements Out, WarnAble {
      */
     public Frame(Layout layout) {
         this.layout = layout;
-        printStream = System.out;
+        defaultSetting();
     }
 
     /**
@@ -76,14 +86,41 @@ public class Frame implements Out, WarnAble {
      */
     public Frame(Configuration cfg) {
         this.layout = new Layout(cfg);
+        defaultSetting();
+    }
+
+    private void defaultSetting() {
         printStream = System.out;
+        controller = System.in;
     }
 
     @Override
     public void out(Message msg) {
-        lastTime = msg;
-        String typed = layout.setType(lastTime);
-        printStream.print(typed);
+        if (msg.advancedInfo.getProperty("FrameAnimateType") == null) {
+            lastTime = msg;
+            String typed = layout.setType(lastTime);
+            printStream.print(typed);
+        } else {
+            AnimateType handle = convertEnum(msg.advancedInfo.getProperty("FrameAnimateType"));
+            switch (handle) {
+                case TYPEWRITER -> {
+                    MessageIterator mi = new MessageIterator(msg);
+                    Typewriter t = new Typewriter(mi, this);
+                    Scanner SC = new Scanner(controller);
+                    t.start();
+                    SC.nextLine();
+                    t.canNotRun();
+                    out(mi.getMsg());
+                }
+            }
+        }
+    }
+
+    private AnimateType convertEnum(String frameAnimateType) {
+        return switch (frameAnimateType) {
+            case "TYPEWRITER" -> AnimateType.TYPEWRITER;
+            default -> throw new RuntimeException("No such animate.");
+        };
     }
 
     @Override
@@ -99,5 +136,13 @@ public class Frame implements Out, WarnAble {
         /* 阅后即焚 */
         lastTime.advancedInfo.remove("FrameWarnStr");
         printStream.print(typed);
+    }
+
+    public static void animate(Message msg, AnimateType type) {
+        animate(System.in, msg, type);
+    }
+
+    public static void animate(InputStream controller, Message msg, AnimateType type) {
+        msg.advancedInfo.put("FrameAnimateType", type.name());
     }
 }

@@ -3,8 +3,10 @@ package com.plzEnterCompanyName.HDQS.util.args;
 import com.plzEnterCompanyName.HDQS.Start;
 import com.plzEnterCompanyName.HDQS.io.ConfigureFile;
 import com.plzEnterCompanyName.HDQS.io.PATH;
+import com.plzEnterCompanyName.HDQS.io.smartIO2.Message;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.MessageManager;
 import com.plzEnterCompanyName.HDQS.text.frame.Frame;
+import com.plzEnterCompanyName.HDQS.text.frame.animate.AnimateType;
 import com.plzEnterCompanyName.HDQS.util.lexicon.KVEntry;
 import com.plzEnterCompanyName.HDQS.util.lexicon.Lexicon;
 import com.plzEnterCompanyName.HDQS.util.lexicon.LexiconConfiguration;
@@ -169,7 +171,9 @@ public class FrameDemo implements Argument {
                 MessageManager mm = read(messageLexicon);
                 ConfigureFile cfgFile = new ConfigureFile(PATH.getFile("settings\\frame.cfg"), DEFAULT_CONFIG);
                 Frame f = new Frame(new LexiconConfiguration(cfgFile.read()));
-                f.out(mm.toMessage());
+                Message msg = mm.toMessage();
+                Frame.animate(System.in, msg, AnimateType.TYPEWRITER);
+                f.out(msg);
                 while (true) {
                     if (sc.nextLine().isEmpty()) {
                         f.warn("请正确输入数值！");
