@@ -6,6 +6,7 @@ import com.plzEnterCompanyName.HDQS.io.smartIO2.Out;
 import com.plzEnterCompanyName.HDQS.io.smartIO2.WarnAble;
 import com.plzEnterCompanyName.HDQS.util.Configuration;
 
+import java.io.InputStream;
 import java.io.PrintStream;
 
 /**
@@ -44,6 +45,11 @@ public class Frame implements Out, WarnAble {
     private PrintStream printStream;
 
     /**
+     * Frame支持动画效果，就需要对动画进程进行控制。
+     */
+    private InputStream controller;
+
+    /**
      * 对输出时所使用的打印流进行配置
      *
      * @param printStream 调用该方法后，{@code Frame}将使用该打印流进行打印
@@ -68,7 +74,7 @@ public class Frame implements Out, WarnAble {
      */
     public Frame(Layout layout) {
         this.layout = layout;
-        printStream = System.out;
+        defaultSetting();
     }
 
     /**
@@ -76,7 +82,12 @@ public class Frame implements Out, WarnAble {
      */
     public Frame(Configuration cfg) {
         this.layout = new Layout(cfg);
+        defaultSetting();
+    }
+
+    private void defaultSetting() {
         printStream = System.out;
+        controller = System.in;
     }
 
     @Override
@@ -99,5 +110,13 @@ public class Frame implements Out, WarnAble {
         /* 阅后即焚 */
         lastTime.advancedInfo.remove("FrameWarnStr");
         printStream.print(typed);
+    }
+
+    public void animate(Message msg, AnimateType type) {
+        animate(System.in, msg, type);
+    }
+
+    public void animate(InputStream controller, Message msg, AnimateType type) {
+        msg.advancedInfo.put("FrameAnimateType", type.name());
     }
 }
